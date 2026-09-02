@@ -7,19 +7,27 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
+  FlaskConical,
   HeartPulse,
   ShieldCheck,
   Stethoscope,
+  Truck,
   UserRound,
+  UsersRound,
+  Video,
 } from 'lucide-react'
 
 import { AFTER_HOURS, HOURS, LOCATIONS, PHONE, PHONE_TEL } from '@/lib/site'
 
 export const services = [
   { icon: Stethoscope, title: 'Primary care', text: 'Thoughtful, continuous care for adults through every season of life.', link: 'Explore primary care' },
-  { icon: HeartPulse, title: 'Preventive health', text: 'Annual wellness visits, screenings, and a clear plan for staying well.', link: 'See preventive care' },
-  { icon: ShieldCheck, title: 'Chronic conditions', text: 'Partner with a care team that listens, adjusts, and keeps you moving forward.', link: 'Manage your health' },
+  { icon: HeartPulse, title: 'Preventive care & physicals', text: 'Annual wellness visits, screenings, and a clear plan for staying well.', link: 'See preventive care' },
+  { icon: ShieldCheck, title: 'Chronic disease management', text: 'Partner with a care team that listens, adjusts, and keeps you moving forward.', link: 'Manage your health' },
   { icon: UserRound, title: 'Women’s health', text: 'Personalized support through menopause and every stage beyond.', link: 'View women’s health' },
+  { icon: UsersRound, title: 'Family care', text: 'Care for the adults in one family — partners, parents, and the people who count on you.', link: 'Care for your family' },
+  { icon: FlaskConical, title: 'On-site labs & vaccinations', text: 'Bloodwork and immunizations handled in the clinic, without a second trip.', link: 'See what we offer' },
+  { icon: Video, title: 'Telehealth', text: 'Many follow-ups and everyday care needs can be handled by video visit.', link: 'Ask about telehealth' },
+  { icon: Truck, title: 'DOT physicals', text: 'Department of Transportation medical examinations for commercial drivers.', link: 'Book a DOT physical' },
 ]
 
 /** Real clinicians. `languages` stands in for a bio until written ones are supplied. */
