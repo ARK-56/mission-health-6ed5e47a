@@ -80,7 +80,7 @@ export function PathwaySection() {
 }
 
 export function LocationsSection() {
-  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont.</p></div><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href={PHONE_TEL}>{PHONE} <ArrowRight size={15} /></a></article>)}</div></div></section>
+  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont. One number books any of the three: <a className="text-link" href={PHONE_TEL}>{PHONE}</a></p></div><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={15} /></a></article>)}</div></div></section>
 }
 
 export function SelfPaySection() {
