@@ -1,2 +1,0 @@
-import { ClinicInnerPage } from '@/components/clinic-inner-page'
-export default function WellnessShopPage() { return <ClinicInnerPage kind="wellness-shop" /> }
