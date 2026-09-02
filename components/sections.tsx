@@ -53,11 +53,18 @@ export const insurancePlans = [
   'Scan', 'Aetna', 'Cigna',
 ]
 
+export const selfPayRates = [
+  { label: 'First visit', price: '$200', note: 'Your initial visit as a new self-pay patient.' },
+  { label: 'Returning visit', price: '$100', note: 'Each visit once you are an established patient.' },
+  { label: 'DOT physical', price: '$200', note: 'Department of Transportation medical examination.' },
+] as const
+
 export const faqs = [
   ['Do you accept my insurance?', 'We are contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Call the office to confirm your specific plan before your visit.'],
   ['What should I bring to my first visit?', 'Bring your photo ID, insurance card, medication list, and any questions you want to talk through.'],
   ['Can I see a provider virtually?', 'Yes. Telehealth visits are available for many follow-ups and everyday care needs — call the office to arrange one.'],
   ['Do I need a referral?', 'No referral is needed to be seen. Call the office and our team will book you in.'],
+  ['What does a visit cost without insurance?', 'Self-pay visits are $200 for a first visit and $100 once you are an established patient. DOT physicals are $200.'],
 ] as const
 
 export function TrustStrip() {
@@ -74,6 +81,10 @@ export function PathwaySection() {
 
 export function LocationsSection() {
   return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont.</p></div><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href={PHONE_TEL}>{PHONE} <ArrowRight size={15} /></a></article>)}</div></div></section>
+}
+
+export function SelfPaySection() {
+  return <section className="pathway-section" id="self-pay"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Self-pay rates</p><h2>Clear prices, up front.</h2></div><p>These are our rates for patients not billing insurance. Call the office if you have any questions before you book.</p></div><div className="pathway-grid">{selfPayRates.map((rate) => <article className="pathway-card" key={rate.label}><span>{rate.label}</span><h3>{rate.price}</h3><p>{rate.note}</p></article>)}</div></div></section>
 }
 
 export function StorySection() {
