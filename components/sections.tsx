@@ -42,7 +42,7 @@ export const providers = [
 ]
 
 export const gettingStarted = [
-  ['01', 'Call the office', `Reach us at ${PHONE}, Monday to Friday, and we will find an appointment that fits.`],
+  ['01', 'Call the office', `Reach us at ${PHONE}, Monday to Friday. Same-day appointments are available.`],
   ['02', 'Meet your provider', 'Have a full visit with someone who takes a proper history and explains every recommendation.'],
   ['03', 'Stay looked after', 'Leave with a clear plan and a practice that follows up on labs, referrals, and prescriptions.'],
 ] as const
@@ -64,6 +64,7 @@ export const faqs = [
   ['What should I bring to my first visit?', 'Bring your photo ID, insurance card, medication list, and any questions you want to talk through.'],
   ['Can I see a provider virtually?', 'Yes. Telehealth visits are available for many follow-ups and everyday care needs — call the office to arrange one.'],
   ['Do I need a referral?', 'No referral is needed to be seen. Call the office and our team will book you in.'],
+  ['How quickly can I get an appointment?', 'Same-day appointments are available. Call the office and our team will find you the earliest time that works.'],
   ['What does a visit cost without insurance?', 'Self-pay visits are $200 for a first visit and $100 once you are an established patient. DOT physicals are $200.'],
 ] as const
 
@@ -88,7 +89,7 @@ export function SelfPaySection() {
 }
 
 export function StorySection() {
-  return <section className="story-section" id="about"><div className="shell story-grid"><div className="story-image"><div className="story-label"><span>01</span><span>Listen first.</span></div></div><div className="story-copy"><p className="eyebrow">The Mission difference</p><h2>More than a visit. A relationship.</h2><p>We believe great primary care is built on trust. That means unrushed conversations, care plans you understand, and a team that remembers your name.</p><div className="check-list"><span><Check size={16} /> No referral needed to be seen</span><span><Check size={16} /> Telehealth visits available</span><span><Check size={16} /> On-site labs and vaccinations</span></div><Link className="text-link" href="/about">Why patients choose Mission <ArrowRight size={17} /></Link></div></div></section>
+  return <section className="story-section" id="about"><div className="shell story-grid"><div className="story-image"><div className="story-label"><span>01</span><span>Listen first.</span></div></div><div className="story-copy"><p className="eyebrow">The Mission difference</p><h2>More than a visit. A relationship.</h2><p>We believe great primary care is built on trust. That means unrushed conversations, care plans you understand, and a team that remembers your name.</p><div className="check-list"><span><Check size={16} /> Same-day appointments available</span><span><Check size={16} /> No referral needed to be seen</span><span><Check size={16} /> Telehealth visits available</span><span><Check size={16} /> On-site labs and vaccinations</span></div><Link className="text-link" href="/about">Why patients choose Mission <ArrowRight size={17} /></Link></div></div></section>
 }
 
 export function ProvidersSection() {
@@ -104,7 +105,7 @@ export function ResourcesSection() {
 }
 
 export function HoursSection() {
-  return <section className="highlight-band" id="hours"><div className="shell highlight-inner"><div><p className="eyebrow">Opening hours</p><strong>Mon–Fri</strong><p>9am–5pm, closed 12:30–1:30pm for lunch. Closed weekends.</p></div><div className="highlight-details"><span><Check size={15} />{AFTER_HOURS}</span></div></div></section>
+  return <section className="highlight-band" id="hours"><div className="shell highlight-inner"><div><p className="eyebrow">Opening hours</p><strong>Mon–Fri</strong><p>9am–5pm at all three clinics, closed 12:30–1:30pm for lunch. Closed weekends.</p></div><div className="highlight-details"><span><Check size={15} />{AFTER_HOURS}</span></div></div></section>
 }
 
 export function FaqSection() {
