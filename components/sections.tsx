@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { LOCATIONS, PHONE } from '@/lib/site'
 import {
   ArrowRight,
   Check,
@@ -16,10 +17,10 @@ import {
 } from 'lucide-react'
 
 export const services = [
-  { icon: Stethoscope, title: 'Primary care', text: 'Thoughtful, continuous care for every age and every season of life.', link: 'Explore primary care' },
+  { icon: Stethoscope, title: 'Primary care', text: 'Thoughtful, continuous care for adults through every season of life.', link: 'Explore primary care' },
   { icon: HeartPulse, title: 'Preventive health', text: 'Annual wellness visits, screenings, and a clear plan for staying well.', link: 'See preventive care' },
   { icon: ShieldCheck, title: 'Chronic conditions', text: 'Partner with a care team that listens, adjusts, and keeps you moving forward.', link: 'Manage your health' },
-  { icon: UserRound, title: 'Women’s health', text: 'Personalized support from adolescence through menopause and beyond.', link: 'View women’s health' },
+  { icon: UserRound, title: 'Women’s health', text: 'Personalized support through menopause and every stage beyond.', link: 'View women’s health' },
 ]
 
 export const products = [
@@ -29,9 +30,9 @@ export const products = [
 ]
 
 export const providers = [
-  { name: 'Dr. Maya Chen, MD', specialty: 'Family medicine', bio: 'Known for thoughtful preventive care and helping families build realistic, lasting habits.' },
+  { name: 'Dr. Maya Chen, MD', specialty: 'Family medicine', bio: 'Known for thoughtful preventive care and helping adults build realistic, lasting habits.' },
   { name: 'Dr. Jordan Ellis, DO', specialty: 'Internal medicine', bio: 'Partners with adults managing complex health needs through clear, collaborative plans.' },
-  { name: 'Nia Williams, FNP-C', specialty: 'Family nurse practitioner', bio: 'Creates warm, inclusive visits for patients at every stage of life.' },
+  { name: 'Nia Williams, FNP-C', specialty: 'Family nurse practitioner', bio: 'Creates warm, inclusive visits for adult patients at every stage of life.' },
 ]
 
 export const gettingStarted = [
@@ -59,6 +60,10 @@ export function CareSection() {
 
 export function PathwaySection() {
   return <section className="pathway-section" id="new-patients"><div className="shell"><div className="section-heading"><div><p className="eyebrow">A better way to begin</p><h2>New here? We make it easy.</h2></div><p>Getting primary care should feel straightforward from the first hello to your next follow-up.</p></div><div className="pathway-grid">{gettingStarted.map(([number, title, text]) => <article className="pathway-card" key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
+}
+
+export function LocationsSection() {
+  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, labs, and virtual visits across San Leandro, Hayward, and Fremont.</p></div><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href="tel:18005550140">{PHONE} <ArrowRight size={15} /></a></article>)}</div></div></section>
 }
 
 export function StorySection() {

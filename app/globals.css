@@ -47,3 +47,5 @@ footer { position: relative; background: #efe6d6; padding: 70px 0 25px; } footer
 
 .not-found { display: grid; place-items: center; min-height: 62vh; padding: 110px 0; background: #eadfca; text-align: center; }.not-found h1 { color: #181818; font-size: clamp(44px, 6vw, 74px); font-weight: 500; letter-spacing: -.05em; line-height: .98; margin: 0; }.not-found > .shell > p:not(.eyebrow) { max-width: 430px; margin: 24px auto 32px; color: var(--muted-foreground); font-size: 15px; line-height: 1.7; }.not-found-actions { display: flex; align-items: center; justify-content: center; gap: 25px; }
 @media (max-width: 680px) { .not-found { padding: 80px 0; }.not-found-actions { flex-direction: column; gap: 18px; } }
+
+.pathway-card .text-link { margin-top: 14px; }

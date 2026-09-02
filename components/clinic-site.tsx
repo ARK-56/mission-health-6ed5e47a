@@ -8,6 +8,7 @@ import {
   CtaSection,
   FaqSection,
   InsuranceSection,
+  LocationsSection,
   PathwaySection,
   ProvidersSection,
   ResourcesSection,
@@ -32,6 +33,7 @@ export function ClinicSite() {
           <ResourcesSection />
           <ShopSection onAdd={addToCart} />
           <Testimonial />
+          <LocationsSection />
           <FaqSection />
           <CtaSection onBook={openBooking} />
         </>
