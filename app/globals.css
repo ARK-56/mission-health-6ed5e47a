@@ -75,3 +75,33 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 [data-aos='fade-down']:not(.aos-animate) { transform: translate3d(0, -24px, 0); }
 [data-aos='zoom-in']:not(.aos-animate) { transform: scale(.96); }
 [data-aos='zoom-in-up']:not(.aos-animate) { transform: translate3d(0, 20px, 0) scale(.96); }
+
+/* 1. dropdown items: label left, arrow right */
+.nav-dropdown a { display: flex; align-items: center; justify-content: space-between; gap: 26px; }
+.nav-dropdown a svg { flex: 0 0 auto; opacity: .5; transition: transform .25s ease, opacity .25s ease; }
+.nav-dropdown a:hover svg { opacity: 1; transform: translateX(3px); }
+
+/* 2. card hover. The cards themselves carry data-aos, and AOS owns their transition
+   (property list plus an inline 1.15s duration and 0.5s delay), so hovering the card
+   itself would respond over a second late. These target children AOS does not touch. */
+.service-card .icon-box, .service-card h3, .service-card a,
+.provider-card .provider-avatar, .provider-card h3, .provider-card .text-link,
+.pathway-card h3, .pathway-card > span, .inner-panel h2, .provider-watermark {
+  transition: background .3s ease, color .3s ease, transform .35s ease, gap .25s ease, opacity .35s ease;
+}
+.service-card:hover .icon-box { background: var(--primary); color: var(--primary-foreground); transform: translateY(-3px); }
+.service-card:hover h3 { color: var(--primary); }
+.service-card:hover a { gap: 13px; }
+.provider-card:hover .provider-avatar { background: var(--primary); color: var(--primary-foreground); transform: scale(1.06); }
+.provider-card:hover h3 { color: var(--primary); }
+.provider-card:hover .text-link { gap: 12px; }
+.provider-card:hover .provider-watermark { opacity: .24; transform: translate3d(0, -6px, 0); }
+.pathway-card:hover h3 { color: var(--primary); }
+.pathway-card:hover > span { color: var(--foreground); }
+.inner-panel:hover h2 { color: var(--primary); }
+
+/* 3. clinics in the footer */
+.footer-locations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; border-top: 1px solid rgba(234,223,202,.16); padding: 28px 0; }
+.footer-locations strong { display: block; color: #fff; font-size: 12px; margin-bottom: 7px; }
+.footer-locations p { color: #c3b493; font-size: 12px; line-height: 1.6; margin: 0; }
+@media (max-width: 680px) { .footer-locations { grid-template-columns: 1fr; gap: 20px; } }
