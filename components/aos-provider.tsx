@@ -18,6 +18,7 @@ export function AosProvider() {
   useEffect(() => {
     AOS.init({
       duration: 1150,
+      delay: 1000,
       easing: 'ease-out-cubic',
       once: true,
       offset: 80,
