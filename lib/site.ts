@@ -21,8 +21,16 @@ export const nav = [
   ['/about', 'About us'],
 ] as const
 
+/**
+ * x/y are the marker positions on clinic-locations-map.jpg as percentages of the
+ * image, derived from the same web-mercator projection used to build it. They are
+ * percentages so the hotspots track the image as it scales.
+ */
 export const LOCATIONS = [
-  { city: 'San Leandro', street: '15921 E 14th St', region: 'San Leandro, CA 94578' },
-  { city: 'Hayward', street: '1090 La Playa Drive', region: 'Hayward, CA' },
-  { city: 'Fremont', street: '3755 Beacon Ave', region: 'Fremont, CA 94538' },
+  { city: 'San Leandro', street: '15921 E 14th St', region: 'San Leandro, CA 94578', x: 33.25, y: 19.11 },
+  { city: 'Hayward', street: '1090 La Playa Drive', region: 'Hayward, CA 94545', x: 36.96, y: 40.36 },
+  { city: 'Fremont', street: '3755 Beacon Ave', region: 'Fremont, CA 94538', x: 66.75, y: 80.93 },
 ] as const
+
+export const directionsUrl = (street: string, region: string) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(street + ', ' + region)}`

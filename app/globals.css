@@ -65,7 +65,7 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
    elements at opacity 0 until its script runs, which would delay LCP on the h1.
    Delays stay short for the same reason: LCP ignores an element until it paints. */
 @keyframes hero-rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: none; } }
-.hero-stagger > * { animation: hero-rise 2s cubic-bezier(.22,.61,.36,1) both; }
+.hero-stagger > * { animation: hero-rise 3s cubic-bezier(.22,.61,.36,1) both; }
 .hero-stagger > :nth-child(1) { animation-delay: 0s; }
 .hero-stagger > :nth-child(2) { animation-delay: .13s; }
 .hero-stagger > :nth-child(3) { animation-delay: .26s; }
@@ -112,3 +112,18 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 .footer-address b { display: block; color: #fff; font-weight: 700; margin-bottom: 2px; }
 .locations-map { margin: 0 0 34px; }
 .locations-map img { display: block; width: 100%; height: auto; border: 1px solid var(--border); }
+
+.locations-map { position: relative; }
+.map-pin { position: absolute; z-index: 2; width: 34px; height: 34px; transform: translate(-50%, -50%); border-radius: 50%; }
+.map-pin::before { content: ''; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 0 rgba(185,138,46,0); transition: box-shadow .25s ease; }
+.map-pin:hover::before, .map-pin:focus-visible::before { box-shadow: 0 0 0 7px rgba(185,138,46,.32); }
+.map-pin-card { position: absolute; bottom: calc(100% + 12px); left: 50%; z-index: 3; width: 214px; padding: 15px 17px; transform: translateX(-50%) translateY(4px); background: var(--surface-white); border: 1px solid var(--border); box-shadow: 0 16px 32px rgba(24,24,24,.18); opacity: 0; visibility: hidden; transition: opacity .2s ease, transform .2s ease; text-align: left; }
+/* bridges the 12px gap so moving the pointer from pin to card does not drop :hover */
+.map-pin-card::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+.map-pin:hover .map-pin-card, .map-pin:focus-within .map-pin-card { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.map-pin-card strong { display: block; color: #181818; font-size: 14px; margin-bottom: 6px; }
+.map-pin-card > span { display: block; color: var(--muted-foreground); font-size: 12px; line-height: 1.6; }
+.map-pin-go { display: flex !important; align-items: center; gap: 6px; margin-top: 10px; color: var(--primary); font-size: 12px; font-weight: 800; }
+/* the map is only 258px tall on a phone; popups there would be unreadable, and the
+   clinic cards directly below already carry the same detail */
+@media (max-width: 680px) { .map-pin { display: none; } }
