@@ -61,6 +61,10 @@ export const selfPayRates = [
   { label: 'DOT physical', price: '$200', note: 'Department of Transportation medical examination.' },
 ] as const
 
+/** The recognisable subset shown in the trust strip, derived so spellings cannot drift. */
+export const featuredPlans = insurancePlans.filter((p) =>
+  ['Medicare Part B', 'Medi-Cal', 'Alameda Alliance', 'UnitedHealthcare PPO', 'Aetna', 'Cigna'].includes(p))
+
 export const faqs = [
   ['Do you accept my insurance?', 'We are contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Call the office to confirm your specific plan before your visit.'],
   ['What should I bring to my first visit?', 'Bring your photo ID, insurance card, medication list, and any questions you want to talk through.'],
@@ -71,7 +75,7 @@ export const faqs = [
 ] as const
 
 export function TrustStrip() {
-  return <section className="trust-strip"><div className="shell trust-inner"><span>In-network with these plans and more</span><div className="plan-list"><span>Medicare <span>part b</span></span><span>Medi-Cal</span><span>Alameda Alliance</span><span>UnitedHealthcare</span><span>Aetna</span><span>Cigna</span></div></div></section>
+  return <section className="trust-strip"><div className="shell trust-inner"><span>In-network with these plans and more</span><div className="plan-list">{featuredPlans.map((plan) => <span key={plan}>{plan}</span>)}</div></div></section>
 }
 
 export function CareSection() {
