@@ -6,6 +6,7 @@ import { useState, type ReactNode } from 'react'
 import { ArrowRight, Menu, Phone, X } from 'lucide-react'
 
 import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, nav } from '@/lib/site'
+import { services } from '@/lib/services'
 
 /**
  * The chrome every page shares: utility bar, header and footer. Booking runs
@@ -17,7 +18,9 @@ export function ClinicShell({ className, children }: { className?: string; child
   return (
     <main className={className}>
       <div className="utility"><div className="shell utility-inner"><span>{HOURS}</span><div className="utility-links"><Link href="/contact">Find a location</Link><a href={PHONE_TEL}><Phone size={13} /> {PHONE}</a></div></div></div>
-      <header className="site-header"><div className="shell nav-inner"><Link className="brand" href="/" aria-label="Mission Primary Care home"><Image className="brand-logo" src={LOGO_SRC} alt={LOGO_ALT} width={140} height={130} priority /></Link><nav className={mobileOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">{nav.map(([href, label]) => <Link href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</Link>)}</nav><div className="nav-actions"><a className="button button-small" href={PHONE_TEL}><Phone size={15} /> {PHONE}</a><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">{mobileOpen ? <X /> : <Menu />}</button></div></div></header>
+      <header className="site-header"><div className="shell nav-inner"><Link className="brand" href="/" aria-label="Mission Primary Care home"><Image className="brand-logo" src={LOGO_SRC} alt={LOGO_ALT} width={140} height={130} priority /></Link><nav className={mobileOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">{nav.map(([href, label]) => href === '/services'
+        ? <div className="nav-item" key={href}><Link href={href} onClick={() => setMobileOpen(false)}>{label}</Link><div className="nav-dropdown">{services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug} onClick={() => setMobileOpen(false)}>{service.title}</Link>)}</div></div>
+        : <Link href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</Link>)}</nav><div className="nav-actions"><a className="button button-small" href={PHONE_TEL}><Phone size={15} /> {PHONE}</a><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">{mobileOpen ? <X /> : <Menu />}</button></div></div></header>
 
       {children}
 

@@ -18,17 +18,14 @@ import {
 } from 'lucide-react'
 
 import { AFTER_HOURS, HOURS, LOCATIONS, PHONE, PHONE_TEL } from '@/lib/site'
+import { services } from '@/lib/services'
 
-export const services = [
-  { icon: Stethoscope, title: 'Primary care', text: 'Thoughtful, continuous care for adults through every season of life.', link: 'Explore primary care' },
-  { icon: HeartPulse, title: 'Preventive care & physicals', text: 'Annual wellness visits, screenings, and a clear plan for staying well.', link: 'See preventive care' },
-  { icon: ShieldCheck, title: 'Chronic disease management', text: 'Partner with a care team that listens, adjusts, and keeps you moving forward.', link: 'Manage your health' },
-  { icon: UserRound, title: 'Women’s health', text: 'Personalized support through menopause and every stage beyond.', link: 'View women’s health' },
-  { icon: UsersRound, title: 'Family care', text: 'Care for the adults in one family — partners, parents, and the people who count on you.', link: 'Care for your family' },
-  { icon: FlaskConical, title: 'On-site labs & vaccinations', text: 'Bloodwork and immunizations handled in the clinic, without a second trip.', link: 'See what we offer' },
-  { icon: Video, title: 'Telehealth', text: 'Many follow-ups and everyday care needs can be handled by video visit.', link: 'Ask about telehealth' },
-  { icon: Truck, title: 'DOT physicals', text: 'Department of Transportation medical examinations for commercial drivers.', link: 'Book a DOT physical' },
-]
+export { services }
+
+const serviceIcons = {
+  stethoscope: Stethoscope, heart: HeartPulse, shield: ShieldCheck, woman: UserRound,
+  family: UsersRound, labs: FlaskConical, video: Video, dot: Truck,
+} as const
 
 /** Real clinicians. `languages` stands in for a bio until written ones are supplied. */
 type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean }
@@ -124,7 +121,7 @@ export function TrustStrip() {
 }
 
 export function CareSection() {
-  return <section className="section care-section" id="care"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Care for the whole you</p><h2>Health is not one-size-fits-all.</h2></div><p>From the everyday to the unexpected, our care teams are here to help you feel heard, understood, and cared for.</p></div><div className="service-grid">{services.map(({ icon: Icon, title, text, link }) => <article className="service-card" key={title}><div className="icon-box"><Icon size={22} /></div><h3>{title}</h3><p>{text}</p><Link href="/services">{link} <ArrowRight size={15} /></Link></article>)}</div></div></section>
+  return <section className="section care-section" id="care"><div className="shell"><div className="section-heading"><div><p className="eyebrow">Care for the whole you</p><h2>Health is not one-size-fits-all.</h2></div><p>From the everyday to the unexpected, our care teams are here to help you feel heard, understood, and cared for.</p></div><div className="service-grid">{services.map(({ icon, slug, title, text, link }) => { const Icon = serviceIcons[icon]; return <article className="service-card" key={slug}><div className="icon-box"><Icon size={22} /></div><h3>{title}</h3><p>{text}</p><Link href={`/services/${slug}`}>{link} <ArrowRight size={15} /></Link></article> })}</div></div></section>
 }
 
 export function PathwaySection() {
