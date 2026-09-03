@@ -57,3 +57,5 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 .service-body { display: grid; grid-template-columns: 1.4fr .6fr; gap: 70px; align-items: start; }.service-body h2 { color: #181818; font-size: clamp(26px, 3vw, 38px); font-weight: 500; letter-spacing: -.04em; line-height: 1.15; margin: 0 0 26px; }.service-points { display: flex; flex-direction: column; gap: 13px; list-style: none; padding: 0; margin: 0; color: #4a4133; font-size: 14px; font-weight: 700; }.service-points li { display: flex; align-items: flex-start; gap: 10px; }.service-points svg { flex: 0 0 auto; margin-top: 2px; color: var(--primary); }
 .service-aside { background: var(--secondary); padding: 28px; }.service-aside strong { display: block; color: #181818; font-size: 13px; margin-bottom: 12px; }.service-aside p { color: var(--muted-foreground); font-size: 13px; line-height: 1.7; margin: 0 0 18px; }
 @media (max-width: 900px) { .service-body { grid-template-columns: 1fr; gap: 40px; } }
+
+[data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, 24px, 0); }

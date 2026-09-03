@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
+import { AosProvider } from '@/components/aos-provider'
 import './globals.css'
 
 const careSans = DM_Sans({ subsets: ['latin'], variable: '--font-care-sans' })
@@ -21,7 +22,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${careSans.variable} ${careSerif.variable} bg-background`}>
       <body className="antialiased font-sans">
+        {/* AOS hides [data-aos] elements via CSS until its script runs, so without
+            JS every animated section would stay invisible. This reveals them. */}
+        <noscript>
+          <style>{'[data-aos]{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
         {children}
+        <AosProvider />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
