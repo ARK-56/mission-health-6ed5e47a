@@ -103,10 +103,6 @@ export function PayerMark({ plan }: { plan: string }) {
   </>
 }
 
-/** The recognisable subset shown in the trust strip, derived so spellings cannot drift. */
-export const featuredPlans = insurancePlans.filter((p) =>
-  ['Medicare Part B', 'Medi-Cal', 'Alameda Alliance', 'UnitedHealthcare PPO', 'Aetna', 'Cigna'].includes(p))
-
 export const faqs = [
   ['Do you accept my insurance?', 'We are contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Call the office to confirm your specific plan before your visit.'],
   ['What should I bring to my first visit?', 'Bring your photo ID, insurance card, medication list, and any questions you want to talk through.'],
@@ -117,7 +113,18 @@ export const faqs = [
 ] as const
 
 export function TrustStrip() {
-  return <section className="trust-strip"><div className="shell trust-inner"><span>In-network with these plans and more</span><div className="plan-list">{featuredPlans.map((plan) => <span key={plan}><PayerMark plan={plan} /></span>)}</div></div></section>
+  // two identical sets: the track scrolls exactly one set width, so the loop is seamless.
+  // the second is hidden from assistive tech so the payers are not announced twice.
+  const set = (duplicate: boolean) => (
+    <div className="plan-list" key={duplicate ? 'b' : 'a'} aria-hidden={duplicate || undefined}>
+      {insurancePlans.map((plan) => <span key={plan}><PayerMark plan={plan} /></span>)}
+    </div>
+  )
+  return (
+    <section className="trust-strip" aria-label="Insurance plans we accept">
+      <div className="marquee"><div className="marquee-track">{set(false)}{set(true)}</div></div>
+    </section>
+  )
 }
 
 export function CareSection() {
