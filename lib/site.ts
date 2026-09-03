@@ -1,5 +1,4 @@
-export const LOGO_SRC =
-  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mission%20Primary%20Care%20-%20transparent-TiPRel7sFcMlhjwmqsDl1JOOUbIL8O.png'
+export const LOGO_SRC = '/mission-logo.jpg'
 
 export const LOGO_ALT = 'Mission Primary Care Family Practice'
 
