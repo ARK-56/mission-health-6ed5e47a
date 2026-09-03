@@ -31,8 +31,10 @@ export const services = [
 ]
 
 /** Real clinicians. `languages` stands in for a bio until written ones are supplied. */
-export const providers = [
-  { name: 'Pacita Aducayen, MD', specialty: 'Internal medicine', languages: 'Speaks English and Tagalog.' },
+type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean }
+
+export const providers: Provider[] = [
+  { name: 'Pacita Aducayen, MD', specialty: 'Internal medicine', role: 'Medical director', languages: 'Speaks English and Tagalog.', bookable: false },
   { name: 'Gautam Pareek, MD', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
   { name: 'Nipa Sinh, MD', specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
   { name: 'Kashif Abdullah, MD', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
@@ -93,7 +95,7 @@ export function StorySection() {
 }
 
 export function ProvidersSection() {
-  return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p></div><div className="provider-grid">{providers.map((provider) => <article className="provider-card" key={provider.name}><div className="provider-avatar"><UserRound size={34} /></div><p className="eyebrow">{provider.specialty}</p><h3>{provider.name}</h3><p>{provider.languages}</p><a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a></article>)}</div></div></section>
+  return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p></div><div className="provider-grid">{providers.map((provider) => <article className="provider-card" key={provider.name}><div className="provider-avatar"><UserRound size={34} /></div><p className="eyebrow">{provider.specialty}</p><h3>{provider.name}</h3>{provider.role && <p className="provider-role">{provider.role}</p>}<p>{provider.languages}</p>{provider.bookable !== false && <a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a>}</article>)}</div></div></section>
 }
 
 export function InsuranceSection() {

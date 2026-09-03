@@ -46,3 +46,5 @@ footer { position: relative; background: #181818; padding: 70px 0 25px; } footer
 @media (max-width: 680px) { .not-found { padding: 80px 0; }.not-found-actions { flex-direction: column; gap: 18px; } }
 
 .pathway-card .text-link { margin-top: 14px; }
+
+.provider-role { color: #181818; font-size: 12px; font-weight: 700; margin: 0 0 8px; }
