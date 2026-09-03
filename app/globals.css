@@ -72,3 +72,6 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 .hero-copy > :nth-child(4) { animation-delay: .39s; }
 .hero-copy > :nth-child(5) { animation-delay: .52s; }
 @media (prefers-reduced-motion: reduce) { .hero-copy > * { animation: none; } }
+[data-aos='fade-down']:not(.aos-animate) { transform: translate3d(0, -24px, 0); }
+[data-aos='zoom-in']:not(.aos-animate) { transform: scale(.96); }
+[data-aos='zoom-in-up']:not(.aos-animate) { transform: translate3d(0, 20px, 0) scale(.96); }
