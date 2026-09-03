@@ -15,7 +15,7 @@ export function ClinicServicePage({ slug }: { slug: string }) {
 
   return (
     <ClinicShell className={`inner-page inner-page-service inner-page-service-${slug}`}>
-      <section className="hero inner-hero service-hero"><div className="shell"><p className="eyebrow"><Link href="/services">Care &amp; services</Link></p><h1>{service.title}</h1><p className="service-intro">{service.intro}</p><a className="button" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a></div></section>
+      <section className="hero inner-hero service-hero"><div className="shell hero-stagger"><p className="eyebrow"><Link href="/services">Care &amp; services</Link></p><h1>{service.title}</h1><p className="service-intro">{service.intro}</p><a className="button" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a></div></section>
 
       <section className="section care-section"><div className="shell service-body"><div data-aos="fade-up"><p className="eyebrow">What this includes</p><h2>{service.text}</h2><ul className="service-points">{service.points.map((point) => <li key={point}><Check size={16} />{point}</li>)}</ul></div><aside className="service-aside" data-aos="zoom-in" data-aos-delay="600"><strong>Booking this visit</strong><p>Call the office Monday to Friday, 9am–5pm. No referral is needed to be seen, and same-day appointments are available.</p><a className="text-link" href={PHONE_TEL}>{PHONE} <ArrowRight size={16} /></a></aside></div></section>
 

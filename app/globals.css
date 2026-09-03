@@ -65,13 +65,13 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
    elements at opacity 0 until its script runs, which would delay LCP on the h1.
    Delays stay short for the same reason: LCP ignores an element until it paints. */
 @keyframes hero-rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: none; } }
-.hero-copy > * { animation: hero-rise 2s cubic-bezier(.22,.61,.36,1) both; }
-.hero-copy > :nth-child(1) { animation-delay: 0s; }
-.hero-copy > :nth-child(2) { animation-delay: .13s; }
-.hero-copy > :nth-child(3) { animation-delay: .26s; }
-.hero-copy > :nth-child(4) { animation-delay: .39s; }
-.hero-copy > :nth-child(5) { animation-delay: .52s; }
-@media (prefers-reduced-motion: reduce) { .hero-copy > * { animation: none; } }
+.hero-stagger > * { animation: hero-rise 2s cubic-bezier(.22,.61,.36,1) both; }
+.hero-stagger > :nth-child(1) { animation-delay: 0s; }
+.hero-stagger > :nth-child(2) { animation-delay: .13s; }
+.hero-stagger > :nth-child(3) { animation-delay: .26s; }
+.hero-stagger > :nth-child(4) { animation-delay: .39s; }
+.hero-stagger > :nth-child(5) { animation-delay: .52s; }
+@media (prefers-reduced-motion: reduce) { .hero-stagger > * { animation: none; } }
 [data-aos='fade-down']:not(.aos-animate) { transform: translate3d(0, -24px, 0); }
 [data-aos='zoom-in']:not(.aos-animate) { transform: scale(.96); }
 [data-aos='zoom-in-up']:not(.aos-animate) { transform: translate3d(0, 20px, 0) scale(.96); }

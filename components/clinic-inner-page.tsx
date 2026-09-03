@@ -108,7 +108,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
 
   return (
     <ClinicShell className={`inner-page inner-page-${kind}`}>
-      <section className="hero inner-hero"><div className="shell hero-grid inner-hero-grid"><div className="inner-hero-content"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p>{data.intro}</p><a className="button" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a></div><div className="inner-hero-image"><Image src={imageByPage[kind]} alt={imageAlt[imageByPage[kind]]} fill sizes="(max-width: 680px) 100vw, 50vw" priority /></div></div></section>
+      <section className="hero inner-hero"><div className="shell hero-grid inner-hero-grid"><div className="inner-hero-content hero-stagger"><p className="eyebrow">{data.eyebrow}</p><h1>{data.title}</h1><p>{data.intro}</p><a className="button" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a></div><div className="inner-hero-image"><Image src={imageByPage[kind]} alt={imageAlt[imageByPage[kind]]} fill sizes="(max-width: 680px) 100vw, 50vw" priority /></div></div></section>
       {layouts[kind].map((block) => <Fragment key={block}>{blocks[block]}</Fragment>)}
     </ClinicShell>
   )
