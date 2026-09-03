@@ -101,7 +101,14 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 .inner-panel:hover h2 { color: var(--primary); }
 
 /* 3. clinics in the footer */
-.footer-locations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; border-top: 1px solid rgba(234,223,202,.16); padding: 28px 0; }
-.footer-locations strong { display: block; color: #fff; font-size: 12px; margin-bottom: 7px; }
-.footer-locations p { color: #c3b493; font-size: 12px; line-height: 1.6; margin: 0; }
-@media (max-width: 680px) { .footer-locations { grid-template-columns: 1fr; gap: 20px; } }
+
+
+
+@media (max-width: 680px) {  }
+.nav-item > a { display: inline-flex; align-items: center; gap: 6px; }
+.nav-item > a svg { flex: 0 0 auto; opacity: .65; transition: transform .25s ease, opacity .25s ease; }
+.nav-item:hover > a svg, .nav-item:focus-within > a svg { opacity: 1; transform: rotate(180deg); }
+.footer-address { display: block; color: #c3b493; font-size: 12px; line-height: 1.6; }
+.footer-address b { display: block; color: #fff; font-weight: 700; margin-bottom: 2px; }
+.locations-map { margin: 0 0 34px; }
+.locations-map img { display: block; width: 100%; height: auto; border: 1px solid var(--border); }

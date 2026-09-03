@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import {
@@ -136,7 +137,7 @@ export function PathwaySection() {
 }
 
 export function LocationsSection() {
-  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont. One number books any of the three: <a className="text-link" href={PHONE_TEL}>{PHONE}</a></p></div><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city} data-aos="zoom-in-up" data-aos-delay={500 + index * 100}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={15} /></a></article>)}</div></div></section>
+  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont. One number books any of the three: <a className="text-link" href={PHONE_TEL}>{PHONE}</a></p></div><figure className="locations-map" data-aos="fade-up" data-aos-delay="600"><Image src="/clinic-locations-map.jpg" alt="Map of the three Mission Primary Care clinics across San Leandro, Hayward and Fremont" width={1200} height={900} sizes="(max-width: 680px) 100vw, 1160px" /></figure><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city} data-aos="zoom-in-up" data-aos-delay={500 + index * 100}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p>{location.street}<br />{location.region}</p><a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={15} /></a><a className="text-link" href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(location.street + ', ' + location.region)}`} target="_blank" rel="noopener noreferrer">Get directions <ArrowRight size={15} /></a></article>)}</div></div></section>
 }
 
 export function SelfPaySection() {
