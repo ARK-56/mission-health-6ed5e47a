@@ -50,7 +50,7 @@ export const gettingStarted = [
 ] as const
 
 export const insurancePlans = [
-  'Medicare Part B', 'Medi-Cal', 'Alameda Alliance', 'Brown & Toland', 'Nivano', 'Imperial Health',
+  'Medicare Part B', 'Medi-Cal', 'Alameda Alliance', 'Altais (formerly Brown & Toland)', 'Nivano', 'Imperial Health',
   'Amada', 'UnitedHealthcare PPO', 'Hill Physicians', 'Blue Cross (select plans)', 'Alignment Health',
   'Scan', 'Aetna', 'Cigna',
 ]
@@ -60,6 +60,51 @@ export const selfPayRates = [
   { label: 'Returning visit', price: '$100', note: 'Each visit once you are an established patient.' },
   { label: 'DOT physical', price: '$200', note: 'Department of Transportation medical examination.' },
 ] as const
+
+/**
+ * Payer logo files. Drop an image into public/insurance/ and add its entry here,
+ * keyed by the exact name in insurancePlans. Any payer without an entry falls back
+ * to its name as text, so the lists stay complete while logos arrive piecemeal.
+ *
+ * Most payer contracts restrict use of their marks -- confirm written permission
+ * per payer before adding one.
+ */
+export const payerLogos: Record<string, string> = {
+  'Medicare Part B': '/insurance/medicare.png',
+  'Alameda Alliance': '/insurance/alameda-alliance.png',
+  'Nivano': '/insurance/nivano.png',
+  'Imperial Health': '/insurance/imperial-health.png',
+  'Hill Physicians': '/insurance/hill-physicians.png',
+  'Alignment Health': '/insurance/alignment-health.png',
+  'Aetna': '/insurance/aetna.png',
+  'UnitedHealthcare PPO': '/insurance/unitedhealthcare.svg',
+  'Blue Cross (select plans)': '/insurance/blue-cross.png',
+  'Cigna': '/insurance/cigna.svg',
+  'Medi-Cal': '/insurance/medi-cal.svg',
+  'Altais (formerly Brown & Toland)': '/insurance/altais.svg',
+  'Amada': '/insurance/amada.svg',
+  'Scan': '/insurance/scan.png',
+}
+
+/**
+ * Payers whose logo does not spell out the plan name a patient is looking for:
+ * Medi-Cal is administered by DHCS and its mark reads "DHCS", and the Altais mark
+ * carries no trace of the Brown & Toland name members may still hold cards for.
+ * These render the name beneath the logo.
+ */
+export const captionedPayers = ['Medi-Cal', 'Altais (formerly Brown & Toland)']
+
+/** Renders a payer as its logo (with a caption where the mark omits the name), else as text. */
+export function PayerMark({ plan }: { plan: string }) {
+  const logo = payerLogos[plan]
+  if (!logo) return <>{plan}</>
+  const captioned = captionedPayers.includes(plan)
+  // when a caption is shown it is the accessible name, so the image must not repeat it
+  return <>
+    <img src={logo} alt={captioned ? '' : plan} />
+    {captioned && <small>{plan}</small>}
+  </>
+}
 
 /** The recognisable subset shown in the trust strip, derived so spellings cannot drift. */
 export const featuredPlans = insurancePlans.filter((p) =>
@@ -75,7 +120,7 @@ export const faqs = [
 ] as const
 
 export function TrustStrip() {
-  return <section className="trust-strip"><div className="shell trust-inner"><span>In-network with these plans and more</span><div className="plan-list">{featuredPlans.map((plan) => <span key={plan}>{plan}</span>)}</div></div></section>
+  return <section className="trust-strip"><div className="shell trust-inner"><span>In-network with these plans and more</span><div className="plan-list">{featuredPlans.map((plan) => <span key={plan}><PayerMark plan={plan} /></span>)}</div></div></section>
 }
 
 export function CareSection() {
@@ -103,7 +148,7 @@ export function ProvidersSection() {
 }
 
 export function InsuranceSection() {
-  return <section className="insurance-section" id="insurance"><div className="shell insurance-inner"><div><p className="eyebrow">Coverage made clearer</p><h2>We work with your plan.</h2><p>Mission is contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Coverage varies by plan and service, so call our team to confirm yours before your visit.</p></div><div className="insurance-list">{insurancePlans.map((plan) => <span key={plan}>{plan}</span>)}</div></div></section>
+  return <section className="insurance-section" id="insurance"><div className="shell insurance-inner"><div><p className="eyebrow">Coverage made clearer</p><h2>We work with your plan.</h2><p>Mission is contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Coverage varies by plan and service, so call our team to confirm yours before your visit.</p></div><div className="insurance-list">{insurancePlans.map((plan) => <span key={plan}><PayerMark plan={plan} /></span>)}</div></div></section>
 }
 
 export function ResourcesSection() {
