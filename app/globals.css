@@ -59,3 +59,16 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
 @media (max-width: 900px) { .service-body { grid-template-columns: 1fr; gap: 40px; } }
 
 [data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, 24px, 0); }
+
+/* Homepage hero: a load-in, not a scroll-in. .hero-copy is homepage-only.
+   Kept as CSS rather than AOS because the hero is above the fold -- AOS holds
+   elements at opacity 0 until its script runs, which would delay LCP on the h1.
+   Delays stay short for the same reason: LCP ignores an element until it paints. */
+@keyframes hero-rise { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: none; } }
+.hero-copy > * { animation: hero-rise .62s cubic-bezier(.22,.61,.36,1) both; }
+.hero-copy > :nth-child(1) { animation-delay: 0s; }
+.hero-copy > :nth-child(2) { animation-delay: .06s; }
+.hero-copy > :nth-child(3) { animation-delay: .14s; }
+.hero-copy > :nth-child(4) { animation-delay: .22s; }
+.hero-copy > :nth-child(5) { animation-delay: .3s; }
+@media (prefers-reduced-motion: reduce) { .hero-copy > * { animation: none; } }
