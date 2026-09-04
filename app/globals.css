@@ -6,7 +6,7 @@
  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground); --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground); --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --font-sans: var(--font-care-sans), 'DM Sans', sans-serif; --font-serif: var(--font-care-serif), 'Cormorant Garamond', serif;
 }
 
-:root { --background: #f7f1e6; --foreground: #181818; --card: #fffdf8; --card-foreground: #181818; --primary: #b98a2e; --primary-foreground: #fffdf8; --secondary: #ead9b5; --secondary-foreground: #181818; --muted: #eee5d4; --muted-foreground: #655d50; --accent: #d8ad58; --accent-foreground: #181818; --border: #d9c9a9; --input: #fffdf8; --ring: #b98a2e; --surface-white: #ffffff; --surface-dark: #182033; --radius: 1rem; }
+:root { --background: #f7f1e6; --foreground: #181818; --card: #fffdf8; --card-foreground: #181818; --primary: #b98a2e; --primary-foreground: #fffdf8; --secondary: #ead9b5; --secondary-foreground: #181818; --muted: #eee5d4; --muted-foreground: #655d50; --accent: #d8ad58; --accent-foreground: #181818; --border: #d9c9a9; --input: #fffdf8; --ring: #b98a2e; --surface-white: #ffffff; --primary-deep: #8a6620; --surface-dark: #182033; --radius: 1rem; }
 * { box-sizing: border-box; padding: 0; margin: 0; }
 html { scroll-behavior: smooth; background: var(--background); }
 body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-care-sans), Arial, sans-serif; }
@@ -128,3 +128,13 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
    clinic cards directly below already carry the same detail */
 @media (max-width: 680px) { .map-pin { display: none; } }
 
+
+/* the outline button had no hover of its own, so it took .button:hover's dark-gold
+   background while keeping gold text -- 1.4:1, effectively invisible */
+.button-outline:hover { background: var(--primary-deep); border-color: var(--primary-deep); color: var(--primary-foreground); }
+/* .button-light's gold text also lost contrast on hover as its background warmed */
+.button-light, .button-light:hover { color: var(--primary-deep); }
+/* the address wraps to two lines, so the icon aligns to the first line, not centre */
+.pathway-card .location-address { display: flex; align-items: flex-start; gap: 9px; }
+.pathway-card .location-address svg { flex: 0 0 auto; margin-top: 4px; color: var(--primary); }
+.pathway-card .text-link svg, .map-pin-go svg { flex: 0 0 auto; }
