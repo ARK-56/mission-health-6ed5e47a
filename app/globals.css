@@ -128,7 +128,3 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
    clinic cards directly below already carry the same detail */
 @media (max-width: 680px) { .map-pin { display: none; } }
 
-.flip-word { display: inline-block; perspective: 700px; }
-.flip-word i { display: inline-block; transform-origin: 50% 0; animation: word-flip 2s cubic-bezier(.22,.61,.36,1) both; }
-@keyframes word-flip { from { opacity: 0; transform: rotateX(-92deg); } to { opacity: 1; transform: rotateX(0); } }
-@media (prefers-reduced-motion: reduce) { .flip-word i { animation: none; } }
