@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { ArrowRight, ChevronDown, Menu, Phone, X } from 'lucide-react'
 
 import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, nav } from '@/lib/site'
@@ -15,6 +15,14 @@ import { services } from '@/lib/services'
  */
 export function ClinicShell({ className, children }: { className?: string; children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  // a full-screen overlay leaves the page scrolling behind it otherwise
+  useEffect(() => {
+    if (!mobileOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [mobileOpen])
 
   return (
     <main className={className}>
