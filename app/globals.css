@@ -61,7 +61,7 @@ footer { position: relative; background: var(--surface-dark); padding: 70px 0 25
   .nav-toggle svg { transition: transform .25s ease; }
   .nav-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
   /* hover cannot open it on a touch screen, so only the toggle does */
-  .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown { display: none; }
+  .nav-item:hover .nav-dropdown:not(.open), .nav-item:focus-within .nav-dropdown:not(.open) { display: none; }
   .nav-dropdown { position: static; display: none; min-width: 0; padding: 0; gap: 0; background: rgba(0,0,0,.16); border: 0; box-shadow: none; }
   .nav-dropdown.open { display: flex; }
   .nav-dropdown a { padding: 15px 22px 15px 38px; border-bottom: 1px solid rgba(234,223,202,.08); }
