@@ -15,20 +15,33 @@ import { services } from '@/lib/services'
  */
 export function ClinicShell({ className, children }: { className?: string; children: ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
 
   // a full-screen overlay leaves the page scrolling behind it otherwise
   useEffect(() => {
-    if (!mobileOpen) return
+    if (!mobileOpen) { setServicesOpen(false); return }
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previous }
+
+    const header = document.querySelector('.site-header')
+    const measure = () => {
+      if (header) document.documentElement.style.setProperty('--nav-offset', `${Math.round(header.getBoundingClientRect().bottom)}px`)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+
+    return () => {
+      window.removeEventListener('resize', measure)
+      document.documentElement.style.removeProperty('--nav-offset')
+      document.body.style.overflow = previous
+    }
   }, [mobileOpen])
 
   return (
     <main className={className}>
       <div className="utility"><div className="shell utility-inner"><span>{HOURS}</span><div className="utility-links"><Link href="/contact">Find a location</Link><a href={PHONE_TEL}><Phone size={13} /> {PHONE}</a></div></div></div>
       <header className="site-header"><div className="shell nav-inner"><Link className="brand" href="/" aria-label="Mission Primary Care home"><Image className="brand-logo" src={LOGO_SRC} alt={LOGO_ALT} width={140} height={130} priority /></Link><nav className={mobileOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">{nav.map(([href, label]) => href === '/services'
-        ? <div className="nav-item" key={href}><Link href={href} onClick={() => setMobileOpen(false)}>{label}<ChevronDown size={14} /></Link><div className="nav-dropdown">{services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug} onClick={() => setMobileOpen(false)}>{service.title}<ArrowRight size={14} /></Link>)}</div></div>
+        ? <div className="nav-item" key={href}><span className="nav-item-row"><Link href={href} onClick={() => setMobileOpen(false)}>{label}</Link><button type="button" className="nav-toggle" onClick={() => setServicesOpen((v) => !v)} aria-expanded={servicesOpen} aria-label={servicesOpen ? 'Hide services' : 'Show services'}><ChevronDown size={14} /></button></span><div className={servicesOpen ? 'nav-dropdown open' : 'nav-dropdown'}>{services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug} onClick={() => setMobileOpen(false)}>{service.title}<ArrowRight size={14} /></Link>)}</div></div>
         : <Link href={href} key={href} onClick={() => setMobileOpen(false)}>{label}</Link>)}</nav><div className="nav-actions"><a className="button button-small" href={PHONE_TEL}><Phone size={15} /> {PHONE}</a><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">{mobileOpen ? <X /> : <Menu />}</button></div></div></header>
 
       {children}
