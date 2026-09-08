@@ -95,14 +95,34 @@ export const payerLogos: Record<string, string> = {
  */
 export const captionedPayers = ['Medi-Cal', 'Altais (formerly Brown & Toland)']
 
+/** Intrinsic pixel sizes, so the browser can reserve each logo box before the
+ *  stylesheet arrives. CSS still drives the rendered size. */
+const payerLogoSizes: Record<string, [number, number]> = {
+  '/insurance/medicare.png': [338, 96],
+  '/insurance/alameda-alliance.png': [409, 96],
+  '/insurance/nivano.png': [266, 96],
+  '/insurance/imperial-health.png': [154, 78],
+  '/insurance/hill-physicians.png': [187, 96],
+  '/insurance/alignment-health.png': [94, 96],
+  '/insurance/aetna.png': [376, 96],
+  '/insurance/unitedhealthcare.svg': [606, 186],
+  '/insurance/blue-cross.png': [184, 96],
+  '/insurance/cigna.svg': [536, 286],
+  '/insurance/medi-cal.svg': [249, 72],
+  '/insurance/altais.svg': [181, 56],
+  '/insurance/amada.svg': [720, 144],
+  '/insurance/scan.png': [250, 72],
+}
+
 /** Renders a payer as its logo (with a caption where the mark omits the name), else as text. */
 export function PayerMark({ plan }: { plan: string }) {
   const logo = payerLogos[plan]
   if (!logo) return <>{plan}</>
   const captioned = captionedPayers.includes(plan)
+  const [w, h] = payerLogoSizes[logo] ?? []
   // when a caption is shown it is the accessible name, so the image must not repeat it
   return <>
-    <img src={logo} alt={captioned ? '' : plan} />
+    <img src={logo} alt={captioned ? '' : plan} width={w} height={h} />
     {captioned && <small>{plan}</small>}
   </>
 }
@@ -140,7 +160,7 @@ export function PathwaySection() {
 }
 
 export function LocationsSection() {
-  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont. One number books any of the three: <a className="text-link" href={PHONE_TEL}>{PHONE}</a></p></div><figure className="locations-map" data-aos="fade-up" data-aos-delay="600"><Image src="/clinic-locations-map.jpg" alt="Map of the three Mission Primary Care clinics across San Leandro, Hayward and Fremont" width={1200} height={900} sizes="(max-width: 680px) 100vw, 1160px" />{LOCATIONS.map((location) => <a className="map-pin" key={location.city} style={{ left: `${location.x}%`, top: `${location.y}%` }} href={directionsUrl(location.street, location.region)} target="_blank" rel="noopener noreferrer" aria-label={`${location.city} clinic — get directions`}><span className="map-pin-card"><strong>{location.city}</strong><span>{location.street}<br />{location.region}</span><span className="map-pin-go"><Navigation size={13} /> Get directions</span></span></a>)}</figure><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city} data-aos="zoom-in-up" data-aos-delay={500 + index * 100}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p className="location-address"><MapPin size={16} /><span>{location.street}<br />{location.region}</span></p><a className="text-link" href={PHONE_TEL}><Phone size={15} /> Call to book</a><a className="text-link" href={directionsUrl(location.street, location.region)} target="_blank" rel="noopener noreferrer"><Navigation size={15} /> Get directions</a></article>)}</div></div></section>
+  return <section className="pathway-section" id="locations"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">Three East Bay clinics</p><h2>Find the Mission nearest you.</h2></div><p>Primary care, on-site labs, and telehealth across San Leandro, Hayward, and Fremont. One number books any of the three: <a className="text-link" href={PHONE_TEL}>{PHONE}</a></p></div><figure className="locations-map" data-aos="fade-up" data-aos-delay="600"><Image src="/clinic-locations-map.jpg" alt="Map of the three Mission Primary Care clinics across San Leandro, Hayward and Fremont" width={1200} height={900} sizes="(max-width: 680px) 100vw, 1160px" />{LOCATIONS.map((location) => <a className="map-pin" key={location.city} style={{ left: `${location.x}%`, top: `${location.y}%` }} href={directionsUrl(location.street, location.region)} target="_blank" rel="noopener noreferrer" aria-label={`Get directions to the ${location.city} clinic (opens in a new tab)`}><span className="map-pin-card"><strong>{location.city}</strong><span>{location.street}<br />{location.region}</span><span className="map-pin-go"><Navigation size={13} /> Get directions</span></span></a>)}</figure><div className="pathway-grid">{LOCATIONS.map((location, index) => <article className="pathway-card" key={location.city} data-aos="zoom-in-up" data-aos-delay={500 + index * 100}><span>{String(index + 1).padStart(2, '0')}</span><h3>{location.city}</h3><p className="location-address"><MapPin size={16} /><span>{location.street}<br />{location.region}</span></p><a className="text-link" href={PHONE_TEL}><Phone size={15} /> Call to book</a><a className="text-link" href={directionsUrl(location.street, location.region)} target="_blank" rel="noopener noreferrer" aria-label={`Get directions to the ${location.city} clinic (opens in a new tab)`}><Navigation size={15} /> Get directions</a></article>)}</div></div></section>
 }
 
 export function SelfPaySection() {
