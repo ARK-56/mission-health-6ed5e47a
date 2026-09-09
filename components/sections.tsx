@@ -32,16 +32,16 @@ const serviceIcons = {
 } as const
 
 /** Real clinicians. `languages` stands in for a bio until written ones are supplied. */
-type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean }
+type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean; photo?: string }
 
 export const providers: Provider[] = [
-  { name: 'Pacita Aducayen, MD', specialty: 'Internal medicine', role: 'Medical director', languages: 'Speaks English and Tagalog.', bookable: false },
+  { name: 'Pacita Aducayen, MD', photo: '/team/pacita-aducayen.webp', specialty: 'Internal medicine', role: 'Medical director', languages: 'Speaks English and Tagalog.', bookable: false },
   { name: 'Gautam Pareek, MD', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
   { name: 'Nipa Sinh, MD', specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
-  { name: 'Kashif Abdullah, MD', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
-  { name: 'James Keaney, MD', specialty: 'Emergency medicine', languages: 'Speaks English.' },
-  { name: 'Muhammad Khan, PA-C', specialty: 'Physician assistant', languages: 'Speaks English, Urdu, Hindi, Punjabi, and Farsi.' },
-  { name: 'Neil Adler, PA-C', specialty: 'Physician assistant', languages: 'Speaks English and Spanish.' },
+  { name: 'Kashif Abdullah, MD', photo: '/team/kashif-abdullah.webp', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
+  { name: 'James Keaney, MD', photo: '/team/james-keaney.webp', specialty: 'Emergency medicine', languages: 'Speaks English.' },
+  { name: 'Muhammad Khan, PA-C', photo: '/team/muhammad-khan.webp', specialty: 'Physician assistant', languages: 'Speaks English, Urdu, Hindi, Punjabi, and Farsi.' },
+  { name: 'Neil Adler, PA-C', photo: '/team/neil-adler.webp', specialty: 'Physician assistant', languages: 'Speaks English and Spanish.' },
 ]
 
 export const gettingStarted = [
@@ -182,7 +182,9 @@ function StethoscopeMark() {
 }
 
 export function ProvidersSection() {
-  return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p></div><div className="provider-grid">{providers.map((provider, i) => <article className="provider-card" key={provider.name} data-aos="zoom-in-up" data-aos-delay={500 + (i % 3) * 100}><StethoscopeMark /><div className="provider-avatar"><UserRound size={34} /></div><p className="eyebrow">{provider.specialty}</p><h3>{provider.name}</h3>{provider.role && <p className="provider-role">{provider.role}</p>}<p>{provider.languages}</p>{provider.bookable !== false && <a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a>}</article>)}</div></div></section>
+  return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p></div><div className="provider-grid">{providers.map((provider, i) => <article className="provider-card" key={provider.name} data-aos="zoom-in-up" data-aos-delay={500 + (i % 3) * 100}><StethoscopeMark />{provider.photo
+        ? <img className="provider-photo" src={provider.photo} alt={`${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
+        : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}<p className="eyebrow">{provider.specialty}</p><h3>{provider.name}</h3>{provider.role && <p className="provider-role">{provider.role}</p>}<p>{provider.languages}</p>{provider.bookable !== false && <a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a>}</article>)}<article className="provider-card provider-team" data-aos="zoom-in-up" data-aos-delay="700"><img className="provider-photo" src="/team/medical-assistants.webp" alt="The Mission Primary Care medical assistant team" width={1200} height={600} loading="lazy" decoding="async" /><p className="eyebrow">Support team</p><h3>Our medical assistants</h3><p>The team who greet you, take your vitals, and keep your visit moving.</p></article></div></div></section>
 }
 
 export function InsuranceSection() {
