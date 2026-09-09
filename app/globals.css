@@ -227,3 +227,16 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 
 /* the accessible name for each icon lives in aria-label, so nothing is on screen */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* Opening hours as a day-by-day table, day left and hours right */
+.hours-list { display: flex; flex-direction: column; gap: 9px; margin: 0; }
+.hours-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+.hours-row dt { color: #d9cdb4; font-size: 15px; }
+.hours-row dd { margin: 0; color: #c3b493; font-size: 15px; text-align: right; white-space: nowrap; }
+.hours-row.is-today dt, .hours-row.is-today dd { color: var(--accent); font-weight: 700; }
+.hours-list + .footer-note { margin-top: 14px; }
+/* Whether the doors are open right now. Outranks .footer-grid p, which would
+   otherwise win on specificity and flatten the colour. */
+.footer-grid .hours-status { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; color: #eab8a6; font-size: 15px; font-weight: 700; }
+.footer-grid .hours-status::before { content: ''; flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.footer-grid .hours-status.is-open { color: #6ee7a0; }

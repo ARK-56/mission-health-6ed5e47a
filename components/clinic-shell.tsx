@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
 import { ArrowRight, ChevronDown, Mail, Menu, Phone, Printer, X } from 'lucide-react'
 
-import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, nav } from '@/lib/site'
+import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, WEEK_HOURS, nav, openState, type OpenState } from '@/lib/site'
 import { LOCATIONS } from '@/lib/site'
 import { services } from '@/lib/services'
 
@@ -16,6 +16,18 @@ import { services } from '@/lib/services'
  */
 export function ClinicShell({ className, children }: { className?: string; children: ReactNode }) {
   const pathname = usePathname()
+  const [today, setToday] = useState<string | null>(null)
+  const [status, setStatus] = useState<OpenState | null>(null)
+  // the practice keeps Pacific hours, so both follow its clock, not the visitor's
+  useEffect(() => {
+    const tick = () => {
+      setToday(new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: 'America/Los_Angeles' }).format(new Date()))
+      setStatus(openState(new Date()))
+    }
+    tick()
+    const id = setInterval(tick, 60_000)
+    return () => clearInterval(id)
+  }, [])
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
 
@@ -85,7 +97,16 @@ export function ClinicShell({ className, children }: { className?: string; child
             <strong>Locations</strong>
             {LOCATIONS.map((location) => <Link href="/contact" key={location.city}>{location.city}</Link>)}
             <strong className="footer-subhead">Opening hours</strong>
-            <p>Monday to Friday, 9am–5pm.<br />Closed 12:30–1:30pm for lunch.<br />Closed weekends.</p>
+            {status && <p className={status.open ? 'hours-status is-open' : 'hours-status'}>{status.label}</p>}
+            <dl className="hours-list">
+              {WEEK_HOURS.map(([day, hours]) => (
+                <div className={day === today ? 'hours-row is-today' : 'hours-row'} key={day}>
+                  <dt>{day}{day === today && <span className="sr-only"> (today)</span>}</dt>
+                  <dd>{hours}</dd>
+                </div>
+              ))}
+            </dl>
+            <small className="footer-note">Closed 12:30–1:30pm for lunch.</small>
           </div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
