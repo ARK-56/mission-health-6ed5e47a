@@ -240,3 +240,9 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .footer-grid .hours-status { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; color: #eab8a6; font-size: 15px; font-weight: 700; }
 .footer-grid .hours-status::before { content: ''; flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
 .footer-grid .hours-status.is-open { color: #6ee7a0; }
+/* A section's link to its own page, sat alongside the section's standfirst */
+.section-link { padding: 4px 0; }
+.section-heading > .section-link { flex: 0 0 auto; margin-bottom: 0; }
+.resource-grid .section-link { margin: 18px 0 26px; color: var(--accent); }
+.faq-grid .section-link { margin: 18px 0 0; }
+@media (max-width: 680px) { .section-heading > .section-link { margin-top: 18px; } }
