@@ -196,7 +196,7 @@ export function ResourcesSection() {
 }
 
 export function HoursSection() {
-  return <section className="highlight-band" id="hours"><div className="shell highlight-inner"><div data-aos="fade-down"><p className="eyebrow">Opening hours</p><strong>Mon–Fri</strong><p>9am–5pm at all three clinics, closed 12:30–1:30pm for lunch. Closed weekends.</p></div><div className="highlight-details" data-aos="fade" data-aos-delay="600"><span><Check size={15} />{AFTER_HOURS}</span></div></div></section>
+  return <section className="highlight-band" id="hours"><div className="shell highlight-inner"><div data-aos="fade-down"><p className="eyebrow">Opening hours</p><strong>Mon–Fri</strong><p>9am–5pm at all three clinics, closed 12:30pm–1:30pm for lunch. Closed weekends.</p></div><div className="highlight-details" data-aos="fade" data-aos-delay="600"><span><Check size={15} />{AFTER_HOURS}</span></div></div></section>
 }
 
 export function FaqSection() {

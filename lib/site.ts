@@ -9,7 +9,7 @@ export const PHONE_TEL = 'tel:15107967796'
 export const FAX = '510-796-7797'
 export const EMAIL = 'mpc3755@gmail.com'
 
-export const HOURS = 'Mon–Fri 9am–5pm · closed 12:30–1:30pm'
+export const HOURS = 'Mon–Fri 9am–5pm · closed 12:30pm–1:30pm'
 /** One row per day, so the footer can lay hours out as a table. Same at all three clinics. */
 export const WEEK_HOURS: [string, string][] = [
   ['Monday', '9am–5pm'],
@@ -49,7 +49,7 @@ export const directionsUrl = (street: string, region: string) =>
 /**
  * Whether the practice is open at a given moment, judged on its own Pacific
  * clock rather than the visitor's. Weekdays run 9am–5pm with the doors closed
- * 12:30–1:30pm for lunch, and the weekend is closed.
+ * 12:30pm–1:30pm for lunch, and the weekend is closed.
  */
 export type OpenState = { open: boolean; label: string }
 

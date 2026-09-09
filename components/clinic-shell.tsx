@@ -106,7 +106,7 @@ export function ClinicShell({ className, children }: { className?: string; child
                 </div>
               ))}
             </dl>
-            <small className="footer-note">Closed 12:30–1:30pm for lunch.</small>
+            <small className="footer-note">Closed 12:30pm–1:30pm for lunch.</small>
           </div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
