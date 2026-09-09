@@ -49,7 +49,37 @@ export function ClinicShell({ className, children }: { className?: string; child
 
       <main id="main-content" className={className}>{children}</main>
 
-      <footer className="homepage-footer site-footer"><div className="shell footer-grid"><div><Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={160} height={149} /></Link><p>Care for your whole health, close to home.</p></div><div><strong>Explore</strong>{nav.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}<Link href="/resources">Patient resources</Link></div><div><strong>Get in touch</strong>{LOCATIONS.map((location) => <span className="footer-address" key={location.city}><b>{location.city}</b></span>)}<a href={PHONE_TEL}>{PHONE}</a><span>Fax {FAX}</span><a href={`mailto:${EMAIL}`}>{EMAIL}</a><span>Please do not send medical information by email.</span></div><div><strong>Opening hours</strong><p>Monday to Friday, 9am–5pm.<br />Closed 12:30–1:30pm for lunch.<br />Closed weekends.</p><p>{AFTER_HOURS}</p></div></div><div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div></footer>
+      <footer className="homepage-footer site-footer">
+        <div className="footer-media" aria-hidden="true" />
+        <div className="shell footer-grid">
+          <div className="footer-brand-col">
+            <Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={160} height={149} /></Link>
+            <p>Care for your whole health, close to home.</p>
+            <a className="button footer-call" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a>
+          </div>
+          <div>
+            <strong>Explore</strong>
+            {nav.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
+            <Link href="/resources">Patient resources</Link>
+            <strong className="footer-subhead">Opening hours</strong>
+            <p>Monday to Friday, 9am–5pm.<br />Closed 12:30–1:30pm for lunch.<br />Closed weekends.</p>
+          </div>
+          <div>
+            <strong>Care &amp; services</strong>
+            {services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug}>{service.title}</Link>)}
+          </div>
+          <div>
+            <strong>Locations</strong>
+            {LOCATIONS.map((location) => <Link href="/contact" key={location.city}>{location.city}</Link>)}
+            <strong className="footer-subhead">Get in touch</strong>
+            <a href={PHONE_TEL}>{PHONE}</a>
+            <span>Fax {FAX}</span>
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <span>Please do not send medical information by email.</span>
+          </div>
+        </div>
+        <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
+      </footer>
     </>
   )
 }
