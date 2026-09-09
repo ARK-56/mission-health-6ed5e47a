@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
-import { ArrowRight, ChevronDown, Menu, Phone, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, Mail, Menu, Phone, Printer, X } from 'lucide-react'
 
 import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, nav } from '@/lib/site'
 import { LOCATIONS } from '@/lib/site'
@@ -55,14 +55,27 @@ export function ClinicShell({ className, children }: { className?: string; child
           <div className="footer-brand-col">
             <Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={210} height={85} /></Link>
             <p>Care for your whole health, close to home.</p>
-            <a className="button footer-call" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a>
+            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
+              <strong>Newsletter</strong>
+              <p>Practice news and health reminders, once a month.</p>
+              <div className="subscribe-row">
+                <label className="sr-only" htmlFor="footer-email">Email address</label>
+                <input id="footer-email" name="email" type="email" placeholder="Email*" disabled />
+                <button className="button" type="submit" disabled>Submit</button>
+              </div>
+              <small>Sign-up opens once the mailing list is set up.</small>
+            </form>
+            <div className="footer-contact">
+              <a href={PHONE_TEL} aria-label={`Call ${PHONE}`} title={`Call ${PHONE}`}><Phone size={19} /></a>
+              <span aria-label={`Fax ${FAX}`} title={`Fax ${FAX}`}><Printer size={19} /></span>
+              <a href={`mailto:${EMAIL}`} aria-label={`Email ${EMAIL}`} title={`Email ${EMAIL}`}><Mail size={19} /></a>
+            </div>
+            <small className="footer-note">Please do not send medical information by email.</small>
           </div>
           <div>
             <strong>Explore</strong>
             {nav.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
             <Link href="/resources">Patient resources</Link>
-            <strong className="footer-subhead">Opening hours</strong>
-            <p>Monday to Friday, 9am–5pm.<br />Closed 12:30–1:30pm for lunch.<br />Closed weekends.</p>
           </div>
           <div>
             <strong>Care &amp; services</strong>
@@ -71,11 +84,8 @@ export function ClinicShell({ className, children }: { className?: string; child
           <div>
             <strong>Locations</strong>
             {LOCATIONS.map((location) => <Link href="/contact" key={location.city}>{location.city}</Link>)}
-            <strong className="footer-subhead">Get in touch</strong>
-            <a href={PHONE_TEL}>{PHONE}</a>
-            <span>Fax {FAX}</span>
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            <span>Please do not send medical information by email.</span>
+            <strong className="footer-subhead">Opening hours</strong>
+            <p>Monday to Friday, 9am–5pm.<br />Closed 12:30–1:30pm for lunch.<br />Closed weekends.</p>
           </div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
