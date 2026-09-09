@@ -43,7 +43,7 @@ export function ClinicShell({ className, children }: { className?: string; child
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <div className="utility"><div className="shell utility-inner"><span>{HOURS}</span><div className="utility-links"><Link href="/contact">Find a location</Link><a href={PHONE_TEL}><Phone size={13} /> {PHONE}</a></div></div></div>
-      <header className="site-header"><div className="shell nav-inner"><Link className="brand" href="/" aria-label="Mission Primary Care home"><Image className="brand-logo" src={LOGO_SRC} alt={LOGO_ALT} width={140} height={130} priority /></Link><nav id="primary-navigation" className={mobileOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">{nav.map(([href, label]) => href === '/services'
+      <header className="site-header"><div className="shell nav-inner"><Link className="brand" href="/" aria-label="Mission Primary Care home"><Image className="brand-logo" src={LOGO_SRC} alt={LOGO_ALT} width={240} height={97} priority /></Link><nav id="primary-navigation" className={mobileOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">{nav.map(([href, label]) => href === '/services'
         ? <div className="nav-item" key={href}><span className="nav-item-row"><Link href={href} aria-current={pathname === href ? 'page' : undefined} onClick={() => setMobileOpen(false)}>{label}</Link><button type="button" className="nav-toggle" onClick={() => setServicesOpen((v) => !v)} aria-expanded={servicesOpen} aria-label={servicesOpen ? 'Hide services' : 'Show services'}><ChevronDown size={14} /></button></span><div className={servicesOpen ? 'nav-dropdown open' : 'nav-dropdown'}>{services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug} onClick={() => setMobileOpen(false)}>{service.title}<ArrowRight size={14} /></Link>)}</div></div>
         : <Link href={href} key={href} aria-current={pathname === href ? 'page' : undefined} onClick={() => setMobileOpen(false)}>{label}</Link>)}<a className="button nav-cta" href={PHONE_TEL} onClick={() => setMobileOpen(false)}><Phone size={16} /> Call {PHONE}</a></nav><div className="nav-actions"><a className="button button-small" href={PHONE_TEL}><Phone size={15} /> {PHONE}</a><button className="menu-button" onClick={() => setMobileOpen(!mobileOpen)} aria-expanded={mobileOpen} aria-controls="primary-navigation" aria-label={mobileOpen ? 'Close menu' : 'Open menu'}>{mobileOpen ? <X /> : <Menu />}</button></div></div></header>
 
@@ -53,7 +53,7 @@ export function ClinicShell({ className, children }: { className?: string; child
         <div className="footer-media" aria-hidden="true" />
         <div className="shell footer-grid">
           <div className="footer-brand-col">
-            <Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={160} height={149} /></Link>
+            <Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={240} height={97} /></Link>
             <p>Care for your whole health, close to home.</p>
             <a className="button footer-call" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a>
           </div>

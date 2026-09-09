@@ -1,4 +1,4 @@
-export const LOGO_SRC = '/mission-logo.jpg'
+export const LOGO_SRC = '/mission-logo.png'
 
 export const LOGO_ALT = 'Mission Primary Care Family Practice'
 
