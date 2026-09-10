@@ -209,13 +209,15 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
 
 export function ProvidersSection() {
   return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p><SectionLink href="/providers">Meet the full team</SectionLink></div>
-    <div className="provider-grid">
+    <div className="providers-layout">
       <figure className="team-panel" data-aos="fade-up">
         <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
         <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
         <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
       </figure>
-      {providers.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+      <div className="provider-grid">
+        {providers.filter((p) => p.photo).map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+      </div>
     </div>
   </div></section>
 }

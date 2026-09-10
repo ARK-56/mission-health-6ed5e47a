@@ -270,7 +270,7 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 
 
 /* ---- Care team: the quote panel sits as the first cell of the grid ---- */
-.team-panel { display: flex; flex-direction: column; justify-content: center; gap: 22px; margin: 0; border-radius: 20px; background: var(--surface-dark); padding: 38px 34px; }
+.team-panel { display: flex; flex-direction: column; justify-content: space-between; gap: 26px; margin: 0; border-radius: 20px; background: var(--surface-dark); padding: 38px 34px; }
 .team-panel img { flex: 0 0 auto; width: 88px; height: 88px; border-radius: 50%; object-fit: cover; object-position: center top; }
 .team-panel blockquote { margin: 0; }
 .team-panel blockquote p { margin: 0; color: #eadfca; font-size: 17px; line-height: 1.7; font-style: italic; }
@@ -278,6 +278,8 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .team-panel figcaption strong { display: block; color: #fffdf8; font-size: 16px; }
 .team-panel figcaption span { display: block; margin-top: 3px; color: #c3b493; font-size: 14px; line-height: 1.5; }
 
+.providers-layout { display: grid; grid-template-columns: minmax(280px, 300px) minmax(0, 1fr); gap: 22px; align-items: stretch; }
 .provider-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
-@media (max-width: 900px) { .provider-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .team-panel { padding: 30px 24px; } }
+@media (max-width: 1080px) { .providers-layout { grid-template-columns: minmax(240px, 270px) minmax(0, 1fr); gap: 16px; } .provider-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .team-panel { padding: 30px 24px; } }
+@media (max-width: 780px) { .providers-layout { display: flex; flex-direction: column; gap: 24px; } .team-panel { justify-content: flex-start; } }
 @media (max-width: 680px) { .provider-grid { grid-template-columns: 1fr; } }
