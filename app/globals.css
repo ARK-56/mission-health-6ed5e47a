@@ -248,3 +248,22 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 @media (max-width: 680px) { .section-heading > .section-link { margin-top: 18px; } }
 /* the portrait is square, so give its slot the same shape rather than cropping it to a band */
 .inner-page-providers .inner-hero-image { aspect-ratio: 1 / 1; }
+
+/* ---- Practice leadership ---- */
+.leadership-section { background: #efe6d6; }
+.leadership-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; align-items: center; }
+.leadership-portrait img { display: block; width: 100%; max-width: none; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 120px 0 120px 0; }
+.leadership-section h2 { color: #181818; font-size: clamp(38px, 4vw, 52px); font-weight: 500; margin: 0 0 6px; }
+.leadership-role { color: var(--primary-text); font-size: 16px; font-weight: 800; letter-spacing: .02em; margin: 0 0 22px; }
+.leadership-section p:not(.eyebrow):not(.leadership-role) { color: #4a4133; font-size: 17px; line-height: 1.75; margin: 0 0 18px; max-width: 620px; }
+.leadership-tags { display: flex; flex-wrap: wrap; gap: 10px 12px; list-style: none; padding: 0; margin: 24px 0 0; }
+.leadership-tags li { padding: 8px 16px; border: 1px solid rgba(24,24,24,.22); border-radius: 999px; color: #4a4133; font-size: 14px; font-weight: 700; }
+.leadership-quote { margin: 28px 0 0; padding: 4px 0 4px 24px; border-left: 5px solid var(--primary); }
+.leadership-quote p { font-style: italic; }
+
+@media (max-width: 900px) { .leadership-grid { gap: 50px; } }
+@media (max-width: 680px) {
+  .leadership-grid { display: flex; flex-direction: column; align-items: stretch; gap: 38px; }
+  .leadership-portrait img { border-radius: 70px 0 70px 0; }
+  .leadership-quote { padding-left: 18px; }
+}

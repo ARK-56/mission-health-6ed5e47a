@@ -12,6 +12,7 @@ import {
   FaqSection,
   HoursSection,
   InsuranceSection,
+  LeadershipSection,
   LocationsSection,
   PathwaySection,
   ProvidersSection,
@@ -27,7 +28,7 @@ type PageKind = 'services' | 'new-patients' | 'providers' | 'insurance' | 'resou
 /** Blocks a page can be built from: the shared homepage sections, plus the three that are page-specific. */
 type Block =
   | 'trust' | 'care' | 'pathway' | 'story' | 'providers' | 'insurance' | 'resources' | 'faq' | 'hours' | 'locations' | 'selfPay'
-  | 'content' | 'highlight' | 'cta' | 'innerCta'
+  | 'content' | 'highlight' | 'cta' | 'innerCta' | 'leadership'
 
 /**
  * Every page opens with its own hero and closes on a call to action; in between it
@@ -41,7 +42,7 @@ const layouts: Record<PageKind, Block[]> = {
   providers: ['providers', 'content', 'story', 'care', 'insurance', 'cta'],
   insurance: ['trust', 'insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
   resources: ['resources', 'content', 'faq', 'hours', 'care', 'story', 'cta'],
-  about: ['story', 'content', 'providers', 'highlight', 'locations', 'pathway', 'cta'],
+  about: ['story', 'content', 'leadership', 'providers', 'highlight', 'locations', 'pathway', 'cta'],
   contact: ['locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
 }
 
@@ -95,6 +96,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     pathway: <PathwaySection />,
     story: <StorySection />,
     providers: <ProvidersSection />,
+    leadership: <LeadershipSection />,
     insurance: <InsuranceSection />,
     resources: <ResourcesSection />,
     selfPay: <SelfPaySection />,
