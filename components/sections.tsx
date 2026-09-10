@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import {
   ArrowRight,
   Check,
@@ -193,116 +193,29 @@ function StethoscopeMark() {
   )
 }
 
-function ProviderCard({ provider, clone }: { provider: Provider; clone?: boolean }) {
-  return <article className="provider-card" key={provider.name} aria-hidden={clone || undefined}>
+function ProviderCard({ provider, index }: { provider: Provider; index: number }) {
+  return <article className="provider-card" data-aos="zoom-in-up" data-aos-delay={500 + (index % 3) * 100}>
     <StethoscopeMark />
     {provider.photo
-      ? <img className="provider-photo" src={provider.photo} alt={clone ? '' : `${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
+      ? <img className="provider-photo" src={provider.photo} alt={`${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
       : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}
     <p className="eyebrow">{provider.specialty}</p>
     <h3>{provider.name}</h3>
     {provider.role && <p className="provider-role">{provider.role}</p>}
     <p>{provider.languages}</p>
-    {provider.bookable !== false && <a className="text-link" href={PHONE_TEL} tabIndex={clone ? -1 : undefined}>Call to book <ArrowRight size={16} /></a>}
+    {provider.bookable !== false && <a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a>}
   </article>
 }
 
 export function ProvidersSection() {
-  const track = useRef<HTMLDivElement>(null)
-  const drag = useRef({ active: false, startX: 0, startLeft: 0, moved: 0 })
-  const busy = useRef(false)
-
-  /**
-   * The track drifts on its own at a walking pace. It holds still while the
-   * pointer is over it, while anything inside has focus, during a drag, and for
-   * anyone who has asked for reduced motion, which is the escape hatch that
-   * remains now the explicit pause control has been removed. Movement is
-   * measured against elapsed time so the speed does not follow the refresh rate.
-   */
-  useEffect(() => {
-    const el = track.current
-    if (!el) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let frame = 0
-    let last = 0
-    const step = (now: number) => {
-      frame = requestAnimationFrame(step)
-      const dt = last ? now - last : 0
-      last = now
-      if (busy.current || drag.current.active || reduce.matches || !dt) return
-      el.scrollLeft += (26 * Math.min(dt, 50)) / 1000
-    }
-    frame = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frame)
-  }, [])
-
-  const hold = () => { busy.current = true }
-  const release = () => { busy.current = false }
-
-  /**
-   * Three copies of the list. The viewer sits in the middle one, so the track
-   * can wrap in either direction without ever reaching an edge. The wrap
-   * distance is measured from the cards themselves rather than scrollWidth/3,
-   * which would be short by a gap and drift a little further on every lap.
-   */
-  useEffect(() => {
-    const el = track.current
-    if (!el) return
-    const lap = () => {
-      const cards = el.querySelectorAll<HTMLElement>('.provider-card')
-      return cards.length > providers.length ? cards[providers.length].offsetLeft - cards[0].offsetLeft : 0
-    }
-    const start = () => { const w = lap(); if (w) el.scrollLeft = w }
-    start()
-    const onScroll = () => {
-      const w = lap()
-      if (!w) return
-      if (el.scrollLeft >= w * 2) el.scrollLeft -= w
-      else if (el.scrollLeft <= 0) el.scrollLeft += w
-    }
-    el.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', start)
-    return () => { el.removeEventListener('scroll', onScroll); window.removeEventListener('resize', start) }
-  }, [])
-
-  // touch already scrolls this natively, so dragging is only wired up for mouse and pen
-  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = track.current
-    if (!el || e.pointerType === 'touch') return
-    drag.current = { active: true, startX: e.clientX, startLeft: el.scrollLeft, moved: 0 }
-    el.setPointerCapture(e.pointerId)
-    el.classList.add('is-dragging')
-  }
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = track.current
-    if (!el || !drag.current.active) return
-    const dx = e.clientX - drag.current.startX
-    drag.current.moved = Math.max(drag.current.moved, Math.abs(dx))
-    el.scrollLeft = drag.current.startLeft - dx
-  }
-  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = track.current
-    if (!el || !drag.current.active) return
-    drag.current.active = false
-    if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
-    el.classList.remove('is-dragging')
-  }
-  // a drag that ends on a link should not follow it
-  const onClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (drag.current.moved > 6) { e.preventDefault(); e.stopPropagation() }
-  }
-
   return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p><SectionLink href="/providers">Meet the full team</SectionLink></div>
-    <div className="providers-layout">
+    <div className="provider-grid">
       <figure className="team-panel" data-aos="fade-up">
         <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
         <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
         <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
       </figure>
-    <div className="provider-slider" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable"
-      onPointerDown={(e) => { hold(); onPointerDown(e) }} onPointerMove={onPointerMove} onPointerUp={(e) => { release(); endDrag(e) }} onPointerCancel={(e) => { release(); endDrag(e) }} onPointerEnter={hold} onPointerLeave={release} onFocusCapture={hold} onBlurCapture={release} onClickCapture={onClickCapture} data-aos="fade-up">
-      {[0, 1, 2].map((copy) => providers.map((provider) => <ProviderCard key={`${copy}-${provider.name}`} provider={provider} clone={copy !== 1} />))}
-      </div>
+      {providers.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
     </div>
   </div></section>
 }
