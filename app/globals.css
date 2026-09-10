@@ -279,7 +279,7 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .team-panel figcaption span { display: block; margin-top: 3px; color: #c3b493; font-size: 14px; line-height: 1.5; }
 
 .providers-layout { display: grid; grid-template-columns: minmax(220px, 240px) minmax(0, 1fr); gap: 22px; align-items: stretch; }
-.provider-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+.provider-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; align-items: stretch; }
 @media (max-width: 1080px) { .providers-layout { grid-template-columns: minmax(240px, 270px) minmax(0, 1fr); gap: 16px; } .provider-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .team-panel { padding: 30px 24px; } }
 @media (max-width: 780px) { .providers-layout { display: flex; flex-direction: column; gap: 24px; } .team-panel { justify-content: flex-start; } }
 @media (max-width: 680px) { .provider-grid { grid-template-columns: 1fr; } }
