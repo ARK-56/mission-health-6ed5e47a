@@ -9,6 +9,9 @@ export const PHONE_TEL = 'tel:15107967796'
 export const FAX = '510-796-7797'
 export const EMAIL = 'mpc3755@gmail.com'
 
+/** Zia Hamidi’s LinkedIn profile. The panel shows the link only once this is set. */
+export const ZIA_LINKEDIN = ''
+
 export const HOURS = 'Mon–Fri 9am–5pm · closed 12:30pm–1:30pm'
 /** One row per day, so the footer can lay hours out as a table. Same at all three clinics. */
 export const WEEK_HOURS: [string, string][] = [

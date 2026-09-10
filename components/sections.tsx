@@ -23,7 +23,7 @@ import {
   Video,
 } from 'lucide-react'
 
-import { AFTER_HOURS, HOURS, LOCATIONS, PHONE, PHONE_TEL, directionsUrl } from '@/lib/site'
+import { AFTER_HOURS, HOURS, LOCATIONS, PHONE, PHONE_TEL, ZIA_LINKEDIN, directionsUrl } from '@/lib/site'
 import { services } from '@/lib/services'
 
 export { services }
@@ -194,6 +194,15 @@ function StethoscopeMark() {
   )
 }
 
+/** LinkedIn's mark. lucide dropped brand icons, so it is drawn here. */
+function LinkedInMark() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452z" />
+    </svg>
+  )
+}
+
 function ProviderCard({ provider, index }: { provider: Provider; index: number }) {
   return <article className="provider-card" data-aos="zoom-in-up" data-aos-delay={500 + (index % 3) * 100}>
     <div className="provider-photo-wrap">
@@ -254,10 +263,14 @@ export function ProvidersSection() {
     </div>
     <div className="providers-layout">
       <figure className="team-panel" data-aos="fade-up">
+        <h3 className="team-panel-title">The leadership behind Mission Primary Care</h3>
         <p className="team-panel-kicker">Leadership that cares</p>
+        <p className="team-panel-lead">Zia Hamidi provides strategic leadership and operational oversight for the practice through its Management Services Organization (MSO).</p>
         <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
-        <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
-        <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
+        <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence. Through a patient-centered approach, I aim to improve health outcomes, strengthen our communities, and create a lasting positive impact on the lives of the people we serve.</p></blockquote>
+        <figcaption><span><strong>Zia Hamidi</strong><span>Executive Director &middot; Management &amp; Operations</span></span>{ZIA_LINKEDIN
+          ? <a className="team-linkedin" href={ZIA_LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="Zia Hamidi on LinkedIn (opens in a new tab)"><LinkedInMark /></a>
+          : <span className="team-linkedin" aria-hidden="true"><LinkedInMark /></span>}</figcaption>
       </figure>
       <div className="provider-carousel">
         <div className="provider-track" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable">
