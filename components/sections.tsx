@@ -195,22 +195,31 @@ function StethoscopeMark() {
 
 function ProviderCard({ provider, index }: { provider: Provider; index: number }) {
   return <article className="provider-card" data-aos="zoom-in-up" data-aos-delay={500 + (index % 3) * 100}>
-    <StethoscopeMark />
-    {provider.photo
-      ? <img className="provider-photo" src={provider.photo} alt={`${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
-      : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}
+    <div className="provider-photo-wrap">
+      {provider.photo
+        ? <img className="provider-photo" src={provider.photo} alt={`${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
+        : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}
+      <span className="provider-badge" aria-hidden="true"><Stethoscope size={20} /></span>
+    </div>
     <p className="eyebrow">{provider.specialty}</p>
     <h3>{provider.name}</h3>
     {provider.role && <p className="provider-role">{provider.role}</p>}
     <p>{provider.languages}</p>
-    {provider.bookable !== false && <a className="text-link" href={PHONE_TEL}>Call to book <ArrowRight size={16} /></a>}
+    {provider.bookable !== false && <a className="provider-book" href={PHONE_TEL}>Call to book <ArrowRight size={15} /></a>}
   </article>
 }
 
 export function ProvidersSection() {
-  return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p><SectionLink href="/providers">Meet the full team</SectionLink></div>
+  return <section className="providers-section" id="providers"><div className="shell">
+    <div className="team-head" data-aos="fade-down">
+      <p className="team-kicker">Mission Primary Care</p>
+      <h2>Meet our providers</h2>
+      <p className="team-sub">Compassionate care. A healthier tomorrow.</p>
+      <SectionLink href="/providers">Meet the full team</SectionLink>
+    </div>
     <div className="providers-layout">
       <figure className="team-panel" data-aos="fade-up">
+        <p className="team-panel-kicker">Leadership that cares</p>
         <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
         <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
         <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
