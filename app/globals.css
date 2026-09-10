@@ -288,8 +288,8 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .team-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }
 .team-kicker { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 0 0 14px; color: var(--primary-text); font-size: 13px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
 .team-kicker::before, .team-kicker::after { content: ''; width: 62px; height: 1px; background: var(--primary); opacity: .55; }
-.team-head h2 { font-family: var(--font-care-serif), Georgia, serif; color: #182033; font-size: clamp(29px, 3.1vw, 42px); font-weight: 700; letter-spacing: -.01em; line-height: 1.12; margin: 0; }
-.team-sub { margin: 10px 0 0; color: var(--muted-foreground); font-size: 16px; line-height: 1.6; }
+.team-head h2 { font-family: var(--font-care-serif), Georgia, serif; color: #182033; font-size: clamp(25px, 2.6vw, 35px); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; margin: 0; }
+.team-sub { margin: 9px 0 0; color: var(--muted-foreground); font-size: 15px; line-height: 1.6; }
 .team-head .section-link { margin: 20px auto 0; }
 
 .team-panel-kicker { margin: 0; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; line-height: 1.7; }
