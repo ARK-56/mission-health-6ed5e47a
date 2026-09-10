@@ -246,8 +246,6 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .resource-grid .section-link { margin: 18px 0 26px; color: var(--accent); }
 .faq-grid .section-link { margin: 18px 0 0; }
 @media (max-width: 680px) { .section-heading > .section-link { margin-top: 18px; } }
-/* the portrait is square, so give its slot the same shape rather than cropping it to a band */
-.inner-page-providers .inner-hero-image { aspect-ratio: 1 / 1; }
 
 /* ---- Practice leadership ---- */
 .leadership-section { background: #efe6d6; }
