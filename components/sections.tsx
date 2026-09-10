@@ -210,11 +210,9 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
 }
 
 export function ProvidersSection() {
-  const pathname = usePathname()
   const withPhoto = providers.filter((p) => p.photo)
-  // the summary pages show a first four and send people on; /providers is the
-  // page that exists to list the care team in full
-  const shown = pathname === '/providers' ? withPhoto : withPhoto.slice(0, 4)
+  // four are shown wherever the section appears
+  const shown = withPhoto.slice(0, 4)
   return <section className="providers-section" id="providers"><div className="shell">
     <div className="team-head" data-aos="fade-down">
       <p className="team-kicker">Mission Primary Care</p>
