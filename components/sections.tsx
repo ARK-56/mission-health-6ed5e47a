@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
   ArrowRight,
-  Pause,
-  Play,
   Check,
   ChevronDown,
   ChevronRight,
@@ -212,16 +210,14 @@ function ProviderCard({ provider, clone }: { provider: Provider; clone?: boolean
 export function ProvidersSection() {
   const track = useRef<HTMLDivElement>(null)
   const drag = useRef({ active: false, startX: 0, startLeft: 0, moved: 0 })
-  const [paused, setPaused] = useState(false)
   const busy = useRef(false)
 
   /**
    * The track drifts on its own at a walking pace. It holds still while the
    * pointer is over it, while anything inside has focus, during a drag, and for
-   * anyone who has asked for reduced motion. The button beside the heading is
-   * the explicit control WCAG 2.2.2 wants, since hovering is no help on a phone.
-   * Movement is measured against elapsed time so the speed does not follow the
-   * refresh rate.
+   * anyone who has asked for reduced motion, which is the escape hatch that
+   * remains now the explicit pause control has been removed. Movement is
+   * measured against elapsed time so the speed does not follow the refresh rate.
    */
   useEffect(() => {
     const el = track.current
@@ -233,12 +229,12 @@ export function ProvidersSection() {
       frame = requestAnimationFrame(step)
       const dt = last ? now - last : 0
       last = now
-      if (paused || busy.current || drag.current.active || reduce.matches || !dt) return
+      if (busy.current || drag.current.active || reduce.matches || !dt) return
       el.scrollLeft += (26 * Math.min(dt, 50)) / 1000
     }
     frame = requestAnimationFrame(step)
     return () => cancelAnimationFrame(frame)
-  }, [paused])
+  }, [])
 
   const hold = () => { busy.current = true }
   const release = () => { busy.current = false }
@@ -297,7 +293,6 @@ export function ProvidersSection() {
   }
 
   return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p><SectionLink href="/providers">Meet the full team</SectionLink></div>
-    <button type="button" className="slider-pause" onClick={() => setPaused((p) => !p)} aria-label={paused ? 'Resume the care team slider' : 'Pause the care team slider'}>{paused ? <Play size={15} /> : <Pause size={15} />}{paused ? 'Play' : 'Pause'}</button>
     <div className="provider-slider" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable"
       onPointerDown={(e) => { hold(); onPointerDown(e) }} onPointerMove={onPointerMove} onPointerUp={(e) => { release(); endDrag(e) }} onPointerCancel={(e) => { release(); endDrag(e) }} onPointerEnter={hold} onPointerLeave={release} onFocusCapture={hold} onBlurCapture={release} onClickCapture={onClickCapture} data-aos="fade-up">
       {[0, 1, 2].map((copy) => providers.map((provider) => <ProviderCard key={`${copy}-${provider.name}`} provider={provider} clone={copy !== 1} />))}

@@ -268,15 +268,12 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 
 /* ---- Care team slider: wraps forever, drags with a mouse, scrolls on touch ---- */
 .providers-section .shell { position: relative; }
-.provider-slider { display: flex; gap: 18px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; }
+.provider-slider { display: flex; gap: 18px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; user-select: none; -webkit-user-select: none; }
 .provider-slider::-webkit-scrollbar { display: none; }
-.provider-slider.is-dragging { cursor: grabbing; user-select: none; }
+.provider-slider.is-dragging { cursor: grabbing; }
 .provider-slider.is-dragging a { pointer-events: none; }
 .provider-slider > .provider-card { flex: 0 0 clamp(256px, 26vw, 336px); }
 /* the photo bleeds past the padding, so the card must not shrink below it */
 .provider-slider > .provider-card { min-width: 0; }
 @media (max-width: 900px) { .provider-slider { gap: 14px; } }
 @media (max-width: 680px) { .provider-slider > .provider-card { flex: 0 0 min(300px, 82vw); } }
-.slider-pause { position: absolute; right: 0; top: 0; display: inline-flex; align-items: center; gap: 7px; padding: 8px 15px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-white); color: #4a4133; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: border-color .2s ease, color .2s ease; }
-.slider-pause:hover { border-color: var(--primary); color: var(--primary-text); }
-@media (max-width: 680px) { .slider-pause { position: static; margin: 0 0 20px; } }
