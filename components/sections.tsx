@@ -36,7 +36,7 @@ const serviceIcons = {
 type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean; photo?: string }
 
 export const providers: Provider[] = [
-  { name: 'Pacita Aducayen, MD', photo: '/team/pacita-aducayen.webp', specialty: 'Internal medicine', role: '', languages: 'Speaks English and Tagalog.', bookable: false },
+  { name: 'Pacita Aducayen', photo: '/team/pacita-aducayen.webp', specialty: 'Internal medicine', role: '', languages: 'Speaks English and Tagalog.', bookable: false },
   { name: 'Gautam Pareek, MD', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
   { name: 'Nipa Sinh, MD', specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
   { name: 'Kashif Abdullah, MD', photo: '/team/kashif-abdullah.webp', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
