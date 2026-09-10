@@ -3,8 +3,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
+  ArrowLeft,
   ArrowRight,
   Check,
   ChevronDown,
@@ -201,18 +202,49 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
         : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}
       <span className="provider-badge" aria-hidden="true"><Stethoscope size={20} /></span>
     </div>
-    <p className="eyebrow">{provider.specialty}</p>
-    <h3>{provider.name}</h3>
-    {provider.role && <p className="provider-role">{provider.role}</p>}
-    <p>{provider.languages}</p>
-    {provider.bookable !== false && <a className="provider-book" href={PHONE_TEL}>Call to book <ArrowRight size={15} /></a>}
+    <div className="provider-body">
+      <div className="provider-text">
+        <p className="eyebrow">{provider.specialty}</p>
+        <h3>{provider.name}</h3>
+        {provider.role && <p className="provider-role">{provider.role}</p>}
+        <p className="provider-langs">{provider.languages}</p>
+      </div>
+      {provider.bookable !== false && <a className="provider-book" href={PHONE_TEL} aria-label={`Call to book with ${provider.name}`} title={`Call to book with ${provider.name}`}><Phone size={17} /></a>}
+    </div>
   </article>
 }
 
 export function ProvidersSection() {
-  const withPhoto = providers.filter((p) => p.photo)
-  // every clinician with a photograph is shown
-  const shown = withPhoto
+  const track = useRef<HTMLDivElement>(null)
+  const [slide, setSlide] = useState(0)
+
+  // Cards missing a photograph or a booking link go to the back, which puts
+  // Nipa Sinh and Pacita Aducayen on the second slide. Both return to their
+  // place in order once the photograph and the link exist.
+  const complete = (p: Provider) => Boolean(p.photo) && p.bookable !== false
+  const ordered = [...providers.filter(complete), ...providers.filter((p) => !complete(p))]
+  const slides: Provider[][] = []
+  for (let i = 0; i < ordered.length; i += 4) slides.push(ordered.slice(i, i + 4))
+
+  // the index follows the scroller, so dragging or swiping keeps the dots honest
+  useEffect(() => {
+    const el = track.current
+    if (!el) return
+    const onScroll = () => setSlide(Math.round(el.scrollLeft / el.clientWidth))
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const go = (i: number) => {
+    const el = track.current
+    if (!el) return
+    const next = Math.max(0, Math.min(slides.length - 1, i))
+    // scrollTo ignores the motion preference, so it is asked for explicitly
+    const gentle = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollTo({ left: next * el.clientWidth, behavior: gentle ? 'auto' : 'smooth' })
+    setSlide(next)
+  }
+
   return <section className="providers-section" id="providers"><div className="shell">
     <div className="team-head" data-aos="fade-down">
       <p className="team-kicker">Mission Primary Care</p>
@@ -227,8 +259,21 @@ export function ProvidersSection() {
         <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
         <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
       </figure>
-      <div className="provider-grid">
-        {shown.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+      <div className="provider-carousel">
+        <div className="provider-track" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable">
+          {slides.map((group, s) => (
+            <div className="provider-grid" key={s} aria-hidden={s !== slide || undefined}>
+              {group.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+            </div>
+          ))}
+        </div>
+        {slides.length > 1 && <div className="provider-nav">
+          <button type="button" onClick={() => go(slide - 1)} disabled={slide === 0} aria-label="Previous providers"><ArrowLeft size={16} /></button>
+          <span className="provider-dots">
+            {slides.map((_, i) => <button type="button" key={i} className={i === slide ? 'is-current' : undefined} aria-label={`Show providers ${i + 1} of ${slides.length}`} aria-current={i === slide || undefined} onClick={() => go(i)} />)}
+          </span>
+          <button type="button" onClick={() => go(slide + 1)} disabled={slide === slides.length - 1} aria-label="Next providers"><ArrowRight size={16} /></button>
+        </div>}
       </div>
     </div>
   </div></section>
