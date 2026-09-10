@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   FlaskConical,
   HeartPulse,
@@ -267,13 +267,12 @@ export function ProvidersSection() {
             </div>
           ))}
         </div>
-        {slides.length > 1 && <div className="provider-nav">
-          <button type="button" onClick={() => go(slide - 1)} disabled={slide === 0} aria-label="Previous providers"><ArrowLeft size={16} /></button>
-          <span className="provider-dots">
-            {slides.map((_, i) => <button type="button" key={i} className={i === slide ? 'is-current' : undefined} aria-label={`Show providers ${i + 1} of ${slides.length}`} aria-current={i === slide || undefined} onClick={() => go(i)} />)}
-          </span>
-          <button type="button" onClick={() => go(slide + 1)} disabled={slide === slides.length - 1} aria-label="Next providers"><ArrowRight size={16} /></button>
-        </div>}
+        {slides.length > 1 && <>
+          <button type="button" className="provider-step" onClick={() => go(slide === slides.length - 1 ? slide - 1 : slide + 1)}
+            aria-label={slide === slides.length - 1 ? 'Previous providers' : 'Next providers'}>
+            {slide === slides.length - 1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+          </button>
+        </>}
       </div>
     </div>
   </div></section>
