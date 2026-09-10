@@ -293,9 +293,16 @@ export function ProvidersSection() {
   }
 
   return <section className="providers-section" id="providers"><div className="shell"><div className="section-heading" data-aos="fade-down"><div><p className="eyebrow">People who listen</p><h2>Meet your care team.</h2></div><p>Our clinicians speak English, Spanish, Hindi, Urdu, Punjabi, Farsi, Gujarati, and Tagalog between them.</p><SectionLink href="/providers">Meet the full team</SectionLink></div>
+    <div className="providers-layout">
+      <figure className="team-quote" data-aos="fade-up">
+        <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
+        <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence.</p></blockquote>
+        <figcaption><strong>Zia Hamidi</strong><span>Executive Director · Management &amp; Operations</span></figcaption>
+      </figure>
     <div className="provider-slider" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable"
       onPointerDown={(e) => { hold(); onPointerDown(e) }} onPointerMove={onPointerMove} onPointerUp={(e) => { release(); endDrag(e) }} onPointerCancel={(e) => { release(); endDrag(e) }} onPointerEnter={hold} onPointerLeave={release} onFocusCapture={hold} onBlurCapture={release} onClickCapture={onClickCapture} data-aos="fade-up">
       {[0, 1, 2].map((copy) => providers.map((provider) => <ProviderCard key={`${copy}-${provider.name}`} provider={provider} clone={copy !== 1} />))}
+      </div>
     </div>
   </div></section>
 }

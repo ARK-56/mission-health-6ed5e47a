@@ -277,3 +277,17 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .provider-slider > .provider-card { min-width: 0; }
 @media (max-width: 900px) { .provider-slider { gap: 14px; } }
 @media (max-width: 680px) { .provider-slider > .provider-card { flex: 0 0 min(300px, 82vw); } }
+
+/* ---- Care team: leadership quote beside the slider ---- */
+/* minmax(0, 1fr) so the slider column may shrink; a bare 1fr sizes to its
+   content and the track would push the section wide instead of scrolling. */
+.providers-layout { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 22px; align-items: stretch; }
+.team-quote { display: flex; flex-direction: column; gap: 18px; margin: 0; padding: 30px; background: var(--surface-white); border: 1px solid var(--border); }
+.team-quote img { width: 86px; height: 86px; border-radius: 50%; object-fit: cover; object-position: center top; }
+.team-quote blockquote { margin: 0; flex: 1 1 auto; }
+.team-quote blockquote p { margin: 0; color: #4a4133; font-size: 16px; line-height: 1.72; font-style: italic; }
+.team-quote figcaption strong { display: block; color: #181818; font-size: 16px; }
+.team-quote figcaption span { display: block; margin-top: 4px; color: var(--muted-foreground); font-size: 14px; line-height: 1.5; }
+
+@media (max-width: 900px) { .providers-layout { grid-template-columns: 280px minmax(0, 1fr); gap: 16px; } }
+@media (max-width: 680px) { .providers-layout { display: flex; flex-direction: column; gap: 26px; } }
