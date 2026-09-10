@@ -211,8 +211,8 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
 
 export function ProvidersSection() {
   const withPhoto = providers.filter((p) => p.photo)
-  // every clinician with a photograph is shown
-  const shown = withPhoto
+  // a 2x2 of the first four; the rest are not shown
+  const shown = withPhoto.slice(0, 4)
   return <section className="providers-section" id="providers"><div className="shell">
     <div className="team-head" data-aos="fade-down">
       <p className="team-kicker">Mission Primary Care</p>
