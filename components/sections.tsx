@@ -37,7 +37,7 @@ type Provider = { name: string; specialty: string; languages: string; role?: str
 
 export const providers: Provider[] = [
   { name: 'Pacita Aducayen', photo: '/team/pacita-aducayen.webp', specialty: 'Internal medicine', role: '', languages: 'Speaks English and Tagalog.', bookable: false },
-  { name: 'Gautam Pareek, MD', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
+  { name: 'Gautam Pareek, MD', photo: '/team/gautam-pareek.webp', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
   { name: 'Nipa Sinh, MD', specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
   { name: 'Kashif Abdullah, MD', photo: '/team/kashif-abdullah.webp', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
   { name: 'James Keaney, MD', photo: '/team/james-keaney.webp', specialty: 'Emergency medicine', languages: 'Speaks English.' },
