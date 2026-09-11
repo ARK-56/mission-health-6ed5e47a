@@ -95,8 +95,9 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     care: <CareSection />,
     pathway: <PathwaySection />,
     story: <StorySection />,
-    // the providers page is the doctors alone; Zia has his own section on /about
-    providers: <ProvidersSection showLeadership={kind !== 'providers'} />,
+    // Both pages carry the clinicians only: /about has its own Leadership section,
+    // and /providers is the doctors alone.
+    providers: <ProvidersSection showLeadership={kind !== 'providers' && kind !== 'about'} />,
     leadership: <LeadershipSection />,
     insurance: <InsuranceSection />,
     resources: <ResourcesSection />,
