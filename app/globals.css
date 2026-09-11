@@ -283,6 +283,12 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 @media (max-width: 1080px) { .providers-layout { grid-template-columns: minmax(240px, 270px) minmax(0, 1fr); gap: 16px; } .provider-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .team-panel { padding: 30px 24px; } }
 @media (max-width: 780px) { .providers-layout { display: flex; flex-direction: column; gap: 24px; } .team-panel { justify-content: flex-start; } }
 @media (max-width: 680px) { .provider-grid { grid-template-columns: 1fr; } }
+/* Without the leadership panel the carousel has the row to itself, so the cards
+   spread to four across rather than doubling in width. */
+.providers-layout.is-solo { grid-template-columns: 1fr; }
+@media (min-width: 1024px) { .providers-layout.is-solo .provider-grid { grid-template-columns: repeat(4, 1fr); } .providers-layout.is-solo .provider-step { right: -18px; } }
+/* Two across the full width would double the card size, so the row is reined in. */
+@media (min-width: 681px) and (max-width: 1023px) { .providers-layout.is-solo .provider-carousel { max-width: 720px; margin-inline: auto; } }
 
 /* ---- Care team, laid out to the supplied mockup ---- */
 .team-head { text-align: center; max-width: 720px; margin: 0 auto 44px; }

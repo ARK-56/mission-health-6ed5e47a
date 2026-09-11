@@ -223,7 +223,7 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
   </article>
 }
 
-export function ProvidersSection() {
+export function ProvidersSection({ showLeadership = true }: { showLeadership?: boolean } = {}) {
   const track = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
 
@@ -261,17 +261,19 @@ export function ProvidersSection() {
       <p className="team-sub">Compassionate care. A healthier tomorrow.</p>
       <SectionLink href="/providers">Meet the full team</SectionLink>
     </div>
-    <div className="providers-layout">
-      <figure className="team-panel" data-aos="fade-up">
-        <h3 className="team-panel-title">The leadership behind Mission Primary Care</h3>
-        <p className="team-panel-kicker">Leadership that cares</p>
-        <p className="team-panel-lead">Zia Hamidi provides strategic leadership and operational oversight for the practice through its Management Services Organization (MSO).</p>
-        <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />
-        <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence. Through a patient-centered approach, I aim to improve health outcomes, strengthen our communities, and create a lasting positive impact on the lives of the people we serve.</p></blockquote>
-        <figcaption><span><strong>Zia Hamidi</strong><span>Executive Director &middot; Management &amp; Operations</span></span>{ZIA_LINKEDIN
-          ? <a className="team-linkedin" href={ZIA_LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="Zia Hamidi on LinkedIn (opens in a new tab)"><LinkedInMark /></a>
-          : <span className="team-linkedin" aria-hidden="true"><LinkedInMark /></span>}</figcaption>
-      </figure>
+    <div className={showLeadership ? 'providers-layout' : 'providers-layout is-solo'}>
+      {showLeadership && (
+        <figure className="team-panel" data-aos="fade-up">  
+          <h3 className="team-panel-title">The leadership behind Mission Primary Care</h3>  
+          <p className="team-panel-kicker">Leadership that cares</p>  
+          <p className="team-panel-lead">Zia Hamidi provides strategic leadership and operational oversight for the practice through its Management Services Organization (MSO).</p>  
+          <img src="/team/zia.webp" alt="" width={1000} height={1000} loading="lazy" decoding="async" />  
+          <blockquote><p>My ambition is to build Mission Primary Care into a trusted and respected healthcare organization recognized for exceptional patient care, accessibility, and clinical excellence. Through a patient-centered approach, I aim to improve health outcomes, strengthen our communities, and create a lasting positive impact on the lives of the people we serve.</p></blockquote>  
+          <figcaption><span><strong>Zia Hamidi</strong><span>Executive Director &middot; Management &amp; Operations</span></span>{ZIA_LINKEDIN  
+            ? <a className="team-linkedin" href={ZIA_LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="Zia Hamidi on LinkedIn (opens in a new tab)"><LinkedInMark /></a>  
+            : <span className="team-linkedin" aria-hidden="true"><LinkedInMark /></span>}</figcaption>  
+        </figure>
+      )}
       <div className="provider-carousel">
         <div className="provider-track" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable">
           {slides.map((group, s) => (
