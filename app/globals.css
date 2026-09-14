@@ -204,6 +204,16 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .footer-brand-col { gap: 18px; }
 .footer-brand-col > p { max-width: 300px; }
 .footer-subhead { margin-top: 22px; }
+/* the week folds away behind its own heading; the open/closed line stays out */
+.hours-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; background: transparent; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; min-height: 26px; }
+.hours-toggle strong { margin-bottom: 0; }
+.hours-toggle svg { flex: 0 0 auto; color: #c3b493; transition: transform .25s ease; }
+.hours-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.hours-toggle:hover strong, .hours-toggle:hover svg { color: var(--accent); }
+/* 0fr to 1fr gives the panel a real height to travel between */
+.hours-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.hours-panel > div { overflow: hidden; min-height: 0; }
+.hours-panel.open { grid-template-rows: 1fr; }
 
 
 @media (max-width: 900px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -454,4 +464,5 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
   .button:hover svg, .nav-dropdown a:hover svg, .service-card:hover .icon-box, .provider-card:hover .provider-photo,
   .inner-hero-image:hover img, .leadership-portrait:hover img, .provider-card:hover .provider-watermark { transform: none; }
   .nav-dropdown a:hover { padding-left: 18px; }
+  .hours-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 }

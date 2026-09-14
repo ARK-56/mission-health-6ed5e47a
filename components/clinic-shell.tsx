@@ -30,6 +30,7 @@ export function ClinicShell({ className, children }: { className?: string; child
   }, [])
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
+  const [hoursOpen, setHoursOpen] = useState(false)
 
   // a full-screen overlay leaves the page scrolling behind it otherwise
   useEffect(() => {
@@ -96,17 +97,24 @@ export function ClinicShell({ className, children }: { className?: string; child
           <div>
             <strong>Locations</strong>
             {LOCATIONS.map((location) => <Link href="/contact" key={location.city}>{location.city}</Link>)}
-            <strong className="footer-subhead">Opening hours</strong>
+            <button type="button" className="hours-toggle footer-subhead" onClick={() => setHoursOpen((v) => !v)} aria-expanded={hoursOpen} aria-controls="footer-hours">
+              <strong>Opening hours</strong>
+              <ChevronDown size={15} />
+            </button>
             {status && <p className={status.open ? 'hours-status is-open' : 'hours-status'}>{status.label}</p>}
-            <dl className="hours-list">
-              {WEEK_HOURS.map(([day, hours]) => (
-                <div className={day === today ? 'hours-row is-today' : 'hours-row'} key={day}>
-                  <dt>{day}{day === today && <span className="sr-only"> (today)</span>}</dt>
-                  <dd>{hours}</dd>
-                </div>
-              ))}
-            </dl>
-            <small className="footer-note">Closed 12:30pm–1:30pm for lunch.</small>
+            <div className={hoursOpen ? 'hours-panel open' : 'hours-panel'} id="footer-hours">
+              <div>
+                <dl className="hours-list">
+                  {WEEK_HOURS.map(([day, hours]) => (
+                    <div className={day === today ? 'hours-row is-today' : 'hours-row'} key={day}>
+                      <dt>{day}{day === today && <span className="sr-only"> (today)</span>}</dt>
+                      <dd>{hours}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <small className="footer-note">Closed 12:30pm–1:30pm for lunch.</small>
+              </div>
+            </div>
           </div>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
