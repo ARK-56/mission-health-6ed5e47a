@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import {
   ArrowRight,
   Check,
@@ -23,7 +23,7 @@ import {
   Video,
 } from 'lucide-react'
 
-import { AFTER_HOURS, HOURS, LOCATIONS, PHONE, PHONE_TEL, ZIA_LINKEDIN, directionsUrl } from '@/lib/site'
+import { AFTER_HOURS, CONTACT_FORM_ENDPOINT, EMAIL, HOURS, LOCATIONS, PHONE, PHONE_TEL, ZIA_LINKEDIN, directionsUrl } from '@/lib/site'
 import { services } from '@/lib/services'
 
 export { services }
@@ -290,6 +290,122 @@ export function ProvidersSection({ showLeadership = true }: { showLeadership?: b
         </>}
       </div>
     </div>
+  </div></section>
+}
+
+const CONTACT_REASONS = [
+  'Book an appointment',
+  'Question about becoming a patient',
+  'Insurance or billing',
+  'Medical records or forms',
+  'Something else',
+]
+
+/**
+ * Contact form. Posts JSON to CONTACT_FORM_ENDPOINT once one is configured; until
+ * then it hands the message to the visitor's mail app, so the form is useful from
+ * the day it ships rather than sitting disabled.
+ *
+ * It deliberately asks for a reason rather than symptoms. The practice's standing
+ * line, on this page and in the footer, is that medical detail does not travel by
+ * email, and an unencrypted form is no different.
+ */
+export function ContactFormSection() {
+  const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'handoff' | 'error'>('idle')
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const data = new FormData(form)
+    // a field nobody can see; only a bot fills it in
+    if (data.get('company')) return
+    data.delete('company')
+    const fields = Object.fromEntries(data.entries()) as Record<string, string>
+
+    if (!CONTACT_FORM_ENDPOINT) {
+      const body = Object.entries(fields).map(([key, value]) => `${key}: ${value}`).join('\n')
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Website enquiry — ${fields.reason}`)}&body=${encodeURIComponent(body)}`
+      setState('handoff')
+      return
+    }
+
+    setState('sending')
+    try {
+      const res = await fetch(CONTACT_FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      form.reset()
+      setState('sent')
+    } catch {
+      setState('error')
+    }
+  }
+
+  return <section className="section contact-form-section" id="contact-form"><div className="shell contact-form-grid">
+    <div className="contact-form-intro" data-aos="fade-up">
+      <p className="eyebrow">Send us a message</p>
+      <h2>Tell us how we can help.</h2>
+      <p>Fill this in and our team will come back to you on the next working day. If you would rather speak to someone, we are on the phone Monday to Friday.</p>
+      <a className="text-link" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a>
+      <p className="contact-form-urgent"><ShieldCheck size={17} /><span>For urgent or emergency care, go to the nearest emergency room or call 911. Please do not use this form for anything urgent.</span></p>
+    </div>
+
+    <form className="contact-form" onSubmit={onSubmit} data-aos="fade-up" data-aos-delay="600">
+      <div className="field-row">
+        <p className="field">
+          <label htmlFor="cf-name">Full name<span aria-hidden="true">*</span></label>
+          <input id="cf-name" name="name" type="text" autoComplete="name" required />
+        </p>
+        <p className="field">
+          <label htmlFor="cf-phone">Phone</label>
+          <input id="cf-phone" name="phone" type="tel" autoComplete="tel" />
+        </p>
+      </div>
+      <div className="field-row">
+        <p className="field">
+          <label htmlFor="cf-email">Email<span aria-hidden="true">*</span></label>
+          <input id="cf-email" name="email" type="email" autoComplete="email" required />
+        </p>
+        <p className="field">
+          <label htmlFor="cf-clinic">Preferred clinic</label>
+          <select id="cf-clinic" name="clinic" defaultValue="No preference">
+            {LOCATIONS.map((location) => <option key={location.city}>{location.city}</option>)}
+            <option>No preference</option>
+          </select>
+        </p>
+      </div>
+      <p className="field">
+        <label htmlFor="cf-reason">What is this about?</label>
+        <select id="cf-reason" name="reason" defaultValue={CONTACT_REASONS[0]}>
+          {CONTACT_REASONS.map((reason) => <option key={reason}>{reason}</option>)}
+        </select>
+      </p>
+      <p className="field">
+        <label htmlFor="cf-message">Message<span aria-hidden="true">*</span></label>
+        <textarea id="cf-message" name="message" rows={5} required aria-describedby="cf-privacy"
+          placeholder="Let us know how we can help." />
+      </p>
+      <p className="field-note" id="cf-privacy">This form is not secure. Please keep medical details for your visit or a phone call.</p>
+
+      <p className="field-hp" aria-hidden="true">
+        <label htmlFor="cf-company">Company</label>
+        <input id="cf-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </p>
+
+      <button className="button" type="submit" disabled={state === 'sending'}>
+        {state === 'sending' ? 'Sending…' : 'Send message'} <ArrowRight size={15} />
+      </button>
+
+      <p className="contact-status" role="status">
+        {state === 'sent' && 'Thank you — your message is with our team. We will be in touch on the next working day.'}
+        {state === 'handoff' && `Your mail app should be opening with this message ready to send to ${EMAIL}. If nothing happened, please call us instead.`}
+        {state === 'error' && `Sorry, that did not go through. Please call us on ${PHONE} and we will help straight away.`}
+      </p>
+      {!CONTACT_FORM_ENDPOINT && <small className="contact-form-fallback">Sends through your own email app until the form service is connected.</small>}
+    </form>
   </div></section>
 }
 

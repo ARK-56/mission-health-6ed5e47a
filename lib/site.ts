@@ -9,6 +9,12 @@ export const PHONE_TEL = 'tel:15107967796'
 export const FAX = '510-796-7797'
 export const EMAIL = 'mpc3755@gmail.com'
 
+/**
+ * Where the contact form posts, as JSON. Leave it empty and the form hands the
+ * message to the visitor’s mail app instead, so it works without a backend.
+ */
+export const CONTACT_FORM_ENDPOINT = ''
+
 /** Zia Hamidi’s LinkedIn profile. The panel shows the link only once this is set. */
 export const ZIA_LINKEDIN = ''
 

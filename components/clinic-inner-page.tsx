@@ -12,6 +12,7 @@ import {
   FaqSection,
   HoursSection,
   InsuranceSection,
+  ContactFormSection,
   LeadershipSection,
   LocationsSection,
   PathwaySection,
@@ -28,7 +29,7 @@ type PageKind = 'services' | 'new-patients' | 'providers' | 'insurance' | 'resou
 /** Blocks a page can be built from: the shared homepage sections, plus the three that are page-specific. */
 type Block =
   | 'trust' | 'care' | 'pathway' | 'story' | 'providers' | 'insurance' | 'resources' | 'faq' | 'hours' | 'locations' | 'selfPay'
-  | 'content' | 'highlight' | 'cta' | 'innerCta' | 'leadership'
+  | 'content' | 'highlight' | 'cta' | 'innerCta' | 'leadership' | 'contactForm'
 
 /**
  * Every page opens with its own hero and closes on a call to action; in between it
@@ -43,7 +44,7 @@ const layouts: Record<PageKind, Block[]> = {
   insurance: ['trust', 'insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
   resources: ['resources', 'content', 'faq', 'hours', 'care', 'story', 'cta'],
   about: ['story', 'content', 'leadership', 'providers', 'highlight', 'locations', 'pathway', 'cta'],
-  contact: ['locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
+  contact: ['contactForm', 'locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
 }
 
 const pageHighlights: Record<PageKind, { label: string; value: string; note: string; details: string[] }> = {
@@ -99,6 +100,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     // and /providers is the doctors alone.
     providers: <ProvidersSection showLeadership={kind !== 'providers' && kind !== 'about'} />,
     leadership: <LeadershipSection />,
+    contactForm: <ContactFormSection />,
     insurance: <InsuranceSection />,
     resources: <ResourcesSection />,
     selfPay: <SelfPaySection />,
