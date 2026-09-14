@@ -227,10 +227,10 @@ export function ProvidersSection({ showLeadership = true }: { showLeadership?: b
   const track = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
 
-  // Cards missing a photograph or a booking link go to the back, which puts
-  // Nipa Sinh and Pacita Aducayen on the second slide. Both return to their
-  // place in order once the photograph and the link exist.
-  const complete = (p: Provider) => Boolean(p.photo) && p.bookable !== false
+  // Only a missing photograph sends a card to the back, which leaves Nipa Sinh
+  // on the second slide until hers exists. Not taking bookings is no reason to
+  // demote a provider, so Pacita Aducayen keeps her place at the front.
+  const complete = (p: Provider) => Boolean(p.photo)
   const ordered = [...providers.filter(complete), ...providers.filter((p) => !complete(p))]
   const slides: Provider[][] = []
   for (let i = 0; i < ordered.length; i += 4) slides.push(ordered.slice(i, i + 4))
