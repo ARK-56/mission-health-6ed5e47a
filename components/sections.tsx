@@ -47,10 +47,11 @@ export const providers: Provider[] = [
   { name: 'Neil Adler, PA-C', photo: '/team/neil-adler.webp', specialty: 'Physician assistant', languages: 'Speaks English and Spanish.' },
 ]
 
+/** Each step carries the page it leads to, so the whole card can be the link. */
 export const gettingStarted = [
-  ['01', 'Call the office', `Reach us at ${PHONE}, Monday to Friday. Same-day appointments are available.`],
-  ['02', 'Meet your provider', 'Have a full visit with someone who takes a proper history and explains every recommendation.'],
-  ['03', 'Stay looked after', 'Leave with a clear plan and a practice that follows up on labs, referrals, and prescriptions.'],
+  ['01', 'Call the office', `Reach us at ${PHONE}, Monday to Friday. Same-day appointments are available.`, '/contact', 'Contact & locations'],
+  ['02', 'Meet your provider', 'Have a full visit with someone who takes a proper history and explains every recommendation.', '/providers', 'Meet the team'],
+  ['03', 'Stay looked after', 'Leave with a clear plan and a practice that follows up on labs, referrals, and prescriptions.', '/resources', 'Patient resources'],
 ] as const
 
 export const insurancePlans = [
@@ -170,7 +171,8 @@ export function CareSection() {
 }
 
 export function PathwaySection() {
-  return <section className="pathway-section" id="new-patients"><div className="shell"><div className="section-heading" data-aos="fade-up"><div><p className="eyebrow">A better way to begin</p><h2>New here? We make it easy.</h2></div><p>Getting primary care should feel straightforward from the first hello to your next follow-up.</p><SectionLink href="/new-patients">New patient guide</SectionLink></div><div className="pathway-grid">{gettingStarted.map(([number, title, text], i) => <article className="pathway-card" key={number} data-aos="zoom-in" data-aos-delay={500 + i * 100}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
+  const pathname = usePathname()
+  return <section className="pathway-section" id="new-patients"><div className="shell"><div className="section-heading" data-aos="fade-up"><div><p className="eyebrow">A better way to begin</p><h2>New here? We make it easy.</h2></div><p>Getting primary care should feel straightforward from the first hello to your next follow-up.</p><SectionLink href="/new-patients">New patient guide</SectionLink></div><div className="pathway-grid">{gettingStarted.map(([number, title, text, href, label], i) => <article className={pathname === href ? 'pathway-card' : 'pathway-card is-linked'} key={number} data-aos="zoom-in" data-aos-delay={500 + i * 100}><span>{number}</span><h3>{title}</h3><p>{text}</p>{pathname !== href && <Link className="text-link" href={href}>{label} <ArrowRight size={15} /></Link>}</article>)}</div></div></section>
 }
 
 export function LocationsSection() {

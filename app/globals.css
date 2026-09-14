@@ -333,6 +333,12 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
    so there is still one tab stop and the link text is still its name, rather
    than wrapping the card in a second anchor. */
 .service-card > a::after { content: ''; position: absolute; inset: 0; }
+/* Same trick for the pathway steps, but only the ones that lead somewhere: the
+   locations cards share this class and carry two links of their own. */
+.pathway-card.is-linked { position: relative; cursor: pointer; }
+.pathway-card.is-linked > a::after { content: ''; position: absolute; inset: 0; }
+.pathway-card.is-linked > a { margin-top: 18px; }
+.pathway-card.is-linked:hover > a { gap: 12px; }
 
 /* ---- Care team slides: each slide holds one grid of four ---- */
 .provider-carousel { position: relative; display: flex; flex-direction: column; min-width: 0; }
