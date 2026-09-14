@@ -6,8 +6,11 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
 import { ArrowRight, ChevronDown, Mail, Menu, Phone, Printer, X } from 'lucide-react'
 
-import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, WEEK_HOURS, nav, openState, type OpenState } from '@/lib/site'
+import { AFTER_HOURS, BUSINESS_NAME, EMAIL, FAX, HOURS, LOGO_ALT, LOGO_SRC, PHONE, PHONE_TEL, SOCIAL, WEEK_HOURS, nav, openState, type OpenState } from '@/lib/site'
 import { LOCATIONS } from '@/lib/site'
+import { FacebookMark, InstagramMark, LinkedInMark, YouTubeMark } from './brand-marks'
+
+const socialMarks: Record<string, (props: { size?: number }) => React.JSX.Element> = { LinkedIn: LinkedInMark, Facebook: FacebookMark, Instagram: InstagramMark, YouTube: YouTubeMark }
 import { services } from '@/lib/services'
 
 /**
@@ -84,6 +87,14 @@ export function ClinicShell({ className, children }: { className?: string; child
               <a href={`mailto:${EMAIL}`} aria-label={`Email ${EMAIL}`} title={`Email ${EMAIL}`}><Mail size={19} /></a>
             </div>
             <small className="footer-note">Please do not send medical information by email.</small>
+            <div className="footer-social">
+              {SOCIAL.map(([label, url]) => {
+                const Mark = socialMarks[label]
+                return url
+                  ? <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`} title={label}><Mark /></a>
+                  : <span key={label} aria-hidden="true" title={label}><Mark /></span>
+              })}
+            </div>
           </div>
           <div>
             <strong>Explore</strong>

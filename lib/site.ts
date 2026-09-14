@@ -15,6 +15,17 @@ export const EMAIL = 'mpc3755@gmail.com'
  */
 export const CONTACT_FORM_ENDPOINT = ''
 
+/**
+ * The practice’s social profiles. Each mark is drawn either way; it only becomes
+ * a link once its URL is filled in, so none of them can point nowhere.
+ */
+export const SOCIAL: [string, string][] = [
+  ['LinkedIn', ''],
+  ['Facebook', ''],
+  ['Instagram', ''],
+  ['YouTube', ''],
+]
+
 /** Zia Hamidi’s LinkedIn profile. The panel shows the link only once this is set. */
 export const ZIA_LINKEDIN = ''
 
