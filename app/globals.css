@@ -373,3 +373,85 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
 
 @media (max-width: 960px) { .contact-form-grid { grid-template-columns: 1fr; gap: 38px; } .contact-form-intro > p:not(.eyebrow), .contact-form-urgent { max-width: none; } }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } .contact-form { padding: 24px 20px; } .contact-form .button { align-self: stretch; } }
+
+/* ---- Micro-interactions ----
+   Cards all carry data-aos, and AOS's doubled selectors outrank a plain hover
+   rule, so cards answer with colour and shadow and the transforms go on the
+   children AOS leaves alone. Everything here is switched off further down for
+   anyone who asks for reduced motion. */
+
+/* buttons take a press, and the arrow leans into the hover */
+.button { transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+.button:hover { box-shadow: 0 10px 22px rgba(117,86,26,.22); }
+.button:active { transform: translateY(0) scale(.985); box-shadow: none; }
+.button svg { transition: transform .2s ease; }
+.button:hover svg { transform: translateX(3px); }
+.button-light:hover, .button-outline:hover { box-shadow: 0 10px 22px rgba(24,32,51,.16); }
+
+.text-link { transition: gap .2s ease, color .2s ease; }
+
+/* the colour changes these already make, eased rather than snapped. Only the
+   children can carry it: AOS owns transition on every [data-aos] card, and its
+   stagger puts a delay on there too, so a hover declared on the card would both
+   snap and then lag behind the pointer. */
+.service-card h3, .pathway-card h3, .inner-panel h2, .provider-card h3, .pathway-card > span { transition: color .2s ease; }
+.service-card a, .provider-card .text-link { transition: gap .2s ease; }
+.icon-box { transition: background .25s ease, color .25s ease, transform .25s ease; }
+.provider-photo { transition: transform .45s ease; }
+/* the ring rides a pseudo-element, which AOS never touches, so it can ease */
+.provider-card::before { content: ''; position: absolute; z-index: 1; inset: 0; border-radius: 20px; box-shadow: inset 0 0 0 0 rgba(185,138,46,0); pointer-events: none; transition: box-shadow .25s ease; }
+.provider-card:hover::before { box-shadow: inset 0 0 0 2px var(--primary); }
+.provider-watermark { transition: opacity .3s ease, transform .3s ease; }
+
+/* one press-and-lift shared by every round icon button */
+.provider-book, .provider-step, .team-linkedin, .footer-contact a, .footer-contact span {
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.provider-book:hover, .provider-step:hover { transform: translateY(-2px); }
+.provider-step:hover { box-shadow: 0 10px 24px rgba(24,32,51,.18); }
+.provider-book:active, .provider-step:active, .footer-contact a:active, a.team-linkedin:active { transform: translateY(0) scale(.94); }
+
+/* desktop nav: an underline that grows from the left, and stays for the current page */
+@media (min-width: 901px) {
+  .nav-links > a, .nav-item-row > a { position: relative; }
+  .nav-links > a::after, .nav-item-row > a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -7px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left center; transition: transform .25s ease; }
+  .nav-links > a:hover::after, .nav-item-row > a:hover::after,
+  .nav-links > a[aria-current="page"]::after, .nav-item-row > a[aria-current="page"]::after { transform: scaleX(1); }
+  .nav-dropdown.open, .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown { animation: nav-drop .18s ease-out; }
+  @keyframes nav-drop { from { opacity: 0; transform: translateY(-7px); } to { opacity: 1; transform: translateY(0); } }
+}
+.nav-dropdown a { transition: background .18s ease, color .18s ease, padding-left .18s ease; }
+.nav-dropdown a:hover { padding-left: 23px; }
+.nav-dropdown a svg { transition: transform .18s ease; }
+.nav-dropdown a:hover svg { transform: translateX(3px); }
+.menu-button, .nav-toggle { transition: color .2s ease, transform .2s ease; }
+.menu-button:active, .nav-toggle:active { transform: scale(.9); }
+
+/* footer */
+.footer-col a, .footer-bottom a { transition: color .2s ease; }
+.footer-col a:hover, .footer-bottom a:hover { color: var(--accent); }
+
+/* form fields answer to the pointer before they are focused */
+.field input, .field select, .field textarea { transition: border-color .2s ease, box-shadow .2s ease; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--primary); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(185,138,46,.14); }
+.subscribe-row input { transition: border-color .2s ease, background .2s ease; }
+.subscribe-row input:hover:not(:disabled) { border-color: rgba(234,223,202,.55); }
+
+.faq-item button { transition: color .2s ease; }
+.faq-item button:hover { color: var(--primary-text); }
+
+/* hero photographs settle back a touch under the pointer */
+.inner-hero-image img { transition: transform .5s ease; }
+.inner-hero-image:hover img { transform: scale(1.03); }
+.leadership-portrait img { transition: transform .5s ease; }
+.leadership-portrait:hover img { transform: scale(1.03); }
+
+/* ---- and none of it for anyone who would rather sit still ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .button:hover, .button:active, .provider-book:hover, .provider-step:hover, .footer-contact a:hover,
+  .provider-book:active, .provider-step:active, .menu-button:active, .nav-toggle:active { transform: none; }
+  .button:hover svg, .nav-dropdown a:hover svg, .service-card:hover .icon-box, .provider-card:hover .provider-photo,
+  .inner-hero-image:hover img, .leadership-portrait:hover img, .provider-card:hover .provider-watermark { transform: none; }
+  .nav-dropdown a:hover { padding-left: 18px; }
+}
