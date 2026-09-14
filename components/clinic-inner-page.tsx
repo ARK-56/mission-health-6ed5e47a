@@ -41,7 +41,7 @@ const layouts: Record<PageKind, Block[]> = {
   services: ['care', 'content', 'story', 'pathway', 'faq', 'cta'],
   'new-patients': ['pathway', 'content', 'selfPay', 'trust', 'care', 'hours', 'resources', 'innerCta'],
   providers: ['providers', 'content', 'story', 'care', 'insurance', 'cta'],
-  insurance: ['trust', 'insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
+  insurance: ['insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
   resources: ['resources', 'content', 'faq', 'hours', 'care', 'story', 'cta'],
   about: ['story', 'content', 'leadership', 'providers', 'highlight', 'locations', 'pathway', 'cta'],
   contact: ['contactForm', 'locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
@@ -98,7 +98,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     story: <StorySection />,
     // Both pages carry the clinicians only: /about has its own Leadership section,
     // and /providers is the doctors alone.
-    providers: <ProvidersSection showLeadership={kind !== 'providers' && kind !== 'about'} />,
+    providers: <ProvidersSection showLeadership={kind !== 'providers' && kind !== 'about'} showAll={kind === 'providers'} />,
     leadership: <LeadershipSection />,
     contactForm: <ContactFormSection />,
     insurance: <InsuranceSection />,
