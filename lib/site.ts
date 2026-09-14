@@ -27,7 +27,7 @@ export const SOCIAL: [string, string][] = [
 ]
 
 /** Zia Hamidi’s LinkedIn profile. The panel shows the link only once this is set. */
-export const ZIA_LINKEDIN = ''
+export const ZIA_LINKEDIN = 'https://www.linkedin.com/in/zia-hamidi-b14220133/'
 
 export const HOURS = 'Mon–Fri 9am–5pm · closed 12:30pm–1:30pm'
 /** One row per day, so the footer can lay hours out as a table. Same at all three clinics. */
