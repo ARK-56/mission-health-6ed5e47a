@@ -217,7 +217,7 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
   </article>
 }
 
-export function ProvidersSection({ showLeadership = true }: { showLeadership?: boolean } = {}) {
+export function ProvidersSection({ showLeadership = true, showAll = false }: { showLeadership?: boolean; showAll?: boolean } = {}) {
   const track = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
 
@@ -269,19 +269,25 @@ export function ProvidersSection({ showLeadership = true }: { showLeadership?: b
         </figure>
       )}
       <div className="provider-carousel">
-        <div className="provider-track" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable">
-          {slides.map((group, s) => (
-            <div className="provider-grid" key={s} aria-hidden={s !== slide || undefined}>
-              {group.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+        {showAll
+          ? <div className="provider-grid">
+              {ordered.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
             </div>
-          ))}
-        </div>
-        {slides.length > 1 && <>
-          <button type="button" className="provider-step" onClick={() => go(slide === slides.length - 1 ? slide - 1 : slide + 1)}
-            aria-label={slide === slides.length - 1 ? 'Previous providers' : 'Next providers'}>
-            {slide === slides.length - 1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-          </button>
-        </>}
+          : <>
+            <div className="provider-track" ref={track} tabIndex={0} role="group" aria-label="Care team, scrollable">
+              {slides.map((group, s) => (
+                <div className="provider-grid" key={s} aria-hidden={s !== slide || undefined}>
+                  {group.map((provider, i) => <ProviderCard key={provider.name} provider={provider} index={i} />)}
+                </div>
+              ))}
+            </div>
+            {slides.length > 1 && (
+              <button type="button" className="provider-step" onClick={() => go(slide === slides.length - 1 ? slide - 1 : slide + 1)}
+                aria-label={slide === slides.length - 1 ? 'Previous providers' : 'Next providers'}>
+                {slide === slides.length - 1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+              </button>
+            )}
+          </>}
       </div>
     </div>
   </div></section>
