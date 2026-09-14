@@ -35,12 +35,12 @@ const serviceIcons = {
 } as const
 
 /** Real clinicians. `languages` stands in for a bio until written ones are supplied. */
-type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean; photo?: string }
+type Provider = { name: string; specialty: string; languages: string; role?: string; bookable?: boolean; photo?: string; placeholder?: boolean }
 
 export const providers: Provider[] = [
   { name: 'Pacita Aducayen', photo: '/team/pacita-aducayen.webp', specialty: 'Internal medicine', role: '', languages: 'Speaks English and Tagalog.', bookable: false },
   { name: 'Gautam Pareek, MD', photo: '/team/gautam-pareek.webp', specialty: 'Internal medicine', languages: 'Speaks English and Hindi.' },
-  { name: 'Nipa Sinh, MD', specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
+  { name: 'Nipa Sinh, MD', photo: '/team/nipa-sinh.webp', placeholder: true, specialty: 'Family medicine', languages: 'Speaks English, Hindi, and Gujarati.' },
   { name: 'Kashif Abdullah, MD', photo: '/team/kashif-abdullah.webp', specialty: 'General practice', languages: 'Speaks English, Hindi, and Urdu.' },
   { name: 'James Keaney, MD', photo: '/team/james-keaney.webp', specialty: 'Emergency medicine', languages: 'Speaks English.' },
   { name: 'Muhammad Khan, PA-C', photo: '/team/muhammad-khan.webp', specialty: 'Physician assistant', languages: 'Speaks English, Urdu, Hindi, Punjabi, and Farsi.' },
@@ -201,7 +201,7 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
   return <article className="provider-card" data-aos="zoom-in-up" data-aos-delay={500 + (index % 3) * 100}>
     <div className="provider-photo-wrap">
       {provider.photo
-        ? <img className="provider-photo" src={provider.photo} alt={`${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
+        ? <img className="provider-photo" src={provider.photo} alt={provider.placeholder ? '' : `${provider.name}, ${provider.specialty.toLowerCase()}`} width={640} height={640} loading="lazy" decoding="async" />
         : <div className="provider-photo provider-photo-empty" aria-hidden="true"><UserRound size={44} /></div>}
       <span className="provider-badge" aria-hidden="true"><Stethoscope size={20} /></span>
     </div>
@@ -221,10 +221,10 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
   const track = useRef<HTMLDivElement>(null)
   const [slide, setSlide] = useState(0)
 
-  // Only a missing photograph sends a card to the back, which leaves Nipa Sinh
-  // on the second slide until hers exists. Not taking bookings is no reason to
+  // A stand-in portrait still counts as waiting for one, so Nipa Sinh stays at
+  // the back until a real photograph arrives. Not taking bookings is no reason to
   // demote a provider, so Pacita Aducayen keeps her place at the front.
-  const complete = (p: Provider) => Boolean(p.photo)
+  const complete = (p: Provider) => Boolean(p.photo) && !p.placeholder
   const ordered = [...providers.filter(complete), ...providers.filter((p) => !complete(p))]
   const slides: Provider[][] = []
   for (let i = 0; i < ordered.length; i += 4) slides.push(ordered.slice(i, i + 4))
