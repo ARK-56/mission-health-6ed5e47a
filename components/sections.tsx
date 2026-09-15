@@ -221,6 +221,9 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
   const track = useRef<HTMLDivElement>(null)
   const settling = useRef(false)
   const settleTimer = useRef(0)
+  // four to a slide, but stacked there is only room for one, so the phone gets a
+  // card at a time. Starts at four so the server and the first client render agree.
+  const [perSlide, setPerSlide] = useState(4)
   const [slide, setSlide] = useState(0)
 
   // A stand-in portrait still counts as waiting for one, so Nipa Sinh stays at
@@ -229,7 +232,19 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
   const complete = (p: Provider) => Boolean(p.photo) && !p.placeholder
   const ordered = [...providers.filter(complete), ...providers.filter((p) => !complete(p))]
   const slides: Provider[][] = []
-  for (let i = 0; i < ordered.length; i += 4) slides.push(ordered.slice(i, i + 4))
+  for (let i = 0; i < ordered.length; i += perSlide) slides.push(ordered.slice(i, i + perSlide))
+
+  useEffect(() => {
+    const narrow = window.matchMedia('(max-width: 680px)')
+    const apply = () => {
+      setPerSlide(narrow.matches ? 1 : 4)
+      setSlide(0)
+      if (track.current) track.current.scrollLeft = 0
+    }
+    apply()
+    narrow.addEventListener('change', apply)
+    return () => narrow.removeEventListener('change', apply)
+  }, [])
 
   // the index follows the scroller, so dragging or swiping keeps the dots honest
   useEffect(() => {
@@ -298,8 +313,8 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
               ))}
             </div>
             {slides.length > 1 && (
-              <button type="button" className="provider-step" onClick={() => go(slide === slides.length - 1 ? slide - 1 : slide + 1)}
-                aria-label={slide === slides.length - 1 ? 'Previous providers' : 'Next providers'}>
+              <button type="button" className="provider-step" onClick={() => go(slide === slides.length - 1 ? 0 : slide + 1)}
+                aria-label={slide === slides.length - 1 ? (slides.length > 2 ? 'Back to the first providers' : 'Previous providers') : 'Next providers'}>
                 {slide === slides.length - 1 ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
               </button>
             )}
