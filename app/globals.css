@@ -378,7 +378,7 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .provider-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%; background: rgba(24,24,24,.25); cursor: pointer; transition: background .2s ease, width .2s ease; }
 .provider-dots button.is-current { width: 26px; border-radius: 999px; background: var(--primary); }
 .provider-body { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px; }
-@media (max-width: 780px) { .provider-step, .provider-step:hover, .provider-step:active { position: static; transform: none; margin: 18px 0 0 auto; } .provider-nav { margin-top: -34px; justify-content: flex-start; } }
+@media (max-width: 780px) { .provider-carousel .provider-step, .provider-carousel .provider-step:hover, .provider-carousel .provider-step:active { position: static; transform: none; margin: 18px 0 0 auto; } .provider-nav { margin-top: -34px; justify-content: flex-start; } }
 .team-linkedin { flex: 0 0 auto; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(234,223,202,.28); border-radius: 10px; color: #eadfca; transition: background .2s ease, border-color .2s ease, color .2s ease; }
 a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); color: var(--surface-dark); }
 .team-panel-title { color: #fffdf8; font-family: var(--font-care-serif), Georgia, serif; font-size: clamp(32px, 2.9vw, 42px); font-weight: 700; line-height: 1.15; margin: 0 0 6px; }
