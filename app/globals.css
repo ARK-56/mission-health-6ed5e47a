@@ -351,6 +351,14 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .provider-track::-webkit-scrollbar { display: none; }
 /* each slide fills the viewport of the track; the grid inside keeps its own rules */
 .provider-track > .provider-grid { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+/* Each slide sized its rows to its own content, so a slide holding three cards
+   did not line up with one holding four. Equal rows split the track height the
+   same way on every slide. Left alone in the single-column layout, where it
+   would stretch a short slide to the height of a longer one. */
+@media (min-width: 681px) { .provider-track > .provider-grid { grid-auto-rows: 1fr; } }
+/* Stacked, the slide holding three cards was absorbing the spare height and
+   growing them instead. Packed to the top, every card keeps its natural size. */
+@media (max-width: 680px) { .provider-track > .provider-grid { align-content: start; } }
 .provider-nav { display: flex; align-items: center; justify-content: flex-end; gap: 14px; margin-top: 18px; }
 /* one control, sitting half outside the track. The shell always keeps at least
    24px of margin, so it has room without pushing the page wide. */
