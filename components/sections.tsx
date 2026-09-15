@@ -219,6 +219,8 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
 
 export function ProvidersSection({ showLeadership = true, showAll = false }: { showLeadership?: boolean; showAll?: boolean } = {}) {
   const track = useRef<HTMLDivElement>(null)
+  const settling = useRef(false)
+  const settleTimer = useRef(0)
   const [slide, setSlide] = useState(0)
 
   // A stand-in portrait still counts as waiting for one, so Nipa Sinh stays at
@@ -233,7 +235,12 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
   useEffect(() => {
     const el = track.current
     if (!el) return
-    const onScroll = () => setSlide(Math.round(el.scrollLeft / el.clientWidth))
+    const onScroll = () => {
+      // a smooth scroll passes through positions that round back to the slide it
+      // is leaving, which flipped the arrow there and back on the way
+      if (settling.current) return
+      setSlide(Math.round(el.scrollLeft / el.clientWidth))
+    }
     el.addEventListener('scroll', onScroll, { passive: true })
     return () => el.removeEventListener('scroll', onScroll)
   }, [])
@@ -244,8 +251,17 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
     const next = Math.max(0, Math.min(slides.length - 1, i))
     // scrollTo ignores the motion preference, so it is asked for explicitly
     const gentle = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    settling.current = true
     el.scrollTo({ left: next * el.clientWidth, behavior: gentle ? 'auto' : 'smooth' })
     setSlide(next)
+    const land = () => {
+      settling.current = false
+      window.clearTimeout(settleTimer.current)
+    }
+    el.addEventListener('scrollend', land, { once: true })
+    // scrollend is not everywhere yet, so a timer releases the mute regardless
+    window.clearTimeout(settleTimer.current)
+    settleTimer.current = window.setTimeout(land, gentle ? 60 : 700)
   }
 
   return <section className="providers-section" id="providers"><div className="shell">
