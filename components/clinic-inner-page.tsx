@@ -37,6 +37,15 @@ type Block =
  * pages read the same way. 'content' is the page's own copy, and pages alternate
  * between the light and dark closing CTA.
  */
+/**
+ * How many of a page’s supporting panels form a real sequence. Only the new
+ * patients page has one, and only its first four panels are steps — what to
+ * bring, before, during, after. Anything past the count is a related aside, and
+ * pages absent here are a set of points, not an order: numbering /contact would
+ * assert 01 Talk with Mission, 02 When we are closed, which is not a process.
+ */
+const journeySteps: Partial<Record<PageKind, number>> = { 'new-patients': 4 }
+
 const layouts: Record<PageKind, Block[]> = {
   services: ['care', 'content', 'story', 'pathway', 'faq', 'cta'],
   'new-patients': ['pathway', 'content', 'selfPay', 'trust', 'care', 'hours', 'resources', 'innerCta'],
@@ -109,7 +118,46 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     hours: <HoursSection />,
     faq: <FaqSection />,
     cta: <CtaSection />,
-    content: <section className="section care-section inner-content"><div className="shell inner-content-grid">{panels.map((section, i) => <article className="inner-panel" key={section.title} data-aos="zoom-in-up" data-aos-delay={500 + (i % 4) * 100}><p className="eyebrow">Mission care</p><h2>{section.title}</h2><p>{section.body}</p>{section.items && <ul>{section.items.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul>}</article>)}</div></section>,
+    content: (() => {
+      const [lead, ...supporting] = panels
+      const stepCount = journeySteps[kind] ?? 0
+      const ordered = stepCount > 0
+      const steps = ordered ? supporting.slice(0, stepCount) : supporting
+      const asides = ordered ? supporting.slice(stepCount) : []
+      const Steps = ordered ? 'ol' : 'ul'
+      return <section className="section care-section inner-content"><div className="shell inner-content-layout">
+        <article className="inner-lead" data-aos="fade-up">
+          <p className="eyebrow">Mission care</p>
+          <h2>{lead.title}</h2>
+          <p>{lead.body}</p>
+          {lead.items && <ul>{lead.items.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul>}
+        </article>
+        <div className="inner-flow">
+        <Steps className={ordered ? 'inner-steps is-ordered' : 'inner-steps'}>
+          {steps.map((section, i) => (
+            <li className="inner-step" key={section.title} data-aos="fade-up" data-aos-delay={500 + (i % 4) * 100}>
+              {ordered && <span className="inner-step-mark" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>}
+              <div className="inner-step-body">
+                <h3>{section.title}</h3>
+                <p>{section.body}</p>
+                {section.items && <ul>{section.items.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul>}
+              </div>
+            </li>
+          ))}
+        </Steps>
+          {asides.length > 0 && (
+            <div className="inner-asides">
+              {asides.map((section, i) => (
+                <article className="inner-aside" key={section.title} data-aos="fade-up" data-aos-delay={500 + i * 100}>
+                  <h3>{section.title}</h3>
+                  <p>{section.body}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </div></section>
+    })(),
     highlight: <section className="highlight-band"><div className="shell highlight-inner"><div data-aos="fade-down"><p className="eyebrow">{highlight.label}</p><strong>{highlight.value}</strong><p>{highlight.note}</p></div><div className="highlight-details" data-aos="fade" data-aos-delay="600">{highlight.details.map((detail) => <span key={detail}><Check size={15} />{detail}</span>)}</div></div></section>,
     innerCta: <section className="inner-cta"><div className="shell" data-aos="fade-up"><p className="eyebrow">Now welcoming new patients</p><h2>Let’s make a plan that feels right.</h2><a className="button button-light" href={PHONE_TEL}><Phone size={16} /> Call {PHONE}</a></div></section>,
   }
