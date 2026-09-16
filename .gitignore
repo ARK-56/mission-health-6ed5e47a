@@ -16,3 +16,6 @@ node_modules
 # Build artifacts
 next-env.d.ts
 *.tsbuildinfo
+
+# Design source material, not shipped assets
+public/Doctor Images/
