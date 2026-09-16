@@ -18,6 +18,7 @@ import {
   PathwaySection,
   ProvidersSection,
   ResourcesSection,
+  ReviewsSection,
   SelfPaySection,
   StorySection,
   TrustStrip,
@@ -28,7 +29,7 @@ type PageKind = 'services' | 'new-patients' | 'providers' | 'insurance' | 'resou
 
 /** Blocks a page can be built from: the shared homepage sections, plus the three that are page-specific. */
 type Block =
-  | 'trust' | 'care' | 'pathway' | 'story' | 'providers' | 'insurance' | 'resources' | 'faq' | 'hours' | 'locations' | 'selfPay'
+  | 'trust' | 'care' | 'pathway' | 'story' | 'providers' | 'insurance' | 'resources' | 'faq' | 'hours' | 'locations' | 'selfPay' | 'reviews'
   | 'content' | 'highlight' | 'cta' | 'innerCta' | 'leadership' | 'contactForm'
 
 /**
@@ -49,10 +50,10 @@ const journeySteps: Partial<Record<PageKind, number>> = { 'new-patients': 4 }
 const layouts: Record<PageKind, Block[]> = {
   services: ['care', 'content', 'story', 'pathway', 'faq', 'cta'],
   'new-patients': ['pathway', 'content', 'selfPay', 'trust', 'care', 'hours', 'resources', 'innerCta'],
-  providers: ['providers', 'content', 'story', 'care', 'insurance', 'cta'],
+  providers: ['providers', 'content', 'reviews', 'story', 'care', 'insurance', 'cta'],
   insurance: ['insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
   resources: ['resources', 'content', 'faq', 'hours', 'care', 'story', 'cta'],
-  about: ['story', 'content', 'leadership', 'providers', 'highlight', 'locations', 'pathway', 'cta'],
+  about: ['story', 'content', 'leadership', 'providers', 'reviews', 'highlight', 'locations', 'pathway', 'cta'],
   contact: ['contactForm', 'locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
 }
 
@@ -116,6 +117,8 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     contactForm: <ContactFormSection />,
     insurance: <InsuranceSection />,
     resources: <ResourcesSection />,
+    // the full wall; only the homepage shows a trimmed one
+    reviews: <ReviewsSection />,
     selfPay: <SelfPaySection />,
     locations: <LocationsSection />,
     hours: <HoursSection />,

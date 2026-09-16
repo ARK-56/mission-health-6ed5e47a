@@ -548,3 +548,57 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
   .inner-step { grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 20px 0 22px; }
   .inner-lead ul { gap: 10px; }
 }
+
+/* ---- Patient reviews, running past in one full-width band ---- */
+.reviews-section { padding: 104px 0; background: #efe6d6; }
+.reviews-head { max-width: 760px; margin-bottom: 40px; }
+.reviews-head .text-link { margin: 18px auto 0; }
+
+.review-score { display: inline-flex; align-items: center; gap: 12px; margin: 16px 0 0; padding: 9px 18px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface-white); color: #4a4133; font-size: 15px; }
+.review-score strong { color: #181818; font-size: 17px; font-weight: 800; }
+
+.review-stars { display: inline-flex; gap: 3px; color: #d9c9a9; }
+.review-stars svg { fill: none; }
+.review-stars svg.is-filled { color: var(--accent); fill: var(--accent); }
+
+/* the band ignores the shell and runs the whole width of the page */
+.review-marquee { overflow: hidden; }
+.review-marquee-track { display: flex; width: max-content; animation-name: review-marquee; animation-timing-function: linear; animation-iteration-count: infinite; }
+/* two identical runs, so one run's width of travel lands back where it started */
+@keyframes review-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.review-run { display: flex; flex: 0 0 auto; gap: 20px; padding-right: 20px; align-items: stretch; }
+/* room above and below for the hover lift and the card shadows, which the band would otherwise clip */
+.review-marquee { padding: 26px 0; }
+/* stop it so a review can actually be read. :active carries the same weight on a
+   touchscreen, where there is no hover to pause with — press and it holds still */
+.review-marquee:hover .review-marquee-track,
+.review-marquee:focus-within .review-marquee-track,
+.review-marquee:active .review-marquee-track { animation-play-state: paused; }
+
+.review-card { position: relative; overflow: hidden; flex: 0 0 380px; width: 380px; display: flex; flex-direction: column; gap: 16px; padding: 30px 28px 26px; border: 1px solid rgba(24,32,51,.08); border-radius: 20px; background: #fffdf8; box-shadow: 0 10px 30px rgba(24,32,51,.06); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+/* the same serif quote mark the leadership panel uses, so a review reads as a quote */
+.review-card::before { content: '“'; position: absolute; top: 4px; right: 24px; z-index: 0; color: var(--accent); opacity: .26; font-family: var(--font-care-serif), Georgia, serif; font-size: 92px; line-height: 1; pointer-events: none; }
+.review-card > * { position: relative; z-index: 1; }
+/* the band is already paused under the pointer, so the card can answer it */
+.review-card:hover { transform: translateY(-4px); border-color: rgba(185,138,46,.45); box-shadow: 0 18px 40px rgba(24,32,51,.12); }
+/* the reviews are quoted verbatim, so their own line breaks are kept. the clamp
+   is visual only: the full text stays in the document, the way Google collapses
+   a long review rather than truncating it */
+.review-body { white-space: pre-line; margin: 0; color: #4a4133; font-size: 16px; line-height: 1.7; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; overflow: hidden; }
+.review-meta { display: flex; align-items: center; gap: 13px; margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(24,32,51,.09); }
+.review-avatar { flex: 0 0 auto; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #d8ad58, #b98a2e); color: #fffdf8; font-size: 15px; font-weight: 800; }
+.review-meta strong { display: block; color: #182033; font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+.review-meta small { display: block; margin-top: 3px; color: #8a7f6d; font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .review-marquee-track { animation: none; }
+  .review-marquee { overflow-x: auto; }
+}
+@media (max-width: 680px) {
+  .reviews-section { padding: 72px 0; }
+  .reviews-head { margin-bottom: 30px; }
+  .review-card { flex-basis: 300px; width: 300px; padding: 24px 22px 22px; }
+  .review-card::before { font-size: 70px; right: 18px; }
+  .review-marquee { padding: 18px 0; }
+  .review-score { gap: 10px; font-size: 14px; }
+}

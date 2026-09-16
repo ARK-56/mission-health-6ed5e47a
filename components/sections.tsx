@@ -16,6 +16,7 @@ import {
   Navigation,
   Phone,
   ShieldCheck,
+  Star,
   Stethoscope,
   Truck,
   UserRound,
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react'
 
 import { AFTER_HOURS, CONTACT_FORM_ENDPOINT, EMAIL, HOURS, LOCATIONS, PHONE, PHONE_TEL, ZIA_LINKEDIN, directionsUrl } from '@/lib/site'
+import { GOOGLE_REVIEWS_URL, RATING_AVERAGE, RATING_TOTAL, reviews, type Review } from '@/lib/reviews'
 import { services } from '@/lib/services'
 import { LinkedInMark } from './brand-marks'
 
@@ -322,6 +324,104 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
       </div>
     </div>
   </div></section>
+}
+
+/** Five stars, filled to the review's rating. Decorative: the number is in the text beside it. */
+function Stars({ rating }: { rating: number }) {
+  return (
+    <span className="review-stars" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => <Star key={i} size={15} className={i < rating ? 'is-filled' : undefined} />)}
+    </span>
+  )
+}
+
+/**
+ * Initials stand in for the avatar. Google's profile photographs are hotlinked from
+ * its own CDN and disappear when a reviewer changes theirs, so the wall draws its
+ * own mark and never breaks.
+ */
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((word) => word[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+
+function ReviewCard({ review }: { review: Review }) {
+  return (
+    <article className="review-card">
+      <Stars rating={review.rating} />
+      {/* clamped in CSS rather than cut here, so the whole review stays in the
+          document for screen readers and for anyone selecting the text */}
+      <p className="review-body">{review.body}</p>
+      <footer className="review-meta">
+        <span className="review-avatar" aria-hidden="true">{initials(review.name)}</span>
+        <span>
+          <strong>{review.name}</strong>
+          <small>{review.meta.startsWith('Local Guide') ? `Local Guide · ${review.date}` : review.date}</small>
+        </span>
+      </footer>
+    </article>
+  )
+}
+
+/**
+ * `reviews` arrives sorted longest first, which would send the three fullest ones
+ * past in a row and then nothing but one-liners. Alternating longest, shortest,
+ * next longest, next shortest mixes the lengths along the run instead.
+ */
+function balance<T>(items: T[]) {
+  const rest = [...items]
+  const out: T[] = []
+  while (rest.length) {
+    out.push(rest.shift() as T)
+    if (rest.length) out.push(rest.pop() as T)
+  }
+  return out
+}
+
+/**
+ * The practice's Google reviews, in the patients' own words, running past in one
+ * continuous band the full width of the page.
+ *
+ * Two identical runs sit side by side: the track scrolls exactly one run's width
+ * and starts over, so the loop never shows a seam. The second run is hidden from
+ * assistive tech, which would otherwise read every review twice.
+ *
+ * `count` trims the run for pages that only want a taste of it.
+ */
+export function ReviewsSection({ count }: { count?: number } = {}) {
+  const shown = balance(count ? reviews.slice(0, count) : reviews)
+  // a fixed duration would crawl on the homepage's shorter run and race on the
+  // full one, so the clock is set per card to keep the speed the same everywhere
+  const seconds = shown.length * 6
+
+  const run = (duplicate: boolean) => (
+    <div className="review-run" key={duplicate ? 'b' : 'a'} aria-hidden={duplicate || undefined}>
+      {shown.map((review) => <ReviewCard key={review.name + review.date} review={review} />)}
+    </div>
+  )
+
+  return <section className="reviews-section" id="reviews">
+    <div className="shell">
+      <div className="team-head reviews-head" data-aos="fade-down">
+        <p className="team-kicker">What our patients say</p>
+        <h2>Rated {RATING_AVERAGE} by our patients</h2>
+        <p className="review-score">
+          <Stars rating={Math.round(Number(RATING_AVERAGE))} />
+          <span><strong>{RATING_AVERAGE}</strong> out of 5 · {RATING_TOTAL} Google reviews</span>
+        </p>
+        <a className="text-link" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" aria-label="Read our reviews on Google (opens in a new tab)">
+          Read them on Google <ArrowRight size={16} />
+        </a>
+      </div>
+    </div>
+    <div className="review-marquee" data-aos="fade-up" data-aos-delay="400" role="group" aria-label="Patient reviews">
+      <div className="review-marquee-track" style={{ animationDuration: `${seconds}s` }}>{run(false)}{run(true)}</div>
+    </div>
+  </section>
 }
 
 const CONTACT_REASONS = [

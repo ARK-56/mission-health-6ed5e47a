@@ -14,6 +14,7 @@ import {
   PathwaySection,
   ProvidersSection,
   ResourcesSection,
+  ReviewsSection,
   StorySection,
   TrustStrip,
 } from './sections'
@@ -27,6 +28,7 @@ export function ClinicSite() {
       <PathwaySection />
       <StorySection />
       <ProvidersSection />
+      <ReviewsSection count={9} />
       <InsuranceSection />
       <HoursSection />
       <ResourcesSection />
