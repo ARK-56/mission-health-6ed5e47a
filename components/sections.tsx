@@ -356,13 +356,15 @@ function ReviewCard({ review }: { review: Review }) {
       {/* clamped in CSS rather than cut here, so the whole review stays in the
           document for screen readers and for anyone selecting the text */}
       <p className="review-body">{review.body}</p>
-      <footer className="review-meta">
+      {/* a div, not a footer: the stylesheet paints every <footer> with the page
+          footer's dark background and padding, which landed behind the name */}
+      <div className="review-meta">
         <span className="review-avatar" aria-hidden="true">{initials(review.name)}</span>
         <span>
           <strong>{review.name}</strong>
           <small>{review.meta.startsWith('Local Guide') ? `Local Guide · ${review.date}` : review.date}</small>
         </span>
-      </footer>
+      </div>
     </article>
   )
 }
