@@ -61,9 +61,9 @@ export const insurancePlans = [
 ]
 
 export const selfPayRates = [
-  { label: 'First visit', price: '$200', note: 'Your initial visit as a new self-pay patient.' },
-  { label: 'Returning visit', price: '$100', note: 'Each visit once you are an established patient.' },
-  { label: 'DOT physical', price: '$200', note: 'Department of Transportation medical examination.' },
+  { label: 'First visit', price: '$200', note: 'Your initial visit as a new self-pay patient.', action: 'Book a first visit', books: 'a first visit' },
+  { label: 'Returning visit', price: '$100', note: 'Each visit once you are an established patient.', action: 'Book a follow-up', books: 'a returning visit' },
+  { label: 'DOT physical', price: '$200', note: 'Department of Transportation medical examination.', action: 'Book a DOT physical', books: 'a DOT physical' },
 ] as const
 
 /**
@@ -180,7 +180,7 @@ export function LocationsSection() {
 }
 
 export function SelfPaySection() {
-  return <section className="pathway-section" id="self-pay"><div className="shell"><div className="section-heading" data-aos="fade-up"><div><p className="eyebrow">Self-pay rates</p><h2>Clear prices, up front.</h2></div><p>These are our rates for patients not billing insurance. Call the office if you have any questions before you book.</p><SectionLink href="/insurance">Insurance & self-pay</SectionLink></div><div className="pathway-grid">{selfPayRates.map((rate, i) => <article className="pathway-card" key={rate.label} data-aos="zoom-in" data-aos-delay={500 + i * 100}><span>{rate.label}</span><h3>{rate.price}</h3><p>{rate.note}</p></article>)}</div></div></section>
+  return <section className="pathway-section" id="self-pay"><div className="shell"><div className="section-heading" data-aos="fade-up"><div><p className="eyebrow">Self-pay rates</p><h2>Clear prices, up front.</h2></div><p>These are our rates for patients not billing insurance. Call the office if you have any questions before you book.</p><SectionLink href="/insurance">Insurance & self-pay</SectionLink></div><div className="pathway-grid">{selfPayRates.map((rate, i) => <article className="pathway-card is-linked" key={rate.label} data-aos="zoom-in" data-aos-delay={500 + i * 100}><span>{rate.label}</span><h3>{rate.price}</h3><p>{rate.note}</p><a className="text-link" href={PHONE_TEL} aria-label={`Call ${PHONE} to book ${rate.books}`}><Phone size={15} /> {rate.action}</a></article>)}</div></div></section>
 }
 
 export function StorySection() {
