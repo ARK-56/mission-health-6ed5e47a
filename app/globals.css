@@ -534,6 +534,9 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
 .inner-asides { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; margin-top: 30px; padding-top: 28px; border-top: 5px solid var(--border); }
 .inner-aside h3 { color: #181818; font-size: 19px; font-weight: 700; letter-spacing: -.02em; line-height: 1.25; margin: 0 0 9px; }
 .inner-aside p { color: var(--muted-foreground); font-size: 16px; line-height: 1.7; margin: 0; }
+.inner-aside-cta { margin-top: 16px; padding: 11px 18px; font-size: 14px; background: transparent; border: 1px solid var(--primary-text); color: var(--primary-text); }
+.inner-aside-cta:hover { background: var(--primary-text); color: var(--primary-foreground); }
+.inner-aside { display: flex; flex-direction: column; align-items: flex-start; }
 
 @media (max-width: 900px) {
   .inner-content-layout { grid-template-columns: 1fr; gap: 42px; }
