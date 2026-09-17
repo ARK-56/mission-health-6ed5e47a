@@ -33,10 +33,18 @@ type Block =
   | 'content' | 'highlight' | 'cta' | 'innerCta' | 'leadership' | 'contactForm'
 
 /**
- * Every page opens with its own hero and closes on a call to action; in between it
- * draws a different selection of homepage sections, in a different order, so no two
- * pages read the same way. 'content' is the page's own copy, and pages alternate
- * between the light and dark closing CTA.
+ * Every page opens with its own hero and closes on a call to action. In between it
+ * carries only its own subject: the one shared section the page is named for, its
+ * own copy in 'content', and the panels that exist for inner pages alone --
+ * 'selfPay', 'leadership', 'contactForm', 'highlight'.
+ *
+ * Nothing else from the homepage appears here. A page used to be padded out with
+ * four or five sections borrowed from it, so a visitor who had read the homepage
+ * met the same care grid, the same steps and the same questions again on the way
+ * through. The homepage is the summary; these pages are the detail behind it.
+ *
+ * The closing band is 'innerCta' throughout for the same reason: it is the one
+ * call to action the homepage does not already carry.
  */
 /**
  * How many of a page’s supporting panels form a real sequence. Only the new
@@ -48,13 +56,14 @@ type Block =
 const journeySteps: Partial<Record<PageKind, number>> = { 'new-patients': 4 }
 
 const layouts: Record<PageKind, Block[]> = {
-  services: ['care', 'content', 'story', 'pathway', 'faq', 'cta'],
-  'new-patients': ['pathway', 'content', 'selfPay', 'trust', 'care', 'hours', 'resources', 'innerCta'],
-  providers: ['providers', 'content', 'reviews', 'story', 'care', 'insurance', 'cta'],
-  insurance: ['insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
-  resources: ['resources', 'content', 'faq', 'hours', 'care', 'story', 'cta'],
-  about: ['story', 'content', 'leadership', 'providers', 'reviews', 'highlight', 'locations', 'pathway', 'cta'],
-  contact: ['contactForm', 'locations', 'content', 'hours', 'faq', 'trust', 'providers', 'innerCta'],
+  services: ['care', 'content', 'highlight', 'innerCta'],
+  'new-patients': ['pathway', 'content', 'selfPay', 'highlight', 'innerCta'],
+  providers: ['providers', 'content', 'highlight', 'innerCta'],
+  insurance: ['insurance', 'selfPay', 'content', 'highlight', 'innerCta'],
+  resources: ['resources', 'content', 'highlight', 'innerCta'],
+  about: ['story', 'content', 'leadership', 'highlight', 'innerCta'],
+  // contact is named for both: the form to reach the practice and where it is
+  contact: ['contactForm', 'locations', 'content', 'highlight', 'innerCta'],
 }
 
 const pageHighlights: Record<PageKind, { label: string; value: string; note: string; details: string[] }> = {
