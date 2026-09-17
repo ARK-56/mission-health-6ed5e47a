@@ -4,10 +4,13 @@
  * Every quote is verbatim — spelling, line breaks and signatures included —
  * because these are patients' own words, not copy.
  *
- * One-star reviews are left out of this file at the practice's direction, so
- * RATING_TOTAL and RATING_SUM describe the 86 reviews kept here rather than
- * everything the two profiles carry. The two listings share no reviewer between
- * them, so nothing is counted twice.
+ * RATING_TOTAL and RATING_SUM count every review on both profiles, the critical
+ * ones included, so the headline is the rating a reader would find on Google
+ * rather than a figure drawn from the quotes on show. The two listings share no
+ * reviewer between them, so nothing is counted twice.
+ *
+ * `reviews` below is the slider's own list: the five-star reviews with something
+ * to say. It is an excerpt, never the basis of the average.
  */
 
 export type Review = {
@@ -23,17 +26,12 @@ export type Review = {
   body: string
 }
 
-/** Every review kept in this file. */
-export const RATING_TOTAL = 86
+/** Every review on both profiles, not just the ones quoted below. */
+export const RATING_TOTAL = 98
+const RATING_SUM = 439
 
-/**
- * The rating the practice publishes. It is stated rather than worked out from
- * the reviews below, which average 4.97 once the one-star ones are taken out --
- * a number that would read as though nobody had ever been dissatisfied. 4.8 is
- * the figure the practice stands behind and it sits under what this file would
- * compute, so the site never claims more than its own reviews support.
- */
-export const RATING_AVERAGE = '4.8'
+/** To one decimal place, the way Google states it. */
+export const RATING_AVERAGE = (RATING_SUM / RATING_TOTAL).toFixed(1)
 
 export const GOOGLE_REVIEWS_URL = 'https://www.google.com/search?q=Mission+Primary+Care+Fremont+reviews'
 

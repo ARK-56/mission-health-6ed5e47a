@@ -420,7 +420,7 @@ export function ReviewsSection({ count }: { count?: number } = {}) {
         <h2>Rated {RATING_AVERAGE} by our patients</h2>
         <p className="review-score">
           <Stars rating={Math.round(Number(RATING_AVERAGE))} />
-          <span><strong>{RATING_AVERAGE}</strong> out of 5 · {RATING_TOTAL} patient reviews</span>
+          <span><strong>{RATING_AVERAGE}</strong> out of 5 · {RATING_TOTAL} Google reviews</span>
         </p>
         <a className="text-link" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" aria-label="Read our reviews on Google (opens in a new tab)">
           Read them on Google <ArrowRight size={16} />
