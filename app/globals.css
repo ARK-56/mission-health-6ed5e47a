@@ -611,3 +611,20 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
   .review-marquee { padding: 8px 0; }
   .review-score { gap: 10px; font-size: 14px; }
 }
+
+/* ---- Newsletter, set under the link columns ---- */
+/* The brand column runs down both rows, so the first row is only as tall as the
+   link lists and the form begins where they end rather than below the logo,
+   the contact marks and the social row. */
+.footer-brand-col { grid-row: 1 / 3; }
+.footer-subscribe { grid-column: 2 / -1; max-width: 520px; }
+
+@media (max-width: 900px) {
+  /* two columns from here down, so there is no second row to reach across */
+  .footer-brand-col { grid-row: auto; }
+  .footer-subscribe { grid-column: 1 / -1; max-width: none; }
+}
+@media (max-width: 680px) {
+  /* the hours column used to get this as the grid's last child */
+  .footer-grid > .footer-hours-col { grid-column: 1 / -1; }
+}

@@ -71,16 +71,6 @@ export function ClinicShell({ className, children }: { className?: string; child
           <div className="footer-brand-col">
             <Link className="footer-brand" href="/" aria-label="Mission Primary Care home"><Image src={LOGO_SRC} alt={LOGO_ALT} width={210} height={85} /></Link>
             <p>Care for your whole health, close to home.</p>
-            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
-              <strong>Newsletter</strong>
-              <p>Practice news and health reminders, once a month.</p>
-              <div className="subscribe-row">
-                <label className="sr-only" htmlFor="footer-email">Email address</label>
-                <input id="footer-email" name="email" type="email" placeholder="Email*" disabled />
-                <button className="button" type="submit" disabled>Submit</button>
-              </div>
-              <small>Sign-up opens once the mailing list is set up.</small>
-            </form>
             <div className="footer-contact">
               <a href={PHONE_TEL} aria-label={`Call ${PHONE}`} title={`Call ${PHONE}`}><Phone size={19} /></a>
               <span aria-label={`Fax ${FAX}`} title={`Fax ${FAX}`}><Printer size={19} /></span>
@@ -105,7 +95,7 @@ export function ClinicShell({ className, children }: { className?: string; child
             <strong>Care &amp; services</strong>
             {services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug}>{service.title}</Link>)}
           </div>
-          <div>
+          <div className="footer-hours-col">
             <strong>Locations</strong>
             {LOCATIONS.map((location) => <Link href="/contact" key={location.city}>{location.city}</Link>)}
             <button type="button" className="hours-toggle footer-subhead" onClick={() => setHoursOpen((v) => !v)} aria-expanded={hoursOpen} aria-controls="footer-hours">
@@ -127,6 +117,16 @@ export function ClinicShell({ className, children }: { className?: string; child
               </div>
             </div>
           </div>
+            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
+              <strong>Newsletter</strong>
+              <p>Practice news and health reminders, once a month.</p>
+              <div className="subscribe-row">
+                <label className="sr-only" htmlFor="footer-email">Email address</label>
+                <input id="footer-email" name="email" type="email" placeholder="Email*" disabled />
+                <button className="button" type="submit" disabled>Submit</button>
+              </div>
+              <small>Sign-up opens once the mailing list is set up.</small>
+            </form>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
       </footer>
