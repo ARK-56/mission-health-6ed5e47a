@@ -31,7 +31,7 @@ import { LinkedInMark } from './brand-marks'
 
 export { services }
 
-const serviceIcons = {
+export const serviceIcons = {
   stethoscope: Stethoscope, heart: HeartPulse, shield: ShieldCheck, woman: UserRound,
   family: UsersRound, labs: FlaskConical, video: Video, dot: Truck,
 } as const
