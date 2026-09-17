@@ -398,13 +398,15 @@ function balance<T>(items: T[]) {
  */
 export function ReviewsSection({ count }: { count?: number } = {}) {
   const shown = balance(count ? reviews.slice(0, count) : reviews)
-  // a fixed duration would crawl on the homepage's shorter run and race on the
-  // full one, so the clock is set per card to keep the speed the same everywhere
-  const seconds = shown.length * 6
+  // two bands, the lower one travelling the other way. Splitting the reviews
+  // between them rather than repeating them means each band is half as long,
+  // so a reader sees the whole set in half the time.
+  const half = Math.ceil(shown.length / 2)
+  const bands = [shown.slice(0, half), shown.slice(half)]
 
-  const run = (duplicate: boolean) => (
+  const run = (band: Review[], duplicate: boolean) => (
     <div className="review-run" key={duplicate ? 'b' : 'a'} aria-hidden={duplicate || undefined}>
-      {shown.map((review) => <ReviewCard key={review.location + review.name + review.date} review={review} />)}
+      {band.map((review) => <ReviewCard key={review.location + review.name + review.date} review={review} />)}
     </div>
   )
 
@@ -422,9 +424,17 @@ export function ReviewsSection({ count }: { count?: number } = {}) {
         </a>
       </div>
     </div>
-    <div className="review-marquee" data-aos="fade-up" data-aos-delay="400" role="group" aria-label="Patient reviews">
-      <div className="review-marquee-track" style={{ animationDuration: `${seconds}s` }}>{run(false)}{run(true)}</div>
-    </div>
+    {bands.map((band, i) => (
+      <div className="review-marquee" key={i} data-aos="fade-up" data-aos-delay={400 + i * 100}
+        role="group" aria-label={i === 0 ? 'Patient reviews' : 'More patient reviews'}>
+        {/* a fixed duration would crawl on a short band and race on a long one,
+            so each sets its own clock per card and they travel at one speed */}
+        <div className={i === 0 ? 'review-marquee-track' : 'review-marquee-track is-reverse'}
+          style={{ animationDuration: `${band.length * 6}s` }}>
+          {run(band, false)}{run(band, true)}
+        </div>
+      </div>
+    ))}
   </section>
 }
 

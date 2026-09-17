@@ -569,8 +569,10 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
 /* two identical runs, so one run's width of travel lands back where it started */
 @keyframes review-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .review-run { display: flex; flex: 0 0 auto; gap: 20px; padding-right: 20px; align-items: stretch; }
+/* the lower band travels the other way; same keyframes, run backwards */
+.review-marquee-track.is-reverse { animation-direction: reverse; }
 /* room above and below for the hover lift and the card shadows, which the band would otherwise clip */
-.review-marquee { padding: 26px 0; }
+.review-marquee { padding: 10px 0; }
 /* stop it so a review can actually be read. :active carries the same weight on a
    touchscreen, where there is no hover to pause with — press and it holds still */
 .review-marquee:hover .review-marquee-track,
@@ -601,6 +603,6 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
   .reviews-head { margin-bottom: 30px; }
   .review-card { flex-basis: 300px; width: 300px; padding: 24px 22px 22px; }
   .review-card::before { font-size: 70px; right: 18px; }
-  .review-marquee { padding: 18px 0; }
+  .review-marquee { padding: 8px 0; }
   .review-score { gap: 10px; font-size: 14px; }
 }

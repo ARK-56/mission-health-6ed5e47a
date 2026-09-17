@@ -28,7 +28,7 @@ export function ClinicSite() {
       <PathwaySection />
       <StorySection />
       <ProvidersSection />
-      <ReviewsSection count={9} />
+      <ReviewsSection count={16} />
       <InsuranceSection />
       <HoursSection />
       <ResourcesSection />
