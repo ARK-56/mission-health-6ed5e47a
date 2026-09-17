@@ -366,7 +366,7 @@ footer { position: relative; isolation: isolate; overflow: hidden; background: v
 .provider-nav { display: flex; align-items: center; justify-content: flex-end; gap: 14px; margin-top: 18px; }
 /* one control, sitting half outside the track. The shell always keeps at least
    24px of margin, so it has room without pushing the page wide. */
-.provider-step { position: absolute; right: -34px; top: 50%; transform: translateY(-50%); z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: #4a4133; cursor: pointer; box-shadow: 0 6px 18px rgba(24,32,51,.12); transition: border-color .2s ease, color .2s ease; }
+.provider-step { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-white); color: #4a4133; cursor: pointer; box-shadow: 0 6px 18px rgba(24,32,51,.12); transition: border-color .2s ease, color .2s ease; }
 .provider-step:hover { border-color: var(--primary); color: var(--primary-text); }
 /* the two arrows are different elements, so the swap is faded in rather than snapped */
 .provider-step svg { animation: step-arrow .2s ease-out; }
