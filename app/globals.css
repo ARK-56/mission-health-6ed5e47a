@@ -613,18 +613,22 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
 }
 
 /* ---- Newsletter, set under the link columns ---- */
-/* The brand column runs down both rows, so the first row is only as tall as the
-   link lists and the form begins where they end rather than below the logo,
-   the contact marks and the social row. */
-.footer-brand-col { grid-row: 1 / 3; }
-.footer-subscribe { grid-column: 2 / -1; max-width: 520px; }
+/* The two link lists and the sign-up share one track of the footer as a grid of
+   their own. The form's place is then fixed by the lists above it and nothing
+   else: opening the hours panel lengthens the track beside them, which used to
+   push the form down the page while every column sat in one row together.
+   .site-footer carries the weight to beat the .homepage-footer rules above. */
+.site-footer .footer-grid { grid-template-columns: 1.3fr 1.6fr 1.1fr; }
+.site-footer .footer-grid > .footer-links-block { display: grid; grid-template-columns: .7fr .9fr; gap: 45px; align-items: start; }
+.site-footer .footer-grid > .footer-links-block > div { display: flex; flex-direction: column; gap: 11px; }
+.site-footer .footer-subscribe { grid-column: 1 / -1; max-width: 520px; }
 
 @media (max-width: 900px) {
-  /* two columns from here down, so there is no second row to reach across */
-  .footer-brand-col { grid-row: auto; }
-  .footer-subscribe { grid-column: 1 / -1; max-width: none; }
+  /* stacked bands, with the two lists still paired inside their own track */
+  .site-footer .footer-grid { grid-template-columns: 1fr; gap: 35px; }
+  .site-footer .footer-grid > .footer-links-block { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+  .site-footer .footer-subscribe { max-width: none; }
 }
 @media (max-width: 680px) {
-  /* the hours column used to get this as the grid's last child */
-  .footer-grid > .footer-hours-col { grid-column: 1 / -1; }
+  .site-footer .footer-grid > .footer-links-block { gap: 35px 20px; }
 }

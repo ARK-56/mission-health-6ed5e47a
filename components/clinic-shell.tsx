@@ -86,6 +86,7 @@ export function ClinicShell({ className, children }: { className?: string; child
               })}
             </div>
           </div>
+          <div className="footer-links-block">
           <div>
             <strong>Explore</strong>
             {nav.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
@@ -94,6 +95,17 @@ export function ClinicShell({ className, children }: { className?: string; child
           <div>
             <strong>Care &amp; services</strong>
             {services.map((service) => <Link href={`/services/${service.slug}`} key={service.slug}>{service.title}</Link>)}
+          </div>
+            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
+              <strong>Newsletter</strong>
+              <p>Practice news and health reminders, once a month.</p>
+              <div className="subscribe-row">
+                <label className="sr-only" htmlFor="footer-email">Email address</label>
+                <input id="footer-email" name="email" type="email" placeholder="Email*" disabled />
+                <button className="button" type="submit" disabled>Submit</button>
+              </div>
+              <small>Sign-up opens once the mailing list is set up.</small>
+            </form>
           </div>
           <div className="footer-hours-col">
             <strong>Locations</strong>
@@ -117,16 +129,6 @@ export function ClinicShell({ className, children }: { className?: string; child
               </div>
             </div>
           </div>
-            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
-              <strong>Newsletter</strong>
-              <p>Practice news and health reminders, once a month.</p>
-              <div className="subscribe-row">
-                <label className="sr-only" htmlFor="footer-email">Email address</label>
-                <input id="footer-email" name="email" type="email" placeholder="Email*" disabled />
-                <button className="button" type="submit" disabled>Submit</button>
-              </div>
-              <small>Sign-up opens once the mailing list is set up.</small>
-            </form>
         </div>
         <div className="shell footer-bottom"><span>© 2026 {BUSINESS_NAME}</span><a href={PHONE_TEL}>Call {PHONE} <ArrowRight size={13} /></a></div>
       </footer>
