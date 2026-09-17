@@ -188,8 +188,56 @@ export function SelfPaySection() {
   return <section className="pathway-section" id="self-pay"><div className="shell"><div className="section-heading" data-aos="fade-up"><div><p className="eyebrow">Self-pay rates</p><h2>Clear prices, up front.</h2></div><p>These are our rates for patients not billing insurance. Call the office if you have any questions before you book.</p><SectionLink href="/insurance">Insurance & self-pay</SectionLink></div><div className="pathway-grid">{selfPayRates.map((rate, i) => <article className="pathway-card is-linked" key={rate.label} data-aos="zoom-in" data-aos-delay={500 + i * 100}><span>{rate.label}</span><h3>{rate.price}</h3><p>{rate.note}</p><a className="text-link" href={PHONE_TEL} aria-label={`Call ${PHONE} to book ${rate.books}`}><Phone size={15} /> {rate.action}</a></article>)}</div></div></section>
 }
 
-export function StorySection() {
-  return <section className="story-section" id="about"><div className="shell story-grid"><div className="story-image" data-aos="zoom-in"><div className="story-label"><span>01</span><span>Listen first.</span></div></div><div className="story-copy" data-aos="fade-up" data-aos-delay="600"><p className="eyebrow">The Mission difference</p><h2>More than a visit. A relationship.</h2><p>We believe great primary care is built on trust. That means unrushed conversations, care plans you understand, and a team that remembers your name.</p><div className="check-list"><span><Check size={16} /> Same-day appointments available</span><span><Check size={16} /> No referral needed to be seen</span><span><Check size={16} /> Telehealth visits available</span><span><Check size={16} /> On-site labs and vaccinations</span></div><Link className="text-link" href="/about">Why patients choose Mission <ArrowRight size={17} /></Link></div></div></section>
+export type StoryCopy = {
+  /** The caption laid over the photograph. */
+  label: string
+  eyebrow: string
+  title: string
+  body: string
+  points: readonly string[]
+  link: { href: string; label: string }
+}
+
+/** The homepage's version: what the practice is like to be a patient of. */
+const homeStory: StoryCopy = {
+  label: 'Listen first.',
+  eyebrow: 'The Mission difference',
+  title: 'More than a visit. A relationship.',
+  body: 'We believe great primary care is built on trust. That means unrushed conversations, care plans you understand, and a team that remembers your name.',
+  points: ['Same-day appointments available', 'No referral needed to be seen', 'Telehealth visits available', 'On-site labs and vaccinations'],
+  link: { href: '/about', label: 'Why patients choose Mission' },
+}
+
+/**
+ * /about's version. That page already argues the case for unhurried, personal
+ * care in its own copy, so repeating it here said the same thing twice. This
+ * says instead what the practice actually is: how many clinics, who staffs
+ * them, and who they are for.
+ */
+export const aboutStory: StoryCopy = {
+  label: 'Close to home.',
+  eyebrow: 'Who we are',
+  title: 'One practice, three neighbourhoods.',
+  body: 'Mission Primary Care looks after adults across Fremont, Hayward and San Leandro. One number books any of the three, and the same team stands behind each of them — physicians, physician assistants, and the people who pick up the phone.',
+  points: ['Three East Bay clinics, one number to call', 'Physicians and physician assistants in one team', 'Adults-only primary care', 'Care in eight languages'],
+  link: { href: '/providers', label: 'Meet the clinicians' },
+}
+
+export function StorySection({ copy = homeStory }: { copy?: StoryCopy } = {}) {
+  return <section className="story-section" id="about"><div className="shell story-grid">
+    <div className="story-image" data-aos="zoom-in">
+      <div className="story-label"><span>01</span><span>{copy.label}</span></div>
+    </div>
+    <div className="story-copy" data-aos="fade-up" data-aos-delay="600">
+      <p className="eyebrow">{copy.eyebrow}</p>
+      <h2>{copy.title}</h2>
+      <p>{copy.body}</p>
+      <div className="check-list">
+        {copy.points.map((point) => <span key={point}><Check size={16} /> {point}</span>)}
+      </div>
+      <Link className="text-link" href={copy.link.href}>{copy.link.label} <ArrowRight size={17} /></Link>
+    </div>
+  </div></section>
 }
 
 /** Decorative stethoscope sitting behind each provider card. */

@@ -23,6 +23,7 @@ import {
   type Faq,
   SelfPaySection,
   StorySection,
+  aboutStory,
   TrustStrip,
   insurancePlans,
 } from './sections'
@@ -164,7 +165,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     trust: <TrustStrip />,
     care: <CareSection />,
     pathway: <PathwaySection />,
-    story: <StorySection />,
+    story: <StorySection copy={kind === 'about' ? aboutStory : undefined} />,
     // Both pages carry the clinicians only: /about has its own Leadership section,
     // and /providers is the doctors alone.
     providers: <ProvidersSection showLeadership={kind !== 'providers' && kind !== 'about'} showAll={kind === 'providers'} />,

@@ -4,10 +4,10 @@
  * Every quote is verbatim — spelling, line breaks and signatures included —
  * because these are patients' own words, not copy.
  *
- * RATING_TOTAL and RATING_SUM count every review on both profiles, the critical
- * ones included, so the headline is the rating a reader would find on Google
- * rather than a figure drawn from the quotes on show. The two listings share no
- * reviewer between them, so nothing is counted twice.
+ * RATING_TOTAL and RATING_AVERAGE describe both profiles in full, so the headline
+ * is the rating a reader would find on Google rather than a figure drawn from the
+ * quotes on show. The two listings share no reviewer between them, so nothing is
+ * counted twice.
  *
  * `reviews` below is the slider's own list: the five-star reviews with something
  * to say. It is an excerpt, never the basis of the average.
@@ -26,12 +26,27 @@ export type Review = {
   body: string
 }
 
-/** Every review on both profiles, not just the ones quoted below. */
-export const RATING_TOTAL = 98
-const RATING_SUM = 439
+/**
+ * What the two Google Business Profiles show between them, supplied by the
+ * practice: 170 reviews, one clinic rated 4.8 and the other 4.5.
+ *
+ * These are stated rather than counted from `reviews` below, which is an excerpt
+ * — 56 quotes drawn from 98 reviews captured across the two profiles — and would
+ * give a different figure from the profiles themselves.
+ */
+const PROFILE_RATINGS = [4.8, 4.5]
 
-/** To one decimal place, the way Google states it. */
-export const RATING_AVERAGE = (RATING_SUM / RATING_TOTAL).toFixed(1)
+/** Every review across both profiles. */
+export const RATING_TOTAL = 170
+
+/**
+ * The mean of the two profile ratings, to one decimal place. It weighs each
+ * clinic equally because the reviews are not split evenly between them as far as
+ * we know — give each profile's own count and this should be weighted by it.
+ */
+export const RATING_AVERAGE = (
+  PROFILE_RATINGS.reduce((sum, rating) => sum + rating, 0) / PROFILE_RATINGS.length
+).toFixed(1)
 
 export const GOOGLE_REVIEWS_URL = 'https://www.google.com/search?q=Mission+Primary+Care+Fremont+reviews'
 
