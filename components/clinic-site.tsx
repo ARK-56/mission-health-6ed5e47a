@@ -9,7 +9,6 @@ import {
   CtaSection,
   FaqSection,
   HoursSection,
-  InsuranceSection,
   LocationsSection,
   PathwaySection,
   ProvidersSection,
@@ -29,7 +28,6 @@ export function ClinicSite() {
       <StorySection />
       <ProvidersSection />
       <ReviewsSection count={16} />
-      <InsuranceSection />
       <HoursSection />
       <ResourcesSection />
       <LocationsSection />
