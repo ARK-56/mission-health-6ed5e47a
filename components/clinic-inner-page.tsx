@@ -141,13 +141,14 @@ const additionalSections: Record<PageKind, Panel[]> = {
   contact: [{ title: 'Call us', body: `Our team is available Monday through Friday, 9am–5pm at ${PHONE}. Same-day appointments are available.` }, { title: 'Visit in person', body: 'Our clinics offer welcoming spaces, primary care, on-site labs, and support in one place.' }, { title: 'Urgent concerns', body: 'For emergencies, call 911. For urgent matters when we are closed, go to the nearest emergency room.' }, { title: 'Send a fax', body: 'Records and referrals can be faxed to 510-796-7797.' }, { title: 'Email us', body: 'For general, non-medical questions, email mpc3755@gmail.com. Please do not send medical information by email.' }],
 }
 
-const imageByPage: Record<PageKind, string> = { services: '/clinic-care.png', 'new-patients': '/new-patient-form.png', providers: '/team/care-team.webp', insurance: '/insurance-plans.png', resources: '/clinic-wellness.png', about: '/clinic-reception.png', contact: '/team/about-team.webp' }
+const imageByPage: Record<PageKind, string> = { services: '/clinic-consult.png', 'new-patients': '/new-patient-form.png', providers: '/team/care-team.webp', insurance: '/insurance-plans.png', resources: '/clinic-wellness.png', about: '/clinic-reception.png', contact: '/team/about-team.webp' }
 
 const imageAlt: Record<string, string> = {
   '/clinic-care.png': 'A Mission clinician talking with a patient during a visit',
   '/insurance-plans.png': 'A clinician holding badges for the health plans Mission works with',
   '/new-patient-form.png': 'A patient filling in a Mission Primary Care new patient form in the waiting room',
   '/clinic-reception.png': 'The Mission Primary Care reception desk and waiting area',
+  '/clinic-consult.png': 'A Mission clinician talking with a patient in the exam room',
   '/clinic-team.png': 'The Mission Primary Care team together in the clinic',
   '/team/about-team.webp': 'The Mission Primary Care doctors together in the clinic reception',
   '/team/care-team.webp': 'The six Mission Primary Care clinicians together at the clinic',
