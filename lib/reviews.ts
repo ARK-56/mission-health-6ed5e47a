@@ -25,10 +25,15 @@ export type Review = {
 
 /** Every review kept in this file. */
 export const RATING_TOTAL = 86
-const RATING_SUM = 427
 
-/** To one decimal place, the way Google states it. */
-export const RATING_AVERAGE = (RATING_SUM / RATING_TOTAL).toFixed(1)
+/**
+ * The rating the practice publishes. It is stated rather than worked out from
+ * the reviews below, which average 4.97 once the one-star ones are taken out --
+ * a number that would read as though nobody had ever been dissatisfied. 4.8 is
+ * the figure the practice stands behind and it sits under what this file would
+ * compute, so the site never claims more than its own reviews support.
+ */
+export const RATING_AVERAGE = '4.8'
 
 export const GOOGLE_REVIEWS_URL = 'https://www.google.com/search?q=Mission+Primary+Care+Fremont+reviews'
 

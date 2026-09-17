@@ -330,7 +330,7 @@ export function ProvidersSection({ showLeadership = true, showAll = false }: { s
 }
 
 /** Five stars, filled to the review's rating. Decorative: the number is in the text beside it. */
-function Stars({ rating }: { rating: number }) {
+export function Stars({ rating }: { rating: number }) {
   return (
     <span className="review-stars" aria-hidden="true">
       {[0, 1, 2, 3, 4].map((i) => <Star key={i} size={15} className={i < rating ? 'is-filled' : undefined} />)}

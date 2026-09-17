@@ -551,6 +551,13 @@ a.team-linkedin:hover { background: var(--accent); border-color: var(--accent); 
   .inner-lead ul { gap: 10px; }
 }
 
+
+/* a third line under the welcome copy, where it fits at any column width */
+.hero-rating { display: flex; align-items: center; gap: 9px; margin-top: 7px; }
+.hero-rating .review-stars { color: rgba(24,32,51,.22); }
+.hero-rating small { margin-top: 0; color: #4a4133; }
+.hero-rating strong { display: inline; color: #181818; font-size: 15px; font-weight: 800; }
+
 /* ---- Patient reviews, running past in one full-width band ---- */
 .reviews-section { padding: 104px 0; background: #efe6d6; }
 .reviews-head { max-width: 760px; margin-bottom: 40px; }
