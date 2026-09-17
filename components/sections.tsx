@@ -362,7 +362,9 @@ function ReviewCard({ review }: { review: Review }) {
         <span className="review-avatar" aria-hidden="true">{initials(review.name)}</span>
         <span>
           <strong>{review.name}</strong>
-          <small>{review.meta.startsWith('Local Guide') ? `Local Guide · ${review.date}` : review.date}</small>
+          {/* the clinic rather than the age of the review: which of the three a
+              patient was seen at says more than how long ago it was */}
+          <small>{review.meta.startsWith('Local Guide') ? `Local Guide · ${review.location}` : review.location}</small>
         </span>
       </div>
     </article>
@@ -402,7 +404,7 @@ export function ReviewsSection({ count }: { count?: number } = {}) {
 
   const run = (duplicate: boolean) => (
     <div className="review-run" key={duplicate ? 'b' : 'a'} aria-hidden={duplicate || undefined}>
-      {shown.map((review) => <ReviewCard key={review.name + review.date} review={review} />)}
+      {shown.map((review) => <ReviewCard key={review.location + review.name + review.date} review={review} />)}
     </div>
   )
 
@@ -413,7 +415,7 @@ export function ReviewsSection({ count }: { count?: number } = {}) {
         <h2>Rated {RATING_AVERAGE} by our patients</h2>
         <p className="review-score">
           <Stars rating={Math.round(Number(RATING_AVERAGE))} />
-          <span><strong>{RATING_AVERAGE}</strong> out of 5 · {RATING_TOTAL} Google reviews</span>
+          <span><strong>{RATING_AVERAGE}</strong> out of 5 · {RATING_TOTAL} patient reviews</span>
         </p>
         <a className="text-link" href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" aria-label="Read our reviews on Google (opens in a new tab)">
           Read them on Google <ArrowRight size={16} />
