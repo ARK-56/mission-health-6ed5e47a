@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Fragment, type ReactNode } from 'react'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 
-import { PHONE, PHONE_TEL } from '@/lib/site'
+import { AFTER_HOURS, HOURS, PHONE, PHONE_TEL } from '@/lib/site'
 import { ClinicShell } from './clinic-shell'
 import {
   CareSection,
@@ -19,6 +19,8 @@ import {
   ProvidersSection,
   ResourcesSection,
   ReviewsSection,
+  faqs,
+  type Faq,
   SelfPaySection,
   StorySection,
   TrustStrip,
@@ -55,15 +57,55 @@ type Block =
  */
 const journeySteps: Partial<Record<PageKind, number>> = { 'new-patients': 4 }
 
+/**
+ * Questions asked of the page a reader is actually on. Every answer states
+ * something the site already says elsewhere — the rates on /insurance, the hours
+ * and the after-hours line in the footer, the points on the service pages — so
+ * there is one version of each fact and no page invents a policy of its own.
+ *
+ * A page absent here falls back to the general set.
+ */
+const faqsByPage: Partial<Record<PageKind, readonly Faq[]>> = {
+  services: [
+    ['Do I have to go elsewhere for bloodwork?', 'No. Bloodwork and immunisations are handled in the clinic, so a visit and its labs are one trip.'],
+    ['What happens at an annual wellness visit?', 'A full check, the screenings that suit your age and history, and a plan for staying well that you leave with in writing.'],
+    ['What does chronic disease management involve?', 'Regular review of conditions like diabetes and hypertension, medication management, and coordination of any referrals your care needs.'],
+    ['Which visits suit a video appointment?', 'Many follow-ups and everyday care needs. Call the office and our team will tell you whether yours is one of them.'],
+    ['Do you see children?', 'We are an adults-only practice. We can care for the adults in one family — partners, parents, and the people who count on you.'],
+    ['What is a DOT physical?', 'A Department of Transportation medical examination for commercial drivers. Self-pay, it is $200.'],
+  ],
+  insurance: [
+    ['Which plans are you contracted with?', 'Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. The full list is on this page.'],
+    ['My plan is not on the list — can I still be seen?', `Coverage varies by plan and by service, and the list is not exhaustive. Call ${PHONE} and our team will check yours before you book.`],
+    ['How do the self-pay rates work?', 'They are flat per visit and set out on this page: $200 for a first visit, $100 once you are an established patient, and $200 for a DOT physical.'],
+    ['Will I know what I owe before my visit?', 'We verify benefits where we can and explain likely costs before care begins, so you are not surprised afterwards.'],
+    ['Who do I talk to about a bill?', 'Call the office and our team will go through your statement with you.'],
+  ],
+  resources: [
+    ['How do I request a prescription refill?', 'Call the office, or ask your pharmacy to send the request to us directly.'],
+    ['How do I get a copy of my medical records?', 'Call the office and we will send you a medical records release form.'],
+    ['How do I book or change an appointment?', `Call ${PHONE} during opening hours and our team will find you a time.`],
+    ['Can I email a medical question?', 'Please call instead. Email is not a secure way to send medical detail, so our team will not discuss it there.'],
+    ['What if I need help when you are closed?', AFTER_HOURS],
+  ],
+  contact: [
+    ['When are you open?', `${HOURS}.`],
+    ['Which clinic should I call?', `One number books any of the three. Call ${PHONE} and our team will arrange the clinic that suits you.`],
+    ['Where are the clinics?', 'Fremont, Hayward and San Leandro. Each address and its directions are on this page.'],
+    ['What should I do outside opening hours?', AFTER_HOURS],
+    ['Can I describe my symptoms in the form?', 'Please do not. The form asks only for a reason for contact, because an unencrypted message is not a safe place for medical detail. Call the office to talk anything through.'],
+  ],
+}
+
 const layouts: Record<PageKind, Block[]> = {
-  services: ['care', 'content', 'highlight', 'innerCta'],
+  services: ['care', 'content', 'highlight', 'faq', 'innerCta'],
   'new-patients': ['pathway', 'content', 'selfPay', 'highlight', 'innerCta'],
-  providers: ['providers', 'content', 'highlight', 'innerCta'],
-  insurance: ['insurance', 'selfPay', 'content', 'highlight', 'innerCta'],
-  resources: ['resources', 'content', 'highlight', 'innerCta'],
-  about: ['story', 'content', 'leadership', 'highlight', 'innerCta'],
+  providers: ['providers', 'content', 'reviews', 'highlight', 'innerCta'],
+  insurance: ['insurance', 'selfPay', 'content', 'highlight', 'faq', 'innerCta'],
+  resources: ['resources', 'content', 'faq', 'highlight', 'innerCta'],
+  about: ['story', 'content', 'leadership', 'reviews', 'highlight', 'innerCta'],
   // contact is named for both: the form to reach the practice and where it is
-  contact: ['contactForm', 'locations', 'content', 'highlight', 'innerCta'],
+  contact: ['contactForm', 'locations', 'content', 'faq', 'highlight', 'innerCta'],
 }
 
 const pageHighlights: Record<PageKind, { label: string; value: string; note: string; details: string[] }> = {
@@ -131,7 +173,7 @@ export function ClinicInnerPage({ kind }: { kind: PageKind }) {
     selfPay: <SelfPaySection />,
     locations: <LocationsSection />,
     hours: <HoursSection />,
-    faq: <FaqSection />,
+    faq: <FaqSection items={faqsByPage[kind] ?? faqs} />,
     cta: <CtaSection />,
     content: (() => {
       const [lead, ...supporting] = panels

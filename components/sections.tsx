@@ -133,6 +133,9 @@ export function PayerMark({ plan }: { plan: string }) {
   </>
 }
 
+export type Faq = readonly [question: string, answer: string]
+
+/** The general set, used where a page has no questions of its own. */
 export const faqs = [
   ['Do you accept my insurance?', 'We are contracted with Medicare Part B, Medi-Cal, and a range of commercial plans and medical groups. Call the office to confirm your specific plan before your visit.'],
   ['What should I bring to my first visit?', 'Bring your photo ID, insurance card, medication list, and any questions you want to talk through.'],
@@ -571,9 +574,13 @@ export function HoursSection() {
   return <section className="highlight-band" id="hours"><div className="shell highlight-inner"><div data-aos="fade-down"><p className="eyebrow">Opening hours</p><strong>Mon–Fri</strong><p>9am–5pm at all three clinics, closed 12:30pm–1:30pm for lunch. Closed weekends.</p></div><div className="highlight-details" data-aos="fade" data-aos-delay="600"><span><Check size={15} />{AFTER_HOURS}</span></div></div></section>
 }
 
-export function FaqSection() {
+/**
+ * `items` lets a page ask the questions its own readers arrive with; without it
+ * the section falls back to the general set.
+ */
+export function FaqSection({ items = faqs }: { items?: readonly Faq[] } = {}) {
   const [open, setOpen] = useState(0)
-  return <section className="faq-section"><div className="shell faq-grid"><div data-aos="fade-up"><p className="eyebrow">Good to know</p><h2>Questions, answered.</h2><p>Still curious? Our care team is here to help, {HOURS}.</p><SectionLink href="/new-patients">New patient guide</SectionLink><a className="text-link" href={PHONE_TEL}>Talk to our team <ArrowRight size={17} /></a></div><div className="faq-list" data-aos="zoom-in" data-aos-delay="600">{faqs.map(([question, answer], index) => <div className={open === index ? 'faq-item active' : 'faq-item'} key={question}><button onClick={() => setOpen(open === index ? -1 : index)} aria-expanded={open === index}><span>{question}</span><ChevronDown size={19} /></button>{open === index && <p>{answer}</p>}</div>)}</div></div></section>
+  return <section className="faq-section"><div className="shell faq-grid"><div data-aos="fade-up"><p className="eyebrow">Good to know</p><h2>Questions, answered.</h2><p>Still curious? Our care team is here to help, {HOURS}.</p><SectionLink href="/new-patients">New patient guide</SectionLink><a className="text-link" href={PHONE_TEL}>Talk to our team <ArrowRight size={17} /></a></div><div className="faq-list" data-aos="zoom-in" data-aos-delay="600">{items.map(([question, answer], index) => <div className={open === index ? 'faq-item active' : 'faq-item'} key={question}><button onClick={() => setOpen(open === index ? -1 : index)} aria-expanded={open === index}><span>{question}</span><ChevronDown size={19} /></button>{open === index && <p>{answer}</p>}</div>)}</div></div></section>
 }
 
 export function CtaSection() {
