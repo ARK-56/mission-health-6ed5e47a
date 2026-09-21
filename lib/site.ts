@@ -21,7 +21,7 @@ export const CONTACT_FORM_ENDPOINT = ''
  */
 export const SOCIAL: [string, string][] = [
   ['LinkedIn', ''],
-  ['Facebook', ''],
+  ['Facebook', 'https://www.facebook.com/profile.php?id=61593864189307'],
   ['Instagram', ''],
   ['YouTube', ''],
 ]
